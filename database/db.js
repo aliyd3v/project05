@@ -4,8 +4,8 @@ const config = dotenv.config()
 
 exports.connectDB = async () => {
     await mongoose.connect(process.env.MONGOTOKEN)
-        .then(`
+        .then(console.log(`
     < < < < < _MONGODB_CONNECTED_ > > > > >
-`)
+`))
         .catch(error => console.log(error))
 }
