@@ -1,5 +1,5 @@
 const { checkSchema } = require('express-validator');
-const { createUser } = require('../../controllers/user/createUser');
+const { createUser } = require('../../controllers/user/userController');
 const { createUserValidationSchema } = require('../../util/validators/createUserValidation');
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware');
 
