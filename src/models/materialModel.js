@@ -1,9 +1,10 @@
-const { Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const materialSchema = new Schema({
     name: String,
-    amount: Number,
-    createdAt: Date
+    quantity: Number,
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: Date
 })
 
-exports.materialModel = model('Material', materialSchema)
+exports.Material = model('Material', materialSchema)

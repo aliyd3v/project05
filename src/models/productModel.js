@@ -1,9 +1,12 @@
-const { Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const productSchema = new Schema({
     name: String,
-    material: Object,
-    createdAt: Date
+    materialsUsed: [{
+        material: { type: mongoose.Schema.Types.ObjectId, ref: "Material" },
+        amount: { type: Number }
+    }],
+    createdAt: { type: Date, default: Date.now }
 })
 
-exports.productModel = model('Product', productSchema)
+exports.Product = model('Product', productSchema)

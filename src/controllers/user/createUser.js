@@ -1,5 +1,5 @@
 const { checkSchema, validationResult, matchedData } = require('express-validator');
-const { userModel } = require('../../models/userModel')
+const { User } = require('../../models/userModel')
 const bcrypt = require('bcrypt')
 
 exports.createUser = async (req, res) => {
@@ -16,7 +16,7 @@ exports.createUser = async (req, res) => {
         const data = matchedData(req)
 
         // Checking username to exists.
-        const condidat = await userModel.findOne({ username: data.username })
+        const condidat = await User.findOne({ username: data.username })
         if (condidat) {
             return res.status(400).send({
                 success: false,
@@ -42,7 +42,7 @@ exports.createUser = async (req, res) => {
         const passwordHash = await bcrypt.hash(data.password, 10)
 
         // Write new user to database.
-        const newUser = await userModel.create({
+        const newUser = await User.create({
             name: data.name,
             username: data.username,
             password: passwordHash,

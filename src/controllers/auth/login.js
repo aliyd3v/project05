@@ -1,6 +1,6 @@
 const { validationResult, matchedData } = require("express-validator")
 const bcrypt = require('bcrypt')
-const { userModel } = require('../../models/userModel')
+const { User } = require('../../models/userModel')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const cookieParser = require("cookie-parser")
@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
         const data = matchedData(req)
 
         // Checking username
-        const user = await userModel.findOne({ username: data.username }).lean()
+        const user = await User.findOne({ username: data.username }).lean()
         if (!user) {
             return res.status(404).send({
                 success: false,

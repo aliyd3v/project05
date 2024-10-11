@@ -1,10 +1,11 @@
-const { Schema, model} = require('mongoose')
+const { Schema, model } = require('mongoose')
 
 const reportSchema = new Schema({
-    productName: String,
-    quantity: Number,
-    date: Date,
-    reportTime: Date
+    product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+    quantityProduced: Number,
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    producedAt: Date,
+    createdAt: { type: Date, default: Date.now }
 })
 
-exports.reportModel = model('Report', reportSchema)
+exports.Report = model('Report', reportSchema)
