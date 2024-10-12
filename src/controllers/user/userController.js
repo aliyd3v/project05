@@ -79,7 +79,7 @@ exports.getAllUsers = async (req, res) => {
     try {
         // Finding all users.
         const users = await User.find()
-        if (!users) {
+        if (!users.length) {
             return res.status(200).send({
                 success: true,
                 error: false,
