@@ -92,8 +92,70 @@ exports.getAllMaterials = async(req, res) => {
     }
 }
 
+exports.getOneMaterial = async(req, res) => {
+    try {
+        const id = req.params.id
+
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+    
+        const material = await Material.findById(id)
+
+        return res.status(200).send({
+            success: true,
+            error: false,
+            material
+        })
+        
+    } catch (error) {
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERVAL_SERVER_ERROR"
+        })
+    }
+
+
+}
+
 exports.updateMaterial = async (req, res) => {
     try {
+        const id = req.params.id
+
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            const errorMessages = errors.array().map(error => error.msg);
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: errorMessages
+            });
+        }
+        const data = matchedData(req)
+
         const body = req.body
         // Formatting date.
         function formatDate(date) {
@@ -108,13 +170,11 @@ exports.updateMaterial = async (req, res) => {
         const now = new Date();
         const formattedDate = formatDate(now);
 
-        const id = req.params.id
-
         const oldMaterial = await Material.findById(id)
 
         const updateData = {
-            name: body.name || oldMaterial.name,
-            quantity: body.quantity || oldMaterial.quantity,
+            name: data.name || oldMaterial.name,
+            quantity: data.quantity || oldMaterial.quantity,
             updatedAt: formattedDate
         }
 
