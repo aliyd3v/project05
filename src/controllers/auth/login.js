@@ -73,6 +73,7 @@ exports.login = async (req, res) => {
         const token = generateToken(userId, role)
 
         res.cookie('authcookie', token, { httpOnly: true })
+        res.cookie('userId', userId, { httpOnly: true })
 
         // Responsing.
         return res.status(201).send({
