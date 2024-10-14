@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 const productSchema = new Schema({
     name: String,
     materialsUsed: [{
-        material: { type: mongoose.Schema.Types.ObjectId, ref: "Material" },
+        material: { type: Schema.Types.ObjectId, ref: "Material" },
         amount: { type: Number }
     }],
     createdAt: { type: Date, default: Date.now }

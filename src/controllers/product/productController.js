@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const { Product } = require("../../models/productModel");
 const { validationResult, matchedData } = require("express-validator");
 
@@ -26,13 +27,19 @@ exports.createProduct = async (req, res) => {
         }
 
         // Writing new product to database.
+        const materialsUsed = data.materialsUsed.map(object => {
+            return {
+                _id: object.material,
+                amount: object.amount
+            }
+        })
         const newProduct = await Product.create({
             name: data.name,
-            materialsUsed: data.materialsUsed
+            materialsUsed
         })
 
         // Responsing.
-        return res.statsu(201).send({
+        return res.status(201).send({
             success: true,
             error: false,
             message: 'Product is created successful.',
@@ -105,7 +112,7 @@ exports.getOneProduct = async (req, res) => {
         }
 
         // Find product by id.
-        const product = await Product.findById(id).populate(materialsUsed, 'Material')
+        const product = await Product.findById(id).populate("materialsUsed")
 
         // Checking product for exists.
         if (!product) {
@@ -172,12 +179,19 @@ exports.updatOneProduct = async (req, res) => {
                 error: errorMessages
             })
         }
+        const data = matchedData(req)
 
         // Writing updates to database.
+        const materialsUsed = data.materialsUsed.map(object => {
+            return {
+                _id: object.material,
+                amount: object.amount
+            }
+        })
         const updateProduct = await Product.findByIdAndUpdate(id, {
             ...product,
             name: data.name,
-            materialsUsed: data.materialsUsed
+            materialsUsed
         })
 
         // Responsing.
@@ -185,7 +199,7 @@ exports.updatOneProduct = async (req, res) => {
             success: true,
             error: false,
             message: 'Product is updated successful.',
-            data: { updateProduct: { name: data.name, materialsUsed: data.materialsUsed } }
+            data: { updateProduct }
         })
     } catch (error) {
         // Error handling.
