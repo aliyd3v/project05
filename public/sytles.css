@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 40px; /* paddingni kattalashtirdik */
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* soyani kattalashtirdik */
+    width: 400px; /* kenglikni oshirdik */
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 30px; /* bo'shliqni oshirdik */
+    color: #333;
+    font-size: 28px; /* shriftni kattalashtirdik */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 18px; /* labelning shrift o'lchamini kattalashtirdik */
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px; /* inputning ichki bo'shligini oshirdik */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 18px; /* input shriftini kattalashtirdik */
+}
+
+.btn {
+    width: 100%;
+    padding: 14px; /* tugma ichki bo'shligini oshirdik */
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px; /* tugma shriftini kattalashtirdik */
+}
+
+.btn:hover {
+    background-color: #218838;
+}
