@@ -208,6 +208,15 @@ exports.deleteMaterial = async (req, res) => {
     try {
         const id = req.params.id
 
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
         await Material.findByIdAndDelete(id)
 
         return res.status(200).send({
