@@ -14,6 +14,27 @@ const generateToken = (id, role) => {
     return jwt.sign(payload, process.env.JWT_SECRET_KEY)
 }
 
+exports.loginPage = async (req, res) => {
+    try {
+        return res.render('login')
+    } catch (error) {
+        // Handling errors.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+
 exports.login = async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -53,6 +74,7 @@ exports.login = async (req, res) => {
 
         res.cookie('authcookie', token, { httpOnly: true })
 
+        // Responsing.
         return res.status(201).send({
             success: true,
             error: false,
@@ -63,6 +85,7 @@ exports.login = async (req, res) => {
             }
         })
     } catch (error) {
+        // Handling errors.
         console.log(error);
         if (error.message) {
             return res.status(400).send({
