@@ -49,7 +49,6 @@ exports.login = async (req, res) => {
         // Generate token.
         const userId = user._id
         const role = user.role
-        console.log(userId, role)
         const token = generateToken(userId, role)
 
         res.cookie('authcookie', token, { httpOnly: true })
