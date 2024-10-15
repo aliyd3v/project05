@@ -1,12 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Admin Panel</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    {{{body}}}
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                {{#if isDashboard}}
+                <li><a href="/api/admin-panel" class="active">Dashboard</a></li>
+                {{else}}
+                <li><a href="/api/admin-panel">Dashboard</a></li>
+                {{/if}}
+
+                {{!-- {{#if}} --}}
+                {{!-- <li><a href="#" class="active">Users</a></li>
+                {{else}} --}}
+                <li><a href="#">Users</a></li>
+                {{!-- {{/if}} --}}
+
+                {{!-- {{#if}} --}}
+                {{!-- <li><a href="#" class="active">Products</a></li> --}}
+                {{!-- {{else}} --}}
+                <li><a href="#">Products</a></li>
+                {{!-- {{/if}} --}}
+
+                {{#if isMaterials}}
+                <li><a href="/api/materials" class="active">Materials</a></li>
+                {{else}}
+                <li><a href="/api/materials">Materials</a></li>
+                {{/if}}
+
+                {{!-- {{#if}} --}}
+                {{!-- <li><a href="#" class="active">Instruction</a></li> --}}
+                {{!-- {{else}} --}}
+                <li><a href="#">Instruction</a></li>
+                {{!-- {{/if}} --}}
+            </ul>
+        </div>
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <button id="toggle-button">☰</button>
+            <h1>Admin Dashboard</h1>
+            <div class="user-info">
+                <a href="/profile" class="profile-link">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile Icon"
+                        class="profile-icon">
+                </a>
+                <button class="logout-button">Logout</button>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('toggle-button').addEventListener('click', () => {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('active');
+                const mainContent = document.querySelector('.main-content');
+                mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
+            });
+        </script>
+
+        {{{body}}}
 </body>
+
 </html>

@@ -1,71 +1,241 @@
+/* Global Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
 body {
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    overflow-x: hidden; /* X o'qida qimirlamaslik */
 }
 
-.login-container {
+.admin-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Ekran yon tomonlarga siljimasligi uchun */
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    display: block;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.sidebar ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(5px);
+}
+
+.sidebar ul li a.active {
+    background-color: rgba(255, 255, 255, 0.6);
+    font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    height: 70px;
     background-color: #fff;
-    padding: 40px; /* paddingni kattalashtirdik */
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* soyani kattalashtirdik */
-    width: 400px; /* kenglikni oshirdik */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar h1 {
+    font-size: 26px;
+    color: #333;
     text-align: center;
 }
 
-h2 {
-    margin-bottom: 30px; /* bo'shliqni oshirdik */
-    color: #333;
-    font-size: 28px; /* shriftni kattalashtirdik */
-}
-
-.input-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-size: 18px; /* labelning shrift o'lchamini kattalashtirdik */
-}
-
-.input-group input {
-    width: 100%;
-    padding: 12px; /* inputning ichki bo'shligini oshirdik */
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 18px; /* input shriftini kattalashtirdik */
-}
-
-.btn {
-    width: 100%;
-    padding: 14px; /* tugma ichki bo'shligini oshirdik */
-    background-color: #28a745;
-    color: #fff;
+#toggle-button {
+    font-size: 24px;
+    background: none;
     border: none;
-    border-radius: 6px;
     cursor: pointer;
-    font-size: 18px; /* tugma shriftini kattalashtirdik */
+    color: #333;
 }
 
-.btn:hover {
-    background-color: #218838;
+/* User info */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-link {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.profile-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.profile-icon:hover {
+    transform: scale(1.1);
+}
+
+.logout-button {
+    padding: 10px 20px;
+    background-color: #6e8efb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #5777ff;
+}
+
+/* Main content */
+.main-content {
+    display: flex;
+    justify-content: flex-start; /* Kontentni chapga joylashtirish */
+    align-items: flex-start;
+    margin-top: 70px;
+    padding: 20px;
+    margin-left: 250px; /* Yon panel uchun bo'sh joy */
+    width: calc(100% - 250px); /* Yon panel bo'sh joyni hisobga olish */
+    transition: margin-left 0.3s ease;
+}
+
+/* Kalendar joylashuvi */
+.calendar-container {
+    flex-basis: 30%;
+    margin-right: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    max-width: calc(100% - 270px); /* Yon panel va padding uchun bo'sh joy */
 }
 
 
- /* _________________________________CREATE PRODUCT_______________________________________ */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
+.calendar-header h3 {
+    font-size: 20px;
+}
 
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 10px 0;
+    text-align: center;
+    font-weight: bold;
+}
 
- 
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-body div {
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-body div.today {
+    background-color: #ffeb3b; /* Bugun */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .calendar-container {
+        flex-basis: 100%;
+        max-width: fit-content; /* Telefon ekrani uchun maksimal kenglikni to'liq qilib qo'yamiz */
+        margin-right: auto;
+        margin-top: 20px; /* Kalendarni tepadan pastga tushirish */
+    }
+    
+
+    .sidebar.active {
+        transform: translateX(0);
+        width: 100%; /* Ekran to'liq egallash */
+        height: 100%; /* Ekran to'liq egallash */
+        z-index: 999; /* yuqori qatorda bo'lishi uchun */
+        padding-top: 80px; /* Mobilda yuqoridan pastroqqa surish */
+    }
+
+    .main-content {
+        margin-left: 0; /* O'zgartirish */
+        padding: 20px; /* O'ngga joylashtirish */
+        text-align: right; /* Matnni o'ngga joylashtirish */
+    }
+
+    .navbar {
+        left: 0;
+        width: 100%;
+    }
+
+    #toggle-button {
+        display: block; /* Faqat mobilda ko'rsatish */
+    }
+}
+
+/* Kompyuterda menyu belgisi ko'rinmasligi */
+@media (min-width: 769px) {
+    #toggle-button {
+        display: none; /* Kompyuterda menyu belgisi ko'rinmaydi */
+    }
+}

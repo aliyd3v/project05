@@ -61,20 +61,19 @@ exports.getAllMaterials = async(req, res) => {
     try {
         const material = await Material.find()
 
+        res.render('materials', {
+            title: 'Materials',
+            isMaterials: true,
+            material
+        })
+        
+
         if (!material) {
             return res.status(404).send({
                 success: false,
                 error: "Material not found!"
             })
-        } else {
-            return res.status(200).send({
-                success: true,
-                error: false,
-                message: 'List of Material!',
-                data: material
-            })
         }
-        
     } catch (error) {
         console.log(error);
         if (error.message) {

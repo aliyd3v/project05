@@ -16,7 +16,9 @@ const generateToken = (id, role) => {
 
 exports.loginPage = async (req, res) => {
     try {
-        return res.render('login')
+        return res.render('login', {
+            layout: false
+        })
     } catch (error) {
         // Handling errors.
         console.log(error);
