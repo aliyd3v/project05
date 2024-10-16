@@ -10,7 +10,9 @@
         <tbody>
             {{#each material}}
             <tr>
-                <td>{{name}}</td>
+                <td>
+                    <a href="/api/material/{{id}}" class="material-link">{{name}}</a>
+                </td>
                 <td>{{quantity}}</td>
             </tr>
             {{/each}}

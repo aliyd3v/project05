@@ -13,7 +13,7 @@ body {
 }
 
 .admin-container {
-    display: flex;
+    display: flexbox;
     height: 100vh;
     overflow: hidden; /* Ekran yon tomonlarga siljimasligi uchun */
 }
@@ -68,6 +68,20 @@ body {
     font-weight: bold;
 }
 
+.dropdown-menu {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-menu.active {
+    display: block;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+}
 /* Navbar */
 .navbar {
     position: fixed;
@@ -238,4 +252,417 @@ body {
     #toggle-button {
         display: none; /* Kompyuterda menyu belgisi ko'rinmaydi */
     }
+}
+
+/* Table container styling */
+.table-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.table-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff; /* Bright blue color for the header */
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto; /* Center the table */
+}
+
+thead {
+    background-color: #007bff; /* Bright blue for the header */
+    color: #fff;
+}
+
+th, td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 2px solid #e9ecef;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f0f8ff; /* Light blue for even rows */
+}
+
+/* Hover effect on rows */
+tbody tr:hover {
+    background-color: #cce5ff; /* Brighter hover color */
+    cursor: pointer;
+}
+
+th {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+td {
+    color: #212529;
+    font-size: 16px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}
+
+/* Material link styling */
+.material-link {
+    color: #000000; /* Black color for links */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.material-link:hover {
+    text-decoration: underline;
+    color: #007bff; /* Bright blue on hover */
+}
+
+/* Material details container styling */
+/* Umumiy dizayn */
+.material-details {
+    max-width: 600px; /* Ozgina kichraytirildi */
+    margin: 0 auto;
+    padding: 20px; /* Padding kamaytirildi */
+    background-color: #f9f9f9;
+    border-radius: 12px; /* Burchaklar ozgina yumshatildi */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soyasi kamaytirildi */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* O'rtada joylashtirildi */
+    text-align: center; /* Matn o'rtaga keltirildi */
+    position: relative; /* O'rtada bo'lishi uchun qo'shildi */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.material-details h1 {
+    font-size: 28px; /* Kichikroq shrift */
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+.material-info p {
+    font-size: 18px; /* Kichikroq shrift */
+    margin: 10px 0;
+    color: #555;
+    line-height: 1.5; /* Matnni o'qish uchun oraliq biroz qisqartirildi */
+}
+
+.material-info strong {
+    color: #333;
+}
+
+/* Harakat tugmalari */
+/* Harakat tugmalari */
+.action-buttons {
+    display: flex;
+    justify-content: center; /* Tugmalarni o'rtaga joylashtiradi */
+    gap: 20px; /* Tugmalar orasidagi bo'shliq */
+    margin-top: 25px;
+    width: 100%;
+}
+
+.edit-button,
+.delete-button,
+.back-button {
+    padding: 12px 24px; /* Tugmalarni biroz kattalashtirish */
+    border: none;
+    border-radius: 12px; /* Yumshoqroq burchaklar */
+    font-size: 16px; /* Shrift o'lchami */
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Tugmalarga engil soya qo'shildi */
+    transition: all 0.3s ease;
+}
+
+/* Edit tugmasi */
+.edit-button {
+    background: linear-gradient(135deg, #4CAF50, #66BB6A); /* Gradient fon */
+    color: white;
+}
+
+.edit-button:hover {
+    background: linear-gradient(135deg, #45a049, #57a957); /* Hover effekti uchun gradient fon */
+    transform: translateY(-3px); /* Hoverda biroz ko'tarish */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Tugmaning soyasini kattalashtirish */
+}
+
+/* Delete tugmasi */
+.delete-button {
+    background: linear-gradient(135deg, #f44336, #e57373); /* Gradient fon */
+    color: white;
+}
+
+.delete-button:hover {
+    background: linear-gradient(135deg, #d32f2f, #ef5350); /* Hover effekti uchun gradient fon */
+    transform: translateY(-3px); /* Hoverda biroz ko'tarish */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Tugmaning soyasini kattalashtirish */
+}
+
+/* Back tugmasi */
+.back-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #007bff, #007bff); /* Gradient fon */
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #5777ff, #5777ff); /* Hover effekti uchun gradient fon */
+    transform: translateY(-3px); /* Hoverda biroz ko'tarish */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15); /* Tugmaning soyasini kattalashtirish */
+}
+
+
+/* Modal oynalar */
+.edit-modal, .confirmation-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+    z-index: 100;
+    display: none;
+}
+
+.edit-modal h2, .confirmation-modal h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.edit-modal label, .confirmation-modal p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* Modal oynalar uchun tugmalar */
+.update-button, .cancel-edit, .confirm-delete, .cancel-delete {
+    padding: 10px 18px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.update-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.update-button:hover {
+    background-color: #45a049;
+}
+
+.cancel-edit, .cancel-delete {
+    background-color: #007bff;
+    color: white;
+}
+
+.cancel-edit:hover, .cancel-delete:hover {
+    background-color: #007bff
+}
+
+.confirm-delete {
+    background-color: #f44336;
+    color: white;
+}
+
+.confirm-delete:hover {
+    background-color: #d32f2f;
+}
+
+input[type="text"], input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+/* Telefon uchun responsiv dizayn */
+@media (max-width: 768px) {
+    .material-details {
+        padding: 15px;
+        box-shadow: none;
+    }
+
+    .material-details h1 {
+        font-size: 24px;
+    }
+
+    .material-info p {
+        font-size: 16px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .edit-button, .delete-button {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+    .edit-modal, .confirmation-modal {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .edit-modal h2, .confirmation-modal h2 {
+        font-size: 20px;
+    }
+
+    input[type="text"], input[type="number"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+    }
+
+    .update-button, .cancel-edit, .confirm-delete, .cancel-delete {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .material-details h1 {
+        font-size: 20px;
+    }
+
+    .material-info p {
+        font-size: 14px;
+    }
+
+    .edit-button, .delete-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .back-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .edit-modal h2, .confirmation-modal h2 {
+        font-size: 18px;
+    }
+
+    input[type="text"], input[type="number"] {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .update-button, .cancel-edit, .confirm-delete, .cancel-delete {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+.create-material-page {
+    display: flex; /* Flexboxni faollashtirish */
+    flex-direction: column; /* Ustun ustida joylash */
+    justify-content: center; /* Vertikal o'rtaga joylash */
+    align-items: center; /* Gorizontal o'rtaga joylash */
+    max-width: 600px; /* Maksimal kenglik */
+    width: 100%; /* 100% kenglik */
+    padding: 20px; /* Ichki bo'shliq */
+    border-radius: 8px; /* Burchaklarni yumshatish */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soyali effekt */
+    background-color: #ffffff; /* Fon rangi */
+    margin: auto; /* O'rtaga joylash uchun */
+    height: calc(100vh - 40px); /* Butun balandlikdan 40px chiqarib tashlash */
+}
+
+.create-material-page h1 {
+    text-align: center; /* Markazga joylash */
+    color: #333; /* Matn rangi */
+    margin-bottom: 20px; /* Pastki bo'shliq */
+}
+
+.create-material-form {
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Ustun ustida joylash */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Pastki bo'shliq */
+}
+
+.form-group label {
+    margin-bottom: 5px; /* Pastki bo'shliq */
+    font-weight: bold; /* Qalin matn */
+    color: #555; /* Matn rangi */
+}
+
+.form-group input {
+    padding: 10px; /* Ichki bo'shliq */
+    border: 1px solid #ccc; /* Chegara rangi */
+    border-radius: 4px; /* Burchaklarni yumshatish */
+    font-size: 16px; /* Matn o'lchami */
+    transition: border-color 0.3s; /* O'zgarishlar */
+}
+
+.form-group input:focus {
+    border-color: #007bff; /* Fokusa kiritilganda chegara rangi */
+    outline: none; /* Chiziqni olib tashlash */
+}
+
+.create-button {
+    padding: 10px; /* Ichki bo'shliq */
+    background-color: #007bff; /* Tugma rangi */
+    color: white; /* Matn rangi */
+    border: none; /* Chegarasiz */
+    border-radius: 4px; /* Burchaklarni yumshatish */
+    font-size: 16px; /* Matn o'lchami */
+    cursor: pointer; /* Kursor ko'rsatgich */
+    transition: background-color 0.3s; /* O'zgarishlar */
+}
+
+.create-button:hover {
+    background-color: #0056b3; /* Tugma ustida turganda rangi o'zgarishi */
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -21,29 +21,59 @@
                 <li><a href="/api/admin-panel">Dashboard</a></li>
                 {{/if}}
 
-                {{!-- {{#if}} --}}
-                {{!-- <li><a href="#" class="active">Users</a></li>
-                {{else}} --}}
-                <li><a href="#">Users</a></li>
-                {{!-- {{/if}} --}}
+                <li>
+                    <a href="#" class="dropdown-toggle">Users</a>
+                    <ul class="dropdown-menu">
+                        {{#if isUsers}}
+                        <li><a href="/api/users/list" class="active">User List</a></li>
+                        {{else}}
+                        <li><a href="/api/users/list">User List</a></li>
+                        {{/if}}
 
-                {{!-- {{#if}} --}}
-                {{!-- <li><a href="#" class="active">Products</a></li> --}}
-                {{!-- {{else}} --}}
-                <li><a href="#">Products</a></li>
-                {{!-- {{/if}} --}}
+                        {{#if isCreateUser}}
+                        <li><a href="/api/users/create" class="active">Create User</a></li>
+                        {{else}}
+                        <li><a href="/api/users/create">Create User</a></li>
+                        {{/if}}
 
-                {{#if isMaterials}}
-                <li><a href="/api/materials" class="active">Materials</a></li>
-                {{else}}
-                <li><a href="/api/materials">Materials</a></li>
-                {{/if}}
+                    </ul>
+                </li>
 
-                {{!-- {{#if}} --}}
-                {{!-- <li><a href="#" class="active">Instruction</a></li> --}}
-                {{!-- {{else}} --}}
+                <li>
+                    <a href="#" class="dropdown-toggle">Products</a>
+                    <ul class="dropdown-menu">
+                        {{#if isProducts}}
+                        <li><a href="/api/products/list" class="active">Products List</a></li>
+                        {{else}}
+                        <li><a href="/api/products/list">Products List</a></li>
+                        {{/if}}
+
+                        {{#if isCreateProduct}}
+                        <li><a href="/api/products/create" class="active">Create Product</a></li>
+                        {{else}}
+                        <li><a href="/api/products/create">Create Product</a></li>
+                        {{/if}}
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">Materials</a>
+                    <ul class="dropdown-menu">
+                        {{#if isMaterials}}
+                        <li><a href="/api/materials" class="active">Materials List</a></li>
+                        {{else}}
+                        <li><a href="/api/materials">Materials List</a></li>
+                        {{/if}}
+
+                        {{#if isCreateMaterial}}
+                        <li><a href="/api/create-material" class="active">Create Materials</a></li>
+                        {{else}}
+                        <li><a href="/api/create-material">Create Materials</a></li>
+                        {{/if}}
+                    </ul>
+                </li>
+
                 <li><a href="#">Instruction</a></li>
-                {{!-- {{/if}} --}}
             </ul>
         </div>
 
@@ -67,9 +97,25 @@
                 const mainContent = document.querySelector('.main-content');
                 mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
             });
+
+            // Dropdown functionality
+            document.querySelectorAll('.dropdown-toggle').forEach(item => {
+                item.addEventListener('click', event => {
+                    const dropdownMenu = item.nextElementSibling;
+                    dropdownMenu.classList.toggle('active');
+
+                    // Yopish uchun boshqa ochilgan menyularni yopish
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        if (menu !== dropdownMenu) {
+                            menu.classList.remove('active');
+                        }
+                    });
+                });
+            });
         </script>
 
         {{{body}}}
+    </div>
 </body>
 
 </html>
