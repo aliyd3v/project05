@@ -180,7 +180,6 @@ exports.deleteMaterial = async (req, res) => {
   try {
     const id = req.params.id;
 
-    res.redirect('/api/materials')
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send({

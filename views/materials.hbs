@@ -5,6 +5,7 @@
             <tr>
                 <th>Material Name</th>
                 <th>Quantity</th>
+                <th>UpdatedAt</th>
             </tr>
         </thead>
         <tbody>
@@ -14,6 +15,11 @@
                     <a href="/api/material/{{id}}" class="material-link">{{name}}</a>
                 </td>
                 <td>{{quantity}}</td>
+                {{#if updatedAt}}
+                <td>{{formatDate updatedAt}}</td>
+                {{else}}
+                <td>{{formatDate createdAt}}</td>
+                {{/if}}
             </tr>
             {{/each}}
         </tbody>
