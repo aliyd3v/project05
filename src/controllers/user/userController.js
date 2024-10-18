@@ -33,8 +33,7 @@ exports.createUser = async (req, res) => {
         const newUser = await User.create({
             name: data.name,
             username: data.username,
-            password: passwordHash,
-            createdAt: formattedDate
+            password: passwordHash
         })
 
         // Responsing.
@@ -126,10 +125,10 @@ exports.getOneUser = async (req, res) => {
             })
         }
 
-        return res.render('user',{
+        return res.render('user', {
             title: 'User',
             user
-            }
+        }
         )
     } catch (error) {
         console.log(error);

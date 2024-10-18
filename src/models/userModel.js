@@ -5,7 +5,7 @@ const userSchema = new Schema({
     username: String,
     password: String,
     role: {type: String, default: 'baker'},
-    createdAt: Date
+    createdAt: { type: Date, default: Date.now }
 })
 
 exports.User = model('User', userSchema)
