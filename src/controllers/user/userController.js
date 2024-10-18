@@ -74,11 +74,6 @@ exports.getAllUsers = async (req, res) => {
             })
         }
 
-        return res.render('users', {
-            title: 'Users',
-            users
-        })
-
         // Give all users without admins.
         const allUsers = []
         for (let i = 0; i < users.length; i++) {
@@ -86,6 +81,12 @@ exports.getAllUsers = async (req, res) => {
             if (user.role != 'admin')
                 allUsers.push({ id: user._id, name: user.name, username: user.username, createdAt: user.createdAt.toLocaleDateString() })
         }
+
+        return res.render('users', {
+            title: 'Users',
+            allUsers
+        })
+
     } catch (error) {
         // Error handling.
         console.log(error);
