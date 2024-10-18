@@ -33,7 +33,7 @@ exports.createUser = async (req, res) => {
         const newUser = await User.create({
             name: data.name,
             username: data.username,
-            password: passwordHash,
+            password: passwordHash
         })
 
         // Responsing.
@@ -78,7 +78,7 @@ exports.getAllUsers = async (req, res) => {
         for (let i = 0; i < users.length; i++) {
             const user = users[i]
             if (user.role != 'admin')
-                allUsers.push({ name: user.name, username: user.username, createdAt: user.createdAt.toLocaleDateString() })
+                allUsers.push({ id: user._id, name: user.name, username: user.username, createdAt: user.createdAt.toLocaleDateString() })
         }
 
         return res.render('users', {
