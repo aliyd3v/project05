@@ -68,6 +68,11 @@ exports.getAllProducts = async (req, res) => {
         // Find all products
         const products = await Product.find()
 
+        res.render('products', {
+            title: 'Products',
+            products
+        })
+
         // Responsing
         if (!products.length) {
             return res.status(200).send({
@@ -76,11 +81,6 @@ exports.getAllProducts = async (req, res) => {
                 message: "Product is empty."
             })
         }
-        return res.status(200).send({
-            success: true,
-            error: null,
-            message: products
-        })
     } catch (error) {
         // Error handling.
         console.log(error);

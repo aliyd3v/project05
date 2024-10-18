@@ -666,3 +666,310 @@ input[type="text"]:focus, input[type="number"]:focus {
 .create-button:hover {
     background-color: #0056b3; /* Tugma ustida turganda rangi o'zgarishi */
 }
+
+/* Table container styling */
+.product-table-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-table-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff; /* Bright blue color for the header */
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* Table styling */
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto; /* Center the table */
+}
+
+.product-table thead {
+    background-color: #007bff; /* Bright blue for the header */
+    color: #fff;
+}
+
+.product-table th, .product-table td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.product-table tbody tr:nth-child(even) {
+    background-color: #f0f8ff; /* Light blue for even rows */
+}
+
+/* Hover effect on rows */
+.product-table tbody tr:hover {
+    background-color: #cce5ff; /* Brighter hover color */
+    cursor: pointer;
+}
+
+.product-table th {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+.product-table td {
+    color: #212529;
+    font-size: 16px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .product-table-container {
+        padding: 10px;
+    }
+
+    .product-table th, .product-table td {
+        padding: 10px;
+    }
+
+    .product-table {
+        font-size: 14px;
+    }
+}
+
+/* Product link styling */
+.product-link {
+    color: #000000; /* Black color for links */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.product-link:hover {
+    text-decoration: underline;
+    color: #007bff; /* Bright blue on hover */
+}
+
+/* Users table container styling */
+.users-table-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.users-table-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff; /* Bright blue color for the header */
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* Users table styling */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto; /* Center the table */
+}
+
+.users-table thead {
+    background-color: #007bff; /* Bright blue for the header */
+    color: #fff;
+}
+
+.users-table th, .users-table td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.users-table tbody tr:nth-child(even) {
+    background-color: #f0f8ff; /* Light blue for even rows */
+}
+
+/* Hover effect on rows */
+.users-table tbody tr:hover {
+    background-color: #cce5ff; /* Brighter hover color */
+    cursor: pointer;
+}
+
+.users-table th {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: left;
+}
+
+.users-table td {
+    color: #212529;
+    font-size: 16px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .users-table-container {
+        padding: 10px;
+    }
+
+    .users-table th, .users-table td {
+        padding: 10px;
+    }
+
+    .users-table {
+        font-size: 14px;
+    }
+}
+
+/* User link styling */
+.users-link {
+    color: #000000; /* Black color for links */
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.users-link:hover {
+    text-decoration: underline;
+    color: #007bff; /* Bright blue on hover */
+}
+
+#user-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+
+.user-page-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+}
+
+.user-page-container {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6D83F2, #ACD9F7);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    max-width: 450px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-title {
+    color: white;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-info-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info-container h2 {
+    margin: 5px 0; /* Ustma-ust turishi uchun marginni kamaytirish */
+    font-size: 20px;
+    color: #333;
+}
+
+.user-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Buttonlar faqat user-page konteyneriga ta'sir qiladi */
+#user-page button {
+    background-color: #FFA62B;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#user-page button:hover {
+    background-color: #FF8700;
+    transform: scale(1.05);
+}
+
+.edit-form, .delete-confirmation {
+    display: none;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.edit-form input, .delete-confirmation button {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+/* Mobil qurilmalar uchun media queries */
+@media (max-width: 768px) {
+    .user-title {
+        font-size: 24px;
+    }
+
+    .user-info-container h2 {
+        font-size: 18px;
+    }
+
+    #user-page button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .user-page-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-title {
+        font-size: 22px;
+    }
+
+    .user-info-container h2 {
+        font-size: 16px;
+    }
+
+    #user-page button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .user-page-container {
+        padding: 15px;
+    }
+}

@@ -26,19 +26,6 @@ exports.createUser = async (req, res) => {
             })
         }
 
-        // Formatting date.
-        function formatDate(date) {
-            const d = new Date(date);
-            const hours = d.getHours();
-            const minutes = d.getMinutes();
-            const day = d.getDate();
-            const month = d.getMonth() + 1;
-            const year = String(d.getFullYear()).slice(-2);
-            return `${hours}:${String(minutes).padStart(2, '0')} ${day}.${month}.${year}`;
-        }
-        const now = new Date();
-        const formattedDate = formatDate(now);
-
         // Hashing password
         const passwordHash = await bcrypt.hash(data.password, 10)
 
@@ -87,6 +74,11 @@ exports.getAllUsers = async (req, res) => {
             })
         }
 
+        return res.render('users', {
+            title: 'Users',
+            users
+        })
+
         // Give all users without admins.
         const allUsers = []
         for (let i = 0; i < users.length; i++) {
@@ -94,13 +86,6 @@ exports.getAllUsers = async (req, res) => {
             if (user.role != 'admin')
                 allUsers.push({ name: user.name, username: user.username, createdAt: user.createdAt.toLocaleDateString() })
         }
-
-        // Responsing.
-        return res.status(201).send({
-            success: true,
-            error: false,
-            data: { allUsers }
-        })
     } catch (error) {
         // Error handling.
         console.log(error);
@@ -141,18 +126,11 @@ exports.getOneUser = async (req, res) => {
             })
         }
 
-        // Responsing.
-        return res.status(200).send({
-            success: true,
-            error: false,
-            data: {
-                user: {
-                    name: user.name,
-                    username: user.username,
-                    createdAt: user.createdAt.toLocaleString()
-                }
+        return res.render('user',{
+            title: 'User',
+            user
             }
-        })
+        )
     } catch (error) {
         console.log(error);
         if (error.message) {

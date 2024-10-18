@@ -1,0 +1,23 @@
+<div class="product-table-container">
+    <h1>Mahsulotlar Jadvali</h1>
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Mahsulot Nom</th>
+                <th>qreatedAt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+            <tr>
+                <td><a href="/api/product/{{id}}" class="product-link">{{name}}</a></td>
+                {{#if updatedAt}}
+                <td>{{formatDate updatedAt}}</td>
+                {{else}}
+                <td>{{formatDate createdAt}}</td>
+                {{/if}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

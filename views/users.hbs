@@ -1,0 +1,21 @@
+<div class="users-table-container">
+    <h2>Foydalanuvchilar Jadvali</h2>
+    <table class="users-table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>createdAt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+            <tr>
+                <td><a href="/api/user/{{id}}" class="users-link">{{username}}</a></td>
+                <td>{{name}}</td>
+                <td>{{formatDate createdAt}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

@@ -25,9 +25,9 @@
                     <a href="#" class="dropdown-toggle">Users</a>
                     <ul class="dropdown-menu">
                         {{#if isUsers}}
-                        <li><a href="/api/users/list" class="active">User List</a></li>
+                        <li><a href="/api/users" class="active">User List</a></li>
                         {{else}}
-                        <li><a href="/api/users/list">User List</a></li>
+                        <li><a href="/api/users">User List</a></li>
                         {{/if}}
 
                         {{#if isCreateUser}}
@@ -43,9 +43,9 @@
                     <a href="#" class="dropdown-toggle">Products</a>
                     <ul class="dropdown-menu">
                         {{#if isProducts}}
-                        <li><a href="/api/products/list" class="active">Products List</a></li>
+                        <li><a href="/api/products" class="active">Products List</a></li>
                         {{else}}
-                        <li><a href="/api/products/list">Products List</a></li>
+                        <li><a href="/api/products">Products List</a></li>
                         {{/if}}
 
                         {{#if isCreateProduct}}
@@ -83,10 +83,11 @@
             <h1>Admin Dashboard</h1>
             <div class="user-info">
                 <a href="/profile" class="profile-link">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile Icon"
-                        class="profile-icon">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile Icon" class="profile-icon">
                 </a>
-                <button class="logout-button">Logout</button>
+                <form action="/api/auth/logout" method="post">
+                <button class="logout-button" >Logout</button>
+                </form>
             </div>
         </div>
 
