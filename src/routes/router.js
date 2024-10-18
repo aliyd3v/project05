@@ -4,7 +4,7 @@ const materialRouter = require('./materialRouter/materialRouter')
 const productRouter = require('./productRouter/productRouter')
 const adminPanelRouter = require('./admin-panelRouter/admin-panelRouter')
 const logoutRouter = require('./authRouter/logoutRouter')
-
+const reportRouter = require('./reportRouter/reportRouter')
 
 exports.appRouter = (app) => {
     app.use('/api', loginRouter)
@@ -13,4 +13,5 @@ exports.appRouter = (app) => {
     app.use('/api', materialRouter)
     app.use('/api', productRouter)
     app.use('/api', adminPanelRouter)
+    app.use('/api', reportRouter)
 }
