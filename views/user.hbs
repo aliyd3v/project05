@@ -9,7 +9,7 @@
                 <div class="user-actions">
                     <button class="edit-btn">Edit</button>
                     <button class="delete-btn">Delete</button>
-                    <button class="cancel-btn" style="display: none;">Cancel</button> <!-- Yashirin holatda -->
+                    <button class="cancel-btn">Cancel</button> <!-- Ko'rinadigan Cancel tugmasi -->
                 </div>
                 <div class="edit-form" style="display: none;"> <!-- Yashirin holatda -->
                     <input type="text" placeholder="New Username" />
@@ -17,7 +17,7 @@
                     <input type="password" placeholder="New Password" /> <!-- Yangi input qo'shildi -->
                     <div class="edit-actions">
                         <button class="save-btn">Save</button>
-                        <button class="cancel-save-btn">Cancel</button> <!-- Yana bir Cancel tugmasi -->
+                        <button class="cancel-save-btn">Cancel</button> <!-- Save yonidagi Cancel -->
                     </div>
                 </div>
                 <div class="delete-confirmation" style="display: none;"> <!-- Yashirin holatda -->
@@ -44,7 +44,7 @@
         deleteConfirmation.style.display = 'none'; // Delete tasdiqlashini yashirish
         editBtn.style.display = 'none'; // Edit tugmasini yashirish
         deleteBtn.style.display = 'none'; // Delete tugmasini yashirish
-        cancelBtn.style.display = 'inline-block'; // Cancel tugmasini ko'rsatish
+        cancelBtn.style.display = 'none'; // Cancel tugmasini yashirish
     });
 
     // Save tugmasini bosganda inputlarni saqlash
@@ -57,8 +57,7 @@
         editForm.style.display = 'none'; // Edit formni yopish
         editBtn.style.display = 'block'; // Edit tugmasini ko'rsatish
         deleteBtn.style.display = 'block'; // Delete tugmasini ko'rsatish
-        cancelBtn.style.display = 'none'; // Cancel tugmasini yashirish
-        // Parolni qo'shish, lekin faqat ko'rsatish uchun yoki boshqa jarayonlar
+        cancelBtn.style.display = 'inline-block'; // Cancel tugmasini ko'rsatish
         console.log("New Password:", newPassword); // Yangi parolni konsolga chiqarish
     });
 
@@ -67,35 +66,36 @@
         deleteConfirmation.style.display = 'block'; // Tasdiqlashni ko'rsatish
         editForm.style.display = 'none'; // Edit formni yopish
         cancelBtn.style.display = 'none'; // Cancel tugmasini yashirish
+        editBtn.style.display = 'none'; // Edit tugmasini yashirish
+        deleteBtn.style.display = 'none'; // Delete tugmasini yashirish
     });
 
     // Delete tugmasi bosilganda rostan o'chirish
     document.querySelector('.confirm-btn').addEventListener('click', function() {
         alert('User has been deleted.'); // O'chirish tasdiqlovchi xabar
-        // O'chirish jarayonini qo'shish
         deleteConfirmation.style.display = 'none'; // Tasdiqlashni yashirish
-        editBtn.style.display = 'block'; // Edit tugmasini ko'rsatish
-        deleteBtn.style.display = 'block'; // Delete tugmasini ko'rsatish
-        cancelBtn.style.display = 'none'; // Cancel tugmasini yashirish
+        // Foydalanuvchini o'chirish jarayonini qo'shish
+        // Keyin Users sahifasiga qaytish
+        window.location.href = 'users.html'; // Users sahifasiga qaytish
     });
 
     document.querySelector('.cancel-delete-btn').addEventListener('click', function() {
         deleteConfirmation.style.display = 'none'; // Tasdiqlashni yashirish
         editBtn.style.display = 'block'; // Edit tugmasini ko'rsatish
         deleteBtn.style.display = 'block'; // Delete tugmasini ko'rsatish
-        cancelBtn.style.display = 'none'; // Cancel tugmasini yashirish
+        cancelBtn.style.display = 'inline-block'; // Cancel tugmasini ko'rsatish
     });
 
-    // Cancel tugmasini bosganda edit form yopiladi
+    // Cancel tugmasini bosganda users sahifasiga qaytadi
     cancelBtn.addEventListener('click', function() {
+        window.location.href = '/api/users'; // Users sahifasiga qaytish
+    });
+
+    // Save tugmasi yonidagi Cancel tugmasini bosganda
+    document.querySelector('.cancel-save-btn').addEventListener('click', function() {
         editForm.style.display = 'none'; // Edit formni yopish
         editBtn.style.display = 'block'; // Edit tugmasini ko'rsatish
         deleteBtn.style.display = 'block'; // Delete tugmasini ko'rsatish
-        cancelBtn.style.display = 'none'; // Cancel tugmasini yashirish
-    });
-
-    // Cancel tugmasini bosganda edit form yopiladi
-    document.querySelector('.cancel-save-btn').addEventListener('click', function() {
-        editForm.style.display = 'none'; // Edit formni yopish
+        cancelBtn.style.display = 'inline-block'; // Cancel tugmasini ko'rsatish
     });
 </script>

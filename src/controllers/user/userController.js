@@ -34,7 +34,6 @@ exports.createUser = async (req, res) => {
             name: data.name,
             username: data.username,
             password: passwordHash,
-            createdAt: formattedDate
         })
 
         // Responsing.
@@ -74,11 +73,6 @@ exports.getAllUsers = async (req, res) => {
             })
         }
 
-        return res.render('users', {
-            title: 'Users',
-            users
-        })
-
         // Give all users without admins.
         const allUsers = []
         for (let i = 0; i < users.length; i++) {
@@ -86,6 +80,12 @@ exports.getAllUsers = async (req, res) => {
             if (user.role != 'admin')
                 allUsers.push({ name: user.name, username: user.username, createdAt: user.createdAt.toLocaleDateString() })
         }
+
+        return res.render('users', {
+            title: 'Users',
+            allUsers
+        })
+
     } catch (error) {
         // Error handling.
         console.log(error);
