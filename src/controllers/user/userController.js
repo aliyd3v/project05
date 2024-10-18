@@ -130,8 +130,7 @@ exports.getOneUser = async (req, res) => {
         return res.render('user', {
             title: 'User',
             user
-        }
-        )
+        })
     } catch (error) {
         console.log(error);
         if (error.message) {
@@ -255,10 +254,14 @@ exports.updateUserPassword = async (req, res) => {
         }
         const data = matchedData(req)
 
+        // Hashing password.
+        const passwordHash = bcrypt.hash(data.password, 10)
+        delete data.password
+
         // Updating and writing changes to database.
         const updating = await User.findByIdAndUpdate(id, {
             ...user,
-            password: data.password
+            password: passwordHash
         })
 
         // Responsing.
