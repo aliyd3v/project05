@@ -15,6 +15,6 @@ exports.jwtAccessMiddleware = function (req, res, next) {
         next();
     } catch (error) {
         console.log(error);
-        return res.redirect('/api/login');
+        return res.redirect('/api/auth/login');
     }
 }
