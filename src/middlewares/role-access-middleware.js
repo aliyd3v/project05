@@ -8,11 +8,7 @@ exports.roleAccessMiddleware = function (roles) {
             const token = req.cookies.authcookie
 
             if (!token) {
-                return res.status(403).send({
-                    success: false,
-                    data: null,
-                    error: "Authentication failed! Please give token."
-                });
+                return res.redirect('/api/auth/login')
             }
             const { role } = jwt.verify(token, process.env.JWT_SECRET_KEY)
 

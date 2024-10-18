@@ -1,0 +1,27 @@
+<div class="table-container">
+    <h2>Materials</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Material Name</th>
+                <th>Quantity</th>
+                <th>UpdatedAt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each material}}
+            <tr>
+                <td>
+                    <a href="/api/material/{{id}}" class="material-link">{{name}}</a>
+                </td>
+                <td>{{quantity}}</td>
+                {{#if updatedAt}}
+                <td>{{formatDate updatedAt}}</td>
+                {{else}}
+                <td>{{formatDate createdAt}}</td>
+                {{/if}}
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

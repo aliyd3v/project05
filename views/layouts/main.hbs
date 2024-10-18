@@ -1,12 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    {{{body}}}
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                {{#if isDashboard}}
+                <li><a href="/api/admin-panel" class="active">Dashboard</a></li>
+                {{else}}
+                <li><a href="/api/admin-panel">Dashboard</a></li>
+                {{/if}}
+
+                <li>
+                    <a href="#" class="dropdown-toggle">Users</a>
+                    <ul class="dropdown-menu">
+                        {{#if isUsers}}
+                        <li><a href="/api/users" class="active">User List</a></li>
+                        {{else}}
+                        <li><a href="/api/users">User List</a></li>
+                        {{/if}}
+
+                        {{#if isCreateUser}}
+                        <li><a href="/api/users/create" class="active">Create User</a></li>
+                        {{else}}
+                        <li><a href="/api/users/create">Create User</a></li>
+                        {{/if}}
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">Products</a>
+                    <ul class="dropdown-menu">
+                        {{#if isProducts}}
+                        <li><a href="/api/products" class="active">Products List</a></li>
+                        {{else}}
+                        <li><a href="/api/products">Products List</a></li>
+                        {{/if}}
+
+                        {{#if isCreateProduct}}
+                        <li><a href="/api/products/create" class="active">Create Product</a></li>
+                        {{else}}
+                        <li><a href="/api/products/create">Create Product</a></li>
+                        {{/if}}
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">Materials</a>
+                    <ul class="dropdown-menu">
+                        {{#if isMaterials}}
+                        <li><a href="/api/materials" class="active">Materials List</a></li>
+                        {{else}}
+                        <li><a href="/api/materials">Materials List</a></li>
+                        {{/if}}
+
+                        {{#if isCreateMaterial}}
+                        <li><a href="/api/create-material" class="active">Create Materials</a></li>
+                        {{else}}
+                        <li><a href="/api/create-material">Create Materials</a></li>
+                        {{/if}}
+                    </ul>
+                </li>
+
+                <li><a href="#">Instruction</a></li>
+            </ul>
+        </div>
+
+        <!-- Navbar -->
+        <div class="navbar">
+            <button id="toggle-button">☰</button>
+            <h1>Admin Dashboard</h1>
+            <div class="user-info">
+                <a href="/profile" class="profile-link">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile Icon" class="profile-icon">
+                </a>
+                <form action="/api/auth/logout" method="post">
+                <button class="logout-button" >Logout</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('toggle-button').addEventListener('click', () => {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('active');
+                const mainContent = document.querySelector('.main-content');
+                mainContent.style.marginLeft = sidebar.classList.contains('active') ? '250px' : '0';
+            });
+
+            // Dropdown functionality
+            document.querySelectorAll('.dropdown-toggle').forEach(item => {
+                item.addEventListener('click', event => {
+                    const dropdownMenu = item.nextElementSibling;
+                    dropdownMenu.classList.toggle('active');
+
+                    // Yopish uchun boshqa ochilgan menyularni yopish
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        if (menu !== dropdownMenu) {
+                            menu.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        </script>
+
+        {{{body}}}
+    </div>
 </body>
+
 </html>

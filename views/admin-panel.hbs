@@ -1,0 +1,78 @@
+<!-- Asosiy kontent -->
+<div class="main-content">
+    <!-- Kalendar -->
+    <div class="calendar-container">
+        <div class="calendar">
+            <div class="calendar-header">
+                <button id="prevMonthBtn">←</button>
+                <h3 id="currentMonth">Oktyabr 2024</h3>
+                <button id="nextMonthBtn">→</button>
+            </div>
+            <div class="calendar-days">
+                <div>D</div>
+                <div>S</div>
+                <div>Ch</div>
+                <div>P</div>
+                <div>J</div>
+                <div>Sh</div>
+                <div>Y</div>
+            </div>
+            <div class="calendar-body" id="calendarBody">
+                <!-- Kalendar kunlari dinamik ravishda yuklanadi -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    // Kalendarni yuklash va real vaqtni ko'rsatish
+    const monthNames = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust', 'Sentabr', 'Oktyabr', 'Noyabr', 'Dekabr'];
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+
+    const currentMonthEl = document.getElementById('currentMonth');
+    const calendarBody = document.getElementById('calendarBody');
+    const prevMonthBtn = document.getElementById('prevMonthBtn');
+    const nextMonthBtn = document.getElementById('nextMonthBtn');
+
+    function loadCalendar(month, year) {
+        calendarBody.innerHTML = '';
+        const firstDay = new Date(year, month).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        currentMonthEl.textContent = `${monthNames[month]} ${year}`;
+
+        // Haftani boshidan boshlash (dushanba - yakshanba)
+        let dayOfWeek = (firstDay === 0) ? 6 : firstDay - 1;
+
+        for (let i = 0; i < dayOfWeek; i++) {
+            const emptyCell = document.createElement('div');
+            calendarBody.appendChild(emptyCell);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayCell = document.createElement('div');
+            dayCell.textContent = day;
+            if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                dayCell.classList.add('today');
+            }
+            calendarBody.appendChild(dayCell);
+        }
+    }
+
+    prevMonthBtn.addEventListener('click', () => {
+        currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+        currentYear = (currentMonth === 11) ? currentYear - 1 : currentYear;
+        loadCalendar(currentMonth, currentYear);
+    });
+
+    nextMonthBtn.addEventListener('click', () => {
+        currentMonth = (currentMonth === 11) ? 0 : currentMonth + 1;
+        currentYear = (currentMonth === 0) ? currentYear + 1 : currentYear;
+        loadCalendar(currentMonth, currentYear);
+    })
+
+    loadCalendar(currentMonth, currentYear);
+</script>

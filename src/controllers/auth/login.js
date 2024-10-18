@@ -16,7 +16,9 @@ const generateToken = (id, role) => {
 
 exports.loginPage = async (req, res) => {
     try {
-        return res.render('login')
+        return res.render('login', {
+            layout: false
+        })
     } catch (error) {
         // Handling errors.
         console.log(error);
@@ -42,7 +44,7 @@ exports.login = async (req, res) => {
             return res.status(400).send({
                 success: false,
                 data: null,
-                error: errors.map(error => error.msg)
+                error: errors.array().map(error => error.msg)
             })
         }
         const data = matchedData(req)
@@ -75,16 +77,7 @@ exports.login = async (req, res) => {
         res.cookie('authcookie', token, { httpOnly: true })
         res.cookie('userId', userId, { httpOnly: true })
 
-        // Responsing.
-        return res.status(201).send({
-            success: true,
-            error: false,
-            message: 'Login successful.',
-            data: {
-                userId,
-                token
-            }
-        })
+        res.redirect('/api/admin-panel')
     } catch (error) {
         // Handling errors.
         console.log(error);
