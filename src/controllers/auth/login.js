@@ -74,10 +74,16 @@ exports.login = async (req, res) => {
         const role = user.role
         const token = generateToken(userId, role)
 
+        // Writing cookies.
         res.cookie('authcookie', token, { httpOnly: true })
         res.cookie('userId', userId, { httpOnly: true })
 
-        res.redirect('/api/admin-panel')
+        // Send to endpoint.
+        if (role == 'admin') {
+            res.redirect('/api/admin-panel')
+        } else {
+            res.redirect('/api/report/create')
+        }
     } catch (error) {
         // Handling errors.
         console.log(error);
