@@ -1,25 +1,25 @@
-<div id="user-update-page">
-    <div class="user-update-container">
-        <h1 class="user-title">Update User Information</h1>
-        <form id="update-form" action="/api/user/{{user.id}}/update" method="post">
-            <div class="input-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" value={{user.name}}>
+    <div class="update-user-container">
+        <h2 class="update-user-title">Update User</h2>
+        <form class="update-user-form" action="#" method="POST">
+            <div class="update-user-info">
+                <div class="update-user-item">
+                    <label for="name" class="update-user-label">Name:</label>
+                    <input type="text" id="name" name="name" required class="update-user-input" placeholder="Ismingizni kiriting">
+                </div>
+                <div class="update-user-item">
+                    <label for="username" class="update-user-label">Username:</label>
+                    <input type="text" id="username" name="username" required class="update-user-input" placeholder="Foydalanuvchi nomini kiriting">
+                </div>
             </div>
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" value={{user.username}}>
+            <div class="update-user-button-group">
+                <button type="submit" class="update-user-save-button">Save</button>
+                <a href="#" class="update-user-cancel-button">Cancel</a>
             </div>
-            <div class="save-actions">
-                <button type="submit" class="user-update-save-btn">Save</button>
-                <a href="/api/user/{{user.id}}" class="user-update-cancel-btn">Cancel</a>
+            <div class="update-password-link">
+                <a href="#" class="update-password-button">Update Password</a>
             </div>
         </form>
-        <div class="update-password-actions">
-            <a href="#" class="user-update-password-btn">Update Password</a>
-        </div>
-        <form id="delete-form" action="/api/user/{{user.id}}/delete" method="post">
-            <button type="submit" class="user-delete-btn">Delete</button>
+        <form action="#" method="POST" class="delete-user-form">
+            <button type="submit" class="update-user-delete-button">Delete</button>
         </form>
     </div>
-</div>

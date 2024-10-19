@@ -116,11 +116,11 @@ exports.getOneMaterial = async (req, res) => {
 exports.getUpdateMaterial = async (req, res) => {
   const id = req.params.id;
   const material = await Material.findById(id);
-  res.render =
-    ("material",
-    {
-      material,
-    });
+  
+  res.render = ("material-update",{
+    tirle: 'Update material',
+    material
+  });
 };
 
 exports.updateMaterial = async (req, res) => {

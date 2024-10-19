@@ -1,14 +1,16 @@
-<div class="create-material-page">
-    <h1>Create New Material</h1>
-    <form class="create-material-form" action="/api/create-material", method="post">
-        <div class="form-group">
-            <label for="name">Material Name:</label>
-            <input type="text" id="name" name="name" placeholder="Enter material name" required>
+    <div class="create-material-container">
+        <h2 class="create-material-title">Create Material</h2>
+        <form action="/api/create-material" method="post"></form>
+        <div class="create-material-input-group">
+            <label class="create-material-label" for="material-name">Name</label>
+            <input type="text" id="material-name" name="name" class="create-material-input" placeholder="Enter material name" required>
         </div>
-            <div class="form-group">
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
-            </div>
-            <button type="submit" class="create-button">Create Material</button>
-    </form>
-</div>
+        <div class="create-material-input-group">
+            <label class="create-material-label" for="material-quantity">Quantity</label>
+            <input type="number" id="material-quantity" name="quantity" class="create-material-input" placeholder="Enter quantity" required>
+        </div>
+        <div class="create-material-button-group">
+            <button type="submit" class="create-material-button">Create</button>
+            <a href="/api/materials" class="create-material-cancel-button">Cancel</a>
+        </div>
+    </div>

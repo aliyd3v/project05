@@ -1,15 +1,17 @@
-<div id="user-page">
-    <div class="user-page-main-container">
-        <div class="user-page-container">
-            <h1 class="user-title">User Information</h1>
-            <div class="user-info-container">
-                <h2 class="name">{{user.name}}</h2>
-                <h2 class="username">{{user.username}}</h2>
+    <div class="one-user-container">
+        <h2 class="one-user-title">User Details</h2>
+        <div class="one-user-info">
+            <div class="one-user-item">
+                <span class="one-user-label">Name:</span>
+                <span class="one-user-value">{{user.name}}</span>
             </div>
-            <div class="user-actions">
-                <a href="/api/user/{{user.id}}/update" class="edit-btn">Edit</a>
-                <a href="/api/users" class="cancel-btn">Cancel</a>
+            <div class="one-user-item">
+                <span class="one-user-label">Username:</span>
+                <span class="one-user-value">{{user.username}}</span>
             </div>
         </div>
+        <div class="one-user-button-group">
+            <a href="/api/user/{{user.id}}/update" class="one-user-edit-button">Edit</a>
+            <a href="/api/users" class="one-user-cancel-button">Cancel</a>
+        </div>
     </div>
-</div>

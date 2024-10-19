@@ -1,0 +1,23 @@
+
+    <div class="update-material-container">
+        <h2 class="update-material-title">Update Material</h2>
+        <form class="update-material-form">
+            <div class="update-material-item">
+                <label for="material-name" class="update-material-label">Material Name:</label>
+                <input type="text" id="material-name" class="update-material-input" value="Wood" required>
+            </div>
+            <div class="update-material-item">
+                <label for="material-quantity" class="update-material-label">Quantity:</label>
+                <input type="number" id="material-quantity" class="update-material-input" value="100" required>
+            </div>
+            <div class="update-material-button-group">
+                <button type="submit" class="update-material-save-button">Save</button>
+            </div>
+        </form>
+        <div class="update-material-button-group">
+            <a href="/api/material/{{material.id}}" class="update-material-cancel-button">Cancel</a>
+            <form class="delete-material-form">
+                <button type="submit" class="update-material-delete-button">Delete</button>
+            </form>
+        </div>
+    </div>

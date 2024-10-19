@@ -7,79 +7,148 @@
     <title>Login Page</title>
     <style>
         /* Umumiy tanlangan CSS */
-        body {
-            font-family: Arial, sans-serif;
+        .login-body {
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f2f2f2;
+            background: linear-gradient(135deg, #f3e7e9, #e3eeff);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            color: #333;
         }
 
         .login-container {
-            background-color: #fff;
-            padding: 15px; /* Paddingni kamaytirdik */
-            border-radius: 8px; /* Burchaklarni biroz kichikroq qildik */
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            max-width: 300px; /* Kenglikni kichikroq qildik */
-            width: 100%;
-        }
-
-        h2 {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%; /* Kenglikni 90% qilib o'zgartirdik */
             text-align: center;
-            margin-bottom: 15px; /* H2 uchun bo'shliqni kamaytirdik */
         }
 
-        .input-group {
-            margin-bottom: 10px; /* Input guruhlarining oraliqlarini kamaytirdik */
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 4px; /* Label uchun bo'shliqni kamaytirdik */
-            font-weight: bold;
+        .login-container .input-group {
+            position: relative;
+            margin-bottom: 25px;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        .login-container label {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            background-color: white;
+            padding: 0 5px;
+            color: #999;
+            font-size: 14px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
             width: 100%;
-            padding: 8px; /* Inputlar uchun paddingni kamaytirdik */
-            font-size: 14px; /* Shriftni kichikroq qildik */
+            padding: 15px;
+            font-size: 16px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 8px;
+            outline: none;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
             box-sizing: border-box;
         }
 
-        .btn {
-            width: 100%;
-            padding: 8px; /* Tugmani kichikroq qildik */
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px; /* Tugma shriftini ham kichikroq qildik */
-            cursor: pointer;
+        .login-container input:focus {
+            border-color: #6C63FF;
+            box-shadow: 0 0 8px rgba(108, 99, 255, 0.5);
+            background-color: #fff;
         }
 
-        .btn:hover {
-            background-color: #45a049;
+        .login-container input:focus ~ label,
+        .login-container input:not(:placeholder-shown) ~ label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            color: #6C63FF;
+        }
+
+        /* Tugmalar */
+        .login-container .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #6C63FF, #957DFF);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+        }
+
+        .login-container .btn:hover {
+            background: linear-gradient(135deg, #5a55e0, #8377FF);
+            box-shadow: 0 10px 25px rgba(108, 99, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .login-container .btn:active {
+            background-color: #4e47d5;
+        }
+
+        /* Fokus animatsiyasi */
+        .login-container .btn:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(108, 99, 255, 0.8);
+        }
+
+        /* Mobil uchun maxsus o'lchamlar */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+                max-width: 80%; /* Kenglikni 80% qilib o'zgartirdik */
+                box-shadow: none;
+            }
+
+            .login-container input[type="text"],
+            .login-container input[type="password"] {
+                padding: 12px;
+                font-size: 14px; /* Kichik ekranlarda shriftni kichikroq qildik */
+            }
+
+            .login-container .btn {
+                padding: 12px;
+                font-size: 14px; /* Kichik ekranlarda tugma shriftini kichikroq qildik */
+            }
+
+            .login-container h2 {
+                font-size: 20px; /* H2 ning shriftini kichikroq qildik */
+            }
         }
     </style>
 </head>
-<body>
+<body class="login-body">
 
     <div class="login-container">
         <h2>Login</h2>
         <form action="/api/auth/login" method="POST" autocomplete="on">
             <div class="input-group">
+                <input type="text" id="username" name="username" required autocomplete="username" placeholder=" ">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" required autocomplete="username">
             </div>
             <div class="input-group">
+                <input type="password" id="password" name="password" required autocomplete="current-password" placeholder=" ">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password">
             </div>
             <button type="submit" class="btn">Login</button>
         </form>

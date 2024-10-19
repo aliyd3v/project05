@@ -9,9 +9,9 @@ router
 .get('/create-material', roleAccessMiddleware(['admin']), getCreateMaterial)
 .get('/materials', roleAccessMiddleware(['admin']), getAllMaterials)
 .get('/material/:id', roleAccessMiddleware(['admin']), getOneMaterial)
-.get('/update-material/:id', roleAccessMiddleware(['admin']), getUpdateMaterial)
 .post('/create-material', roleAccessMiddleware(['admin']), checkSchema(materialSchema), createMaterial)
-.post('/update-material/:id', roleAccessMiddleware(['admin']), checkSchema(updateMaterialSchema), updateMaterial)
+.get('/material/:id/update', roleAccessMiddleware(['admin']), getUpdateMaterial)
+.post('/material/:id/update', roleAccessMiddleware(['admin']), checkSchema(updateMaterialSchema), updateMaterial)
 .post('/delete-material/:id', roleAccessMiddleware(['admin']), deleteMaterial)
 
 module.exports = router

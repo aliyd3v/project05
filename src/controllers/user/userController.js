@@ -2,6 +2,12 @@ const { checkSchema, validationResult, matchedData } = require('express-validato
 const { User } = require('../../models/userModel')
 const bcrypt = require('bcrypt')
 
+exports.getCreateUser = async (req, res) => {
+    res.render('create-user', {
+        title: 'Create user'
+    })
+}
+
 exports.createUser = async (req, res) => {
     try {
         // Validation result.
@@ -38,12 +44,7 @@ exports.createUser = async (req, res) => {
         })
 
         // Responsing.
-        return res.status(200).send({
-            success: true,
-            error: false,
-            message: 'User created successfully!',
-            data: data
-        })
+        return res.redirect('/api/users')
     } catch (error) {
         // Error handling.
         console.log(error);
