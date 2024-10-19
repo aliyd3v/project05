@@ -1,0 +1,25 @@
+<div id="user-update-page">
+    <div class="user-update-container">
+        <h1 class="user-title">Update User Information</h1>
+        <form id="update-form" action="/api/user/{{user.id}}/update" method="post">
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" value={{user.name}}>
+            </div>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value={{user.username}}>
+            </div>
+            <div class="save-actions">
+                <button type="submit" class="user-update-save-btn">Save</button>
+                <a href="/api/user/{{user.id}}" class="user-update-cancel-btn">Cancel</a>
+            </div>
+        </form>
+        <div class="update-password-actions">
+            <a href="#" class="user-update-password-btn">Update Password</a>
+        </div>
+        <form id="delete-form" action="/api/user/{{user.id}}/delete" method="post">
+            <button type="submit" class="user-delete-btn">Delete</button>
+        </form>
+    </div>
+</div>
