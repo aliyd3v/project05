@@ -196,6 +196,7 @@ exports.updateOneUser = async (req, res) => {
             message: "User is updated successful.",
             data: {
                 user: {
+                    id,
                     name: data.name,
                     username: data.username,
                     createdAt: user.createdAt,
