@@ -1,0 +1,21 @@
+    <div class="create-user-container">
+        <h1 class="create-user-title">Create User</h1>
+        <form class="create-user-form" action="/api/create-user" method="post">
+            <div class="create-user-input-group">
+                <label for="name" class="create-user-label">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter name" class="create-user-input">
+            </div>
+            <div class="create-user-input-group">
+                <label for="username" class="create-user-label">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter username" required class="create-user-input">
+            </div>
+            <div class="create-user-input-group">
+                <label for="password" class="create-user-label">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter user password" required class="create-user-input">
+            </div>
+            <div class="create-user-button-group">
+                <button type="submit" class="create-user-button">Create</button>
+                <a href="/api/users" class="create-user-cancel-button">Cancel</a>
+            </div>
+        </form>
+    </div>

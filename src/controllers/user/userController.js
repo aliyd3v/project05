@@ -2,6 +2,12 @@ const { checkSchema, validationResult, matchedData } = require('express-validato
 const { User } = require('../../models/userModel')
 const bcrypt = require('bcrypt')
 
+exports.getCreateUser = async (req, res) => {
+    res.render('create-user', {
+        title: 'Create user'
+    })
+}
+
 exports.createUser = async (req, res) => {
     try {
         // Validation result.
@@ -38,12 +44,7 @@ exports.createUser = async (req, res) => {
         })
 
         // Responsing.
-        return res.status(200).send({
-            success: true,
-            error: false,
-            message: 'User created successfully!',
-            data: data
-        })
+        return res.redirect('/api/users')
     } catch (error) {
         // Error handling.
         console.log(error);
@@ -84,7 +85,8 @@ exports.getAllUsers = async (req, res) => {
 
         return res.render('users', {
             title: 'Users',
-            allUsers
+            allUsers,
+            isUsers: true
         })
 
     } catch (error) {
@@ -148,6 +150,32 @@ exports.getOneUser = async (req, res) => {
     }
 }
 
+exports.getUpgdateOneUser = async (req, res) => {
+    try {
+        const id = req.params.id
+        const user = await User.findById(id)
+
+        res.render('user-update',{
+            title: 'Update user',
+            user
+        })
+    } catch (error) {
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+
 exports.updateOneUser = async (req, res) => {
     const { params: { id } } = req
     try {
@@ -183,11 +211,12 @@ exports.updateOneUser = async (req, res) => {
         const data = matchedData(req)
 
         // Updating and writing changes to database.
-        const updating = await User.findByIdAndUpdate(id, {
-            ...user,
-            name: data.name,
-            username: data.username
-        })
+        const updating = {
+            name: data.name || user.name,
+            username: data.username || user.username
+        }
+
+         await User.findByIdAndUpdate(id, updating)
 
         // Responsing.
         return res.status(201).send({
@@ -198,8 +227,7 @@ exports.updateOneUser = async (req, res) => {
                 user: {
                     id,
                     name: data.name,
-                    username: data.username,
-                    createdAt: user.createdAt,
+                    username: data.username
                 }
             }
         })
@@ -315,11 +343,7 @@ exports.deleteOneUser = async (req, res) => {
         await User.findByIdAndDelete(id)
 
         // Responsing.
-        return res.status(201).send({
-            success: true,
-            error: false,
-            message: "User is deleted successful."
-        })
+        return res.redirect('/api/users')
     } catch (error) {
         // Error handling.
         console.log(error);

@@ -70,7 +70,8 @@ exports.getAllProducts = async (req, res) => {
 
         res.render('products', {
             title: 'Products',
-            products
+            products,
+            isProducts: true
         })
 
         // Responsing
