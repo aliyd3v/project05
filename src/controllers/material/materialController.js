@@ -115,12 +115,38 @@ exports.getOneMaterial = async (req, res) => {
 
 exports.getUpdateMaterial = async (req, res) => {
   const id = req.params.id;
-  const material = await Material.findById(id);
-  
-  res.render = ("material-update",{
-    tirle: 'Update material',
-    material
-  });
+
+  try {
+    // Checking id to valid.
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: "ID is not valid",
+      });
+    }
+    const material = await Material.findById(id);
+
+    return res.render("material-update", {
+      title: 'Update material',
+      material
+    });
+  } catch (error) {
+    // Error handling.
+    console.log(error);
+    if (error.message) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: error.message,
+      });
+    }
+    return res.status(500).send({
+      success: false,
+      data: null,
+      error: "INTERVAL_SERVER_ERROR",
+    });
+  }
 };
 
 exports.updateMaterial = async (req, res) => {
