@@ -216,14 +216,20 @@ exports.updateOneUser = async (req, res) => {
             username: data.username || user.username
         }
 
-        const newDta = await User.findByIdAndUpdate(id, updating)
+         await User.findByIdAndUpdate(id, updating)
 
         // Responsing.
         return res.status(201).send({
             success: true,
             error: false,
             message: "User is updated successful.",
-            data: newDta
+            data: {
+                user: {
+                    id,
+                    name: data.name,
+                    username: data.username
+                }
+            }
         })
     } catch (error) {
         // Error handling.
