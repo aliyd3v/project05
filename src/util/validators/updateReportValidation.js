@@ -1,4 +1,4 @@
-exports.createReportValidationSchema = {
+exports.updateReportValidationSchema = {
     product: {
         isMongoId: {
             errorMessage: "Mongo idsini to'g'ri formatda kiriting."

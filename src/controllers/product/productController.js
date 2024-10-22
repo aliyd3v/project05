@@ -267,3 +267,42 @@ exports.deleteOneProduct = async (req, res) => {
         })
     }
 }
+
+exports.deleteAllProducts = async (req, res) => {
+    try {
+        // Checking for exists.
+        const products = await Product.find()
+        if (!products) {
+            return res.status(200).send({
+                succes: true,
+                error: false,
+                message: "Products is empty."
+            })
+        }
+
+        // Deleting products from database.
+        await Product.deleteMany()
+
+        // Responsing.
+        return res.status(201).send({
+            success: true,
+            error: false,
+            message: "Products deleted successful."
+        })
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}

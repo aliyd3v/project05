@@ -155,7 +155,7 @@ exports.getUpgdateOneUser = async (req, res) => {
         const id = req.params.id
         const user = await User.findById(id)
 
-        res.render('user-update',{
+        res.render('user-update', {
             title: 'Update user',
             user
         })
@@ -216,7 +216,7 @@ exports.updateOneUser = async (req, res) => {
             username: data.username || user.username
         }
 
-         await User.findByIdAndUpdate(id, updating)
+        await User.findByIdAndUpdate(id, updating)
 
         // Responsing.
         return res.status(201).send({
@@ -344,6 +344,47 @@ exports.deleteOneUser = async (req, res) => {
 
         // Responsing.
         return res.redirect('/api/users')
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+
+exports.deleteAllBakers = async (req, res) => {
+    try {
+        // Checking for exists.
+        const bakers = await User.find({
+            role: 'baker'
+        })
+        console.log(bakers)
+        if (!bakers) {
+            return res.status(200).send({
+                success: false,
+                data: null,
+                error: "Bakers is empty!"
+            })
+        }
+
+        // Deleting bakers from database.
+
+        // Responsing.
+        return res.status(201).send({
+            success: true,
+            error: false,
+            message: "Bakers is deleted successful."
+        })
     } catch (error) {
         // Error handling.
         console.log(error);
