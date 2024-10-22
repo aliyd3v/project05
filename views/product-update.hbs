@@ -1,0 +1,16 @@
+<div class="update-product-container">
+    <h2 class="update-product-title">Update Product</h2>
+    <form class="update-product-form" action="/api/product/{{product.id}}/update" method="post">
+        <div class="update-product-item">
+            <label for="product-name" class="update-product-label">Product Name:</label>
+            <input type="text" id="product-name" name="name" class="update-product-input" value="{{product.name}}" required>
+        </div>
+        <div class="update-product-button-group">
+            <button type="submit" class="update-product-save-button">Save</button>
+        </div>
+    </form>
+    <div class="update-product-cancel-delete-group">
+        <a href="/api/product/{{product.id}}" class="update-product-cancel-button">Cancel</a>
+        <a href="/api/product/{{product.id}}/delete" class="update-product-delete-button">Delete</a>
+    </div>
+</div>

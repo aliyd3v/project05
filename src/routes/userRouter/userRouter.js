@@ -1,5 +1,5 @@
 const { checkSchema } = require('express-validator');
-const { createUser, getAllUsers, getOneUser, updateOneUser, updateUserPassword, deleteOneUser, getUpgdateOneUser, getCreateUser } = require('../../controllers/user/userController');
+const { createUser, getAllUsers, getOneUser, updateOneUser, updateUserPassword, deleteOneUser, getUpgdateOneUser, getCreateUser, getDeleteOneUser, getUpdatePassword } = require('../../controllers/user/userController');
 const { createUserValidationSchema } = require('../../util/validators/createUserValidation');
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware');
 const { updateUserValidationSchema } = require('../../util/validators/updateUserValidation');
@@ -13,7 +13,9 @@ router
     .get('/user/:id', roleAccessMiddleware(['admin']), getOneUser)
     .get('/user/:id/update', roleAccessMiddleware(['admin']), getUpgdateOneUser)
     .post('/user/:id/update', roleAccessMiddleware(['admin']), checkSchema(updateUserValidationSchema), updateOneUser)
+    .get('/user/:id/update-password', roleAccessMiddleware(['admin']), getUpdatePassword)
     .post('/user/:id/update-password', roleAccessMiddleware(['admin']), checkSchema(udpatePasswordValidationSchema), updateUserPassword)
+    .get('/user/:id/delete', roleAccessMiddleware(['admin']), getDeleteOneUser)
     .post('/user/:id/delete', roleAccessMiddleware(['admin']), deleteOneUser)
 
 module.exports = router

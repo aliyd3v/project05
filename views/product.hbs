@@ -1,0 +1,14 @@
+
+    <div class="product-page-container">
+        <h2 class="product-page-title">Product Name</h2>
+        <div class="product-page-info">
+            <div class="product-page-item">
+                <span class="product-page-label">Product Name:</span>
+                <span class="product-page-value" id="product-name">{{product.name}}</span>
+            </div>
+        </div>
+        <div class="product-page-button-group">
+            <a href='/api/product/{{product.id}}/update' class="product-page-edit-button">Edit</a>
+            <a href="/api/products" class="product-page-cancel-button">Cancel</a>
+        </div>
+    </div>

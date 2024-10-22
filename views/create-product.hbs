@@ -1,0 +1,13 @@
+<div class="create-product-container">
+    <h2 class="create-product-title">Create Product</h2>
+    <form action="/api/create-product" method="post">
+        <div class="create-product-input-group">
+            <label class="create-product-label" for="product-name">Name</label>
+            <input type="text" id="product-name" name="name" class="create-product-input" placeholder="Enter product name" required>
+        </div>
+        <div class="create-product-button-group">
+            <button type="submit" class="create-product-button">Create</button>
+        </div>
+    </form>
+    <a href="/api/products" class="create-product-cancel-button">Cancel</a>
+</div>
