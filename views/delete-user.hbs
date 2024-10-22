@@ -1,0 +1,7 @@
+    <div class="delete-user-container">
+        <h2 class="delete-user-title">Foydalanuvchini o'chirishni xohlaysizmi?</h2>
+        <form class="delete-user-form" action="/api/user/{{user.id}}/delete" method="POST">
+            <button type="submit" class="delete-user-yes-button">Yes</button>
+        </form>
+        <a href="/api/user/{{user.id}}/update" class="delete-user-no-button">No</a>
+    </div>

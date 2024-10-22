@@ -59,10 +59,10 @@ exports.login = async (req, res) => {
             })
         }
 
-        // Checking user password
+        // Checking user password  
         const checkPassword = await bcrypt.compare(data.password, user.password)
         if (!checkPassword) {
-            res.status(403).send({
+            return res.status(403).send({
                 success: false,
                 data: null,
                 error: 'Password is wrong!'
@@ -80,9 +80,9 @@ exports.login = async (req, res) => {
 
         // Send to endpoint.
         if (role == 'admin') {
-            res.redirect('/api/admin-panel')
+            return res.redirect('/api/admin-panel')
         } else {
-            res.redirect('/api/report/create')
+            return res.redirect('/api/report/create')
         }
     } catch (error) {
         // Handling errors.

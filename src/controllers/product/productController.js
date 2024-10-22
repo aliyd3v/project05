@@ -2,6 +2,12 @@ const { default: mongoose } = require("mongoose");
 const { Product } = require("../../models/productModel");
 const { validationResult, matchedData } = require("express-validator");
 
+exports.getCreateProduct = async (req, res) => {
+    return res. render('create-product', {
+        title: 'Create product'
+    })
+}
+
 exports.createProduct = async (req, res) => {
     try {
         // Validation result.
@@ -125,11 +131,48 @@ exports.getOneProduct = async (req, res) => {
         }
 
         // Responsing.
-        return res.status(200).send({
-            success: true,
-            error: false,
-            data: { product }
+        return res.render('product', {
+            title: 'Product',
+            product
         })
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+
+exports.getUpdateOneProduct = async (req, res) => {
+    const { params: { id } } = req
+
+    try {
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
+        const product = await Product.findById(id)
+
+        return res.render('product-update', {
+            title: 'Update product',
+            product
+        })
+
     } catch (error) {
         // Error handling.
         console.log(error);
@@ -220,7 +263,46 @@ exports.updatOneProduct = async (req, res) => {
     }
 }
 
+exports.getDeleteOneProduct = async (req, res) => {
+    const { params: { id } } = req
+
+    try {
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
+        const product = await Product.findById(id)
+
+        return res.render('delete-product', {
+            title: 'Delete product',
+            product
+        })
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+
 exports.deleteOneProduct = async (req, res) => {
+    const { params: { id } } = req
+
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -245,11 +327,7 @@ exports.deleteOneProduct = async (req, res) => {
         await Product.findByIdAndDelete(id)
 
         // Responsing.
-        return res.status(201).send({
-            success: true,
-            error: false,
-            message: "Product deleted successful."
-        })
+        return res.redirect('/api/products')
     } catch (error) {
         // Error handling.
         console.log(error);

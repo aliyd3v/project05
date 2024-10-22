@@ -183,7 +183,7 @@ exports.updateMaterial = async (req, res) => {
 
     await Material.findByIdAndUpdate(id, updateData);
 
-    res.redirect('/api/materials')
+    res.redirect(`/api/material/${id}`)
 
   } catch (error) {
     console.log(error);
@@ -201,6 +201,44 @@ exports.updateMaterial = async (req, res) => {
     });
   }
 };
+
+exports.getDdelteMaterial = async (req, res) => {
+  try {
+
+    const id = req.params.id;
+
+    
+    // Checking id to valid.
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: "ID is not valid",
+      });
+    }
+    const material = await Material.findById(id)
+    
+    res.render('delete-material', {
+      title: 'Delete material',
+      material
+    })
+  
+  } catch (error) {
+    console.log(error);
+    if (error.message) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: error.message,
+      });
+    }
+    return res.status(500).send({
+      success: false,
+      data: null,
+      error: "INTERVAL_SERVER_ERROR",
+    });
+  }
+}
 
 exports.deleteMaterial = async (req, res) => {
   try {
