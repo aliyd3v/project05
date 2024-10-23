@@ -1,5 +1,5 @@
 const { checkSchema } = require('express-validator')
-const { getAllProducts, getOneProduct, createProduct, updatOneProduct, deleteOneProduct, getUpdateOneProduct, getDeleteOneProduct, getCreateProduct } = require('../../controllers/product/productController')
+const { getAllProducts, getOneProduct, createProduct, updatOneProduct, deleteOneProduct, getUpdateOneProduct, getDeleteOneProduct, getCreateProduct, deleteAllProducts } = require('../../controllers/product/productController')
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware')
 const { createProductValidationSchema } = require('../../util/validators/createProductValidation')
 const { udpateProductValidationSchema } = require('../../util/validators/udpateProductValidation')

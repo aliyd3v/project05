@@ -1,5 +1,5 @@
 const { checkSchema } = require('express-validator');
-const { createUser, getAllUsers, getOneUser, updateOneUser, updateUserPassword, deleteOneUser, getUpgdateOneUser, getCreateUser, getDeleteOneUser, getUpdatePassword } = require('../../controllers/user/userController');
+const { createUser, getAllUsers, getOneUser, updateOneUser, updateUserPassword, deleteOneUser, getUpgdateOneUser, getCreateUser, getDeleteOneUser, getUpdatePassword, deleteAllBakers } = require('../../controllers/user/userController');
 const { createUserValidationSchema } = require('../../util/validators/createUserValidation');
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware');
 const { updateUserValidationSchema } = require('../../util/validators/updateUserValidation');

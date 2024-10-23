@@ -150,9 +150,8 @@ exports.getUpdateMaterial = async (req, res) => {
 };
 
 exports.updateMaterial = async (req, res) => {
+  const id = req.params.id;
   try {
-    const id = req.params.id;
-
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send({
@@ -162,6 +161,7 @@ exports.updateMaterial = async (req, res) => {
       });
     }
 
+    // Error handling.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg);
@@ -207,7 +207,7 @@ exports.getDdelteMaterial = async (req, res) => {
 
     const id = req.params.id;
 
-    
+
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send({
@@ -217,12 +217,12 @@ exports.getDdelteMaterial = async (req, res) => {
       });
     }
     const material = await Material.findById(id)
-    
+
     res.render('delete-material', {
       title: 'Delete material',
       material
     })
-  
+
   } catch (error) {
     console.log(error);
     if (error.message) {

@@ -3,13 +3,15 @@ const { Report } = require("../../models/reportModel")
 const { Product } = require("../../models/productModel")
 const { Material } = require("../../models/materialModel")
 const { verify } = require("jsonwebtoken")
-const { now } = require("mongoose")
-const { response } = require("express")
 
 exports.createReportPage = async (req, res) => {
     return res.render('create-report', {
         layout: false
     })
+}
+
+exports.createReportPageForAdmin = async (req, res) => {
+    return res.render('create-report-for-admin')
 }
 
 exports.createReport = async (req, res) => {

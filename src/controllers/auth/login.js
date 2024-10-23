@@ -39,6 +39,7 @@ exports.loginPage = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
+        // Error handling.
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).send({
@@ -49,7 +50,7 @@ exports.login = async (req, res) => {
         }
         const data = matchedData(req)
 
-        // Checking username
+        // Checking username to exists.
         const user = await User.findOne({ username: data.username }).lean()
         if (!user) {
             return res.status(404).send({
@@ -59,8 +60,8 @@ exports.login = async (req, res) => {
             })
         }
 
-        // Checking user password  
-        const checkPassword = await bcrypt.compare(data.password, user.password)
+        // Checking user password.
+        const checkPassword = bcrypt.compare(data.password, user.password)
         if (!checkPassword) {
             return res.status(403).send({
                 success: false,
@@ -82,7 +83,7 @@ exports.login = async (req, res) => {
         if (role == 'admin') {
             return res.redirect('/api/admin-panel')
         } else {
-            return res.redirect('/api/report/create')
+            return res.redirect('/api/create-report')
         }
     } catch (error) {
         // Handling errors.

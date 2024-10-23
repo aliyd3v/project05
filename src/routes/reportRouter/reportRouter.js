@@ -1,5 +1,5 @@
 const { checkSchema } = require('express-validator')
-const { createReportPage, createReport, getOneReport, getAllReports, updateOneReport, deleteOneReport, deleteAllReports } = require('../../controllers/report/reportController')
+const { createReportPage, createReport, getOneReport, getAllReports, updateOneReport, deleteOneReport, deleteAllReports, createReportPageForAdmin } = require('../../controllers/report/reportController')
 const { createReportValidationSchema } = require('../../util/validators/createReportValidation')
 const { updateReportValidationSchema } = require('../../util/validators/updateReportValidation')
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware')
@@ -7,7 +7,8 @@ const { roleAccessMiddleware } = require('../../middlewares/role-access-middlewa
 const router = require('express').Router()
 
 router
-    .get('/report/create', roleAccessMiddleware(['admin']), createReportPage)
+    .get('/create-report', createReportPage)
+    .get('/report/create', roleAccessMiddleware(['admin']), createReportPageForAdmin)
     .post('/report/create', checkSchema(createReportValidationSchema), createReport)
     .get('/reports', roleAccessMiddleware(['admin']), getAllReports)
     .get('/report/:id', roleAccessMiddleware(['admin']), getOneReport)
