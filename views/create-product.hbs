@@ -3,31 +3,39 @@
         <h2 class="form-title">Create Product</h2>
         
         <!-- Product name input -->
-        <input type="text" class="product-name-input" placeholder="Product Name" />
+        <form action="/api/product" method="post">
+            <input type="text" class="product-name-input" name="name" placeholder="Product Name" />
 
-        <div id="material-container">
-            <!-- Materiallar qatori -->
-            <div class="material-item">
-                {{#each product}}
-                <label>
-                    <input type="checkbox" class="material-checkbox" onchange="toggleAmountInput(this)" />
-                    Wood
-                </label>
-                <input type="number" class="amount-input" placeholder="Amount" disabled />
+            <div id="material-container">
+                <!-- Materiallar qatori -->
+                {{#each materials}}
+                <div class="material-item">
+                    <label>
+                        <span>
+                        <input type="checkbox" class="material-checkbox" onclick="toggleAmountInput(this)" />
+                        <span>{{name}}</span>
+
+                        </span>
+                    <input type="number" class="amount-input" placeholder="Amount" disabled />
+                    </label>
+                </div>
+                {{/each}}
             </div>
-        </div>
 
-        <div class="action-buttons">
-            <button class="save-product-btn">Save Product</button>
-            <button class="cancel-btn">Cancel</button>
-        </div>
+            <!-- Tugmalar -->
+            <div class="action-buttons">
+                <button type="submit" class="save-product-btn">Save Product</button>
+                <a href="/api/products" class="cancel-btn">Cancel</a>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
     function toggleAmountInput(checkbox) {
-    const amountInput = checkbox.closest('.material-item').querySelector('.amount-input');
-    amountInput.disabled = !checkbox.checked; // Agar checkbox tanlansa, amount inputini yoqish yoki o'chirish
-}
-
+        // Faqat shu checkboxning o'z qatoridagi amount inputiga ta'sir qiladi
+        const materialItem = checkbox.closest('.material-item'); 
+        const amountInput = materialItem.querySelector('.amount-input');
+        amountInput.disabled = !checkbox.checked; // Agar checkbox belgilansa, input aktiv bo'ladi
+    }
 </script>
