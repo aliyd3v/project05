@@ -173,15 +173,18 @@ exports.updateMaterial = async (req, res) => {
     }
     const data = matchedData(req);
 
+    // Writing changes to database.
     const oldMaterial = await Material.findById(id);
-
     const updateData = {
-      name: data.name || oldMaterial.name,
-      quantity: data.quantity || oldMaterial.quantity,
+      name: data.name,
+      quantity: data.quantity,
       updatedAt: new Date(),
     };
 
-    await Material.findByIdAndUpdate(id, updateData);
+    await Material.findByIdAndUpdate(id, {
+      ...oldMaterial,
+      ...updateData
+    }, { new: true });
 
     res.redirect(`/api/material/${id}`)
 
