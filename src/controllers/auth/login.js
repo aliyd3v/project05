@@ -81,7 +81,7 @@ exports.login = async (req, res) => {
 
         // Send to endpoint.
         if (role == 'admin') {
-            return res.redirect('/api/admin-panel')
+            return res.redirect('/api/statistics')
         } else {
             return res.redirect('/api/create-report')
         }
