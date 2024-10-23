@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose')
 
 const reportSchema = new Schema({
     product: { type: Schema.Types.ObjectId, ref: "Product" },
-    createdBy: { type: Schema.Types.ObjectId, ref: "User" },
+    producedBy: { type: Schema.Types.ObjectId, ref: "User" },
     quantityProduced: Number,
     producedAt: Date
 }, { timestamps: true })

@@ -119,7 +119,7 @@ exports.getOneUser = async (req, res) => {
             })
         }
 
-        // Finding user by id.
+        // Finding user by id & checking to exists.
         const user = await User.findById(id)
         if (!user) {
             return res.status(404).send({
@@ -151,11 +151,29 @@ exports.getOneUser = async (req, res) => {
 }
 
 exports.getUpgdateOneUser = async (req, res) => {
+    const id = req.params.id
     try {
-        const id = req.params.id
-        const user = await User.findById(id)
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
 
-        res.render('user-update',{
+        // Checking user to exists.
+        const user = await User.findById(id)
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                data: null,
+                error: "User not found!"
+            })
+        }
+
+        // Rendering.
+        res.render('user-update', {
             title: 'Update user',
             user
         })
@@ -188,7 +206,7 @@ exports.updateOneUser = async (req, res) => {
             })
         }
 
-        // Finding user by id.
+        // Finding user by id & checking to exists.
         const user = await User.findById(id)
         if (!user) {
             return res.status(404).send({
@@ -216,7 +234,7 @@ exports.updateOneUser = async (req, res) => {
             username: data.username || user.username
         }
 
-         await User.findByIdAndUpdate(id, updating)
+        await User.findByIdAndUpdate(id, updating)
 
         // Responsing.
         return res.redirect(`/api/user/${id}`)
@@ -238,7 +256,7 @@ exports.updateOneUser = async (req, res) => {
     }
 }
 
-exports.getUpdatePassword = async(req, res) => {
+exports.getUpdatePassword = async (req, res) => {
     const { params: { id } } = req
     try {
         // Checking id to valid.
@@ -250,13 +268,21 @@ exports.getUpdatePassword = async(req, res) => {
             })
         }
 
+        // Checking user to exists.
         const user = await User.findById(id)
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                data: null,
+                error: "User not found!"
+            })
+        }
 
+        // Rendering.
         res.render('update-user-password', {
             title: 'Update password',
             user
         })
-
     } catch (error) {
         // Error handling.
         console.log(error);
@@ -287,7 +313,7 @@ exports.updateUserPassword = async (req, res) => {
             })
         }
 
-        // Finding user by id.
+        // Finding user by id & checking to exists.
         const user = await User.findById(id)
         if (!user) {
             return res.status(404).send({
@@ -317,7 +343,7 @@ exports.updateUserPassword = async (req, res) => {
         const updating = await User.findByIdAndUpdate(id, {
             ...user,
             password: passwordHash
-        })
+        }, { new: true })
 
         // Responsing.
         return res.status(201).send({
@@ -407,6 +433,48 @@ exports.deleteOneUser = async (req, res) => {
 
         // Responsing.
         return res.redirect('/api/users')
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+
+exports.deleteAllBakers = async (req, res) => {
+    try {
+        // Checking for exists.
+        const bakers = await User.find({
+            role: 'baker'
+        })
+        console.log(bakers)
+        if (!bakers) {
+            return res.status(200).send({
+                success: false,
+                data: null,
+                error: "Bakers is empty!"
+            })
+        }
+
+        // Deleting bakers from database.
+        await User.deleteMany({ role: 'baker' })
+
+        // Responsing.
+        return res.status(201).send({
+            success: true,
+            error: false,
+            message: "Bakers is deleted successful."
+        })
     } catch (error) {
         // Error handling.
         console.log(error);

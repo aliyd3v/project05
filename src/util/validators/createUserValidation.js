@@ -14,7 +14,9 @@ exports.createUserValidationSchema = {
         notEmpty: {
             errorMessage: 'Username cannot be empty'
         },
-        trim: true
+        trim: {
+            errorMessage: "Usernamening orasida ochiq joy qolishi mumkin emas!"
+        }
     },
     password: {
         isString: {

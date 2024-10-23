@@ -150,9 +150,8 @@ exports.getUpdateMaterial = async (req, res) => {
 };
 
 exports.updateMaterial = async (req, res) => {
+  const id = req.params.id;
   try {
-    const id = req.params.id;
-
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send({
@@ -162,6 +161,7 @@ exports.updateMaterial = async (req, res) => {
       });
     }
 
+    // Error handling.
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg);
@@ -207,7 +207,7 @@ exports.getDdelteMaterial = async (req, res) => {
 
     const id = req.params.id;
 
-    
+
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send({
@@ -217,12 +217,12 @@ exports.getDdelteMaterial = async (req, res) => {
       });
     }
     const material = await Material.findById(id)
-    
+
     res.render('delete-material', {
       title: 'Delete material',
       material
     })
-  
+
   } catch (error) {
     console.log(error);
     if (error.message) {
@@ -273,3 +273,43 @@ exports.deleteMaterial = async (req, res) => {
     });
   }
 };
+
+exports.deleteAllMaterials = async (req, res) => {
+  try {
+    // Checking for exists.
+    const materials = await Material.find()
+    if (!materials) {
+      // Responsing.
+      return res.status(200).send({
+        succes: true,
+        error: false,
+        message: "Materials is empty."
+      })
+    }
+
+    // Deleting materials from database.
+    await Material.deleteMany()
+
+    // Responsning.
+    return res.status(201).send({
+      success: true,
+      error: false,
+      message: "Materials is deleted successful."
+    })
+  } catch (error) {
+    // Error handling.
+    console.log(error);
+    if (error.message) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: error.message,
+      });
+    }
+    return res.status(500).send({
+      success: false,
+      data: null,
+      error: "INTERVAL_SERVER_ERROR",
+    });
+  }
+}
