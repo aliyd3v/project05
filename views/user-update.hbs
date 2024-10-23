@@ -3,23 +3,21 @@
         <form class="update-user-form" action="/api/user/{{user.id}}/update" method="POST">
             <div class="update-user-info">
                 <div class="update-user-item">
-                    <label for="name" class="update-user-label">Name</label>
+                    <label for="name" class="update-user-label">Name:</label>
                     <input type="text" id="name" name="name" required class="update-user-input" value="{{user.name}}">
                 </div>
                 <div class="update-user-item">
-                    <label for="username" class="update-user-label">Username</label>
+                    <label for="username" class="update-user-label">Username:</label>
                     <input type="text" id="username" name="username" required class="update-user-input" value="{{user.username}}">
                 </div>
             </div>
             <div class="update-user-button-group">
                 <button type="submit" class="update-user-save-button">Save</button>
-                <a href="/api/users" class="update-user-cancel-button">Cancel</a>
-            </div>
-            <div class="update-password-link">
-                <a href="#" class="update-password-button">Update Password</a>
+                <a href="/api/user/{{user.id}}" class="update-user-cancel-button">Cancel</a>
             </div>
         </form>
-        <form action="/api/user/{{user.id}}/delete" method="POST" class="delete-user-form">
-            <button type="submit" class="update-user-delete-button">Delete</button>
-        </form>
+        <div class="update-password-container">
+            <a href="/api/user/{{user.id}}/update-password" class="update-password-button">Update Password</a>
+        </div>
+        <a href="/api/user/{{user.id}}/delete" class="update-user-delete-button">Delete</a>
     </div>

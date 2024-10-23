@@ -7,7 +7,7 @@ exports.jwtAccessMiddleware = function (req, res, next) {
         const token = req.cookies.authcookie;
 
         if (!token) {
-            return res.redirect('/api/login');
+            return res.redirect('/api/auth/login');
         }
 
         const user = jwt.verify(token, process.env.JWT_SECRET_KEY);

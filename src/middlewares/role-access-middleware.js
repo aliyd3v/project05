@@ -23,7 +23,7 @@ exports.roleAccessMiddleware = function (roles) {
             next();
         } catch (error) {
             console.log(error);
-            res.status(403).redirect('/api/login');
+            res.redirect('/api/auth/login');
         }
     }
 }

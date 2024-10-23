@@ -1,0 +1,9 @@
+<div class="delete-material-container">
+    <h2 class="delete-material-title">Are you sure you want to delete this material?</h2>
+    <div class="delete-material-button-group">
+        <form action="/api/material/{{material.id}}/delete" method="POST">
+            <button type="submit" class="delete-material-yes-button">Yes</button>
+        </form>
+        <a href="/api/material/{{material.id}}/update" class="delete-material-no-button">No</a>
+    </div>
+</div>

@@ -219,18 +219,44 @@ exports.updateOneUser = async (req, res) => {
         await User.findByIdAndUpdate(id, updating)
 
         // Responsing.
-        return res.status(201).send({
-            success: true,
-            error: false,
-            message: "User is updated successful.",
-            data: {
-                user: {
-                    id,
-                    name: data.name,
-                    username: data.username
-                }
-            }
+        return res.redirect(`/api/user/${id}`)
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
         })
+    }
+}
+
+exports.getUpdatePassword = async(req, res) => {
+    const { params: { id } } = req
+    try {
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
+        const user = await User.findById(id)
+
+        res.render('update-user-password', {
+            title: 'Update password',
+            user
+        })
+
     } catch (error) {
         // Error handling.
         console.log(error);
@@ -299,6 +325,43 @@ exports.updateUserPassword = async (req, res) => {
             error: false,
             message: "User password is updated successful."
         })
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+
+exports.getDeleteOneUser = async (req, res) => {
+    const { params: { id } } = req
+    try {
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
+        const user = await User.findById(id)
+
+        res.render('delete-user', {
+            title: 'Delete user',
+            user
+        })
+
     } catch (error) {
         // Error handling.
         console.log(error);
