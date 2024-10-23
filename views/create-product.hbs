@@ -1,13 +1,33 @@
-<div class="create-product-container">
-    <h2 class="create-product-title">Create Product</h2>
-    <form action="/api/create-product" method="post">
-        <div class="create-product-input-group">
-            <label class="create-product-label" for="product-name">Name</label>
-            <input type="text" id="product-name" name="name" class="create-product-input" placeholder="Enter product name" required>
+<div class="product-page-wrapper">
+    <div id="product-creation-form">
+        <h2 class="form-title">Create Product</h2>
+        
+        <!-- Product name input -->
+        <input type="text" class="product-name-input" placeholder="Product Name" />
+
+        <div id="material-container">
+            <!-- Materiallar qatori -->
+            <div class="material-item">
+                {{#each product}}
+                <label>
+                    <input type="checkbox" class="material-checkbox" onchange="toggleAmountInput(this)" />
+                    Wood
+                </label>
+                <input type="number" class="amount-input" placeholder="Amount" disabled />
+            </div>
         </div>
-        <div class="create-product-button-group">
-            <button type="submit" class="create-product-button">Create</button>
+
+        <div class="action-buttons">
+            <button class="save-product-btn">Save Product</button>
+            <button class="cancel-btn">Cancel</button>
         </div>
-    </form>
-    <a href="/api/products" class="create-product-cancel-button">Cancel</a>
+    </div>
 </div>
+
+<script>
+    function toggleAmountInput(checkbox) {
+    const amountInput = checkbox.closest('.material-item').querySelector('.amount-input');
+    amountInput.disabled = !checkbox.checked; // Agar checkbox tanlansa, amount inputini yoqish yoki o'chirish
+}
+
+</script>
