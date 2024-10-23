@@ -1,11 +1,20 @@
 const { default: mongoose } = require("mongoose");
 const { Product } = require("../../models/productModel");
 const { validationResult, matchedData } = require("express-validator");
+const { Material } = require('../../models/materialModel')
 
 exports.getCreateProduct = async (req, res) => {
-    return res. render('create-product', {
-        title: 'Create product'
-    })
+    try {
+        // Get all materials
+        const materials = await Material.find()
+
+        return res.render('create-product', {
+            title: 'Create product',
+            materials
+        })
+    } catch (error) {
+
+    }
 }
 
 exports.createProduct = async (req, res) => {

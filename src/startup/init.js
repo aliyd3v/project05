@@ -9,7 +9,7 @@ const hbs = exphbs.create({
     extname: 'hbs',
     handlebars: allowInsecurePrototypeAccess(Handlebars),
     helpers: {
-        formatDate: function(date) {
+        formatDate: function (date) {
             const d = new Date(date);
             const hours = d.getHours();
             const minutes = d.getMinutes();
@@ -43,8 +43,6 @@ exports.appSetup = (app, express) => {
     app.use(express.urlencoded({ extended: true }));
 
     app.listen(3000, () => {
-        console.log(`
-    < < < < < _SERVER_HAS_BEEN_LISTENING_ON_PORT_3000_ > > > > >
-`)
+        console.log('SERVER HAS BEEN LISTENING ON PORT 3000\n')
     })
 }
