@@ -219,11 +219,20 @@ exports.updateOneReport = async (req, res) => {
 
         // Writing updates to database.
         if (report.product == data.product && report.quantityProduced == data.quantityProduced) {
+            report = { ...report, ...data }
+        } else if (report.product == data.product && report.quantityProduced != data.quantityProduced) {
+            const differenceInQuantity = report.quantityProduced - data.quantityProduced
+
+            // Product
+            const product = await Product.findById(data.product).populate('materialsUsed')
+            const materials = product.materialsUsed
+
+            for (let i = 0; i < materials.length; i++) {
+                addMaterialQuantity(materials[i]._id, (differenceInQuantity * materials[i].amount))
+            }
 
             report = { ...report, ...data }
-
         } else if (report.product != data.product) {
-
             // Product before
             const productBefore = await Product.findById(report.product).populate('materialsUsed')
             const reportMaterials = productBefore.materialsUsed
@@ -241,21 +250,6 @@ exports.updateOneReport = async (req, res) => {
             }
 
             report = { ...report, ...data }
-
-        } else if (report.quantityProduced != data.quantityProduced && report.product == data.product) {
-
-            const differenceInQuantity = report.quantityProduced - data.quantityProduced
-
-            // Product
-            const product = await Product.findById(data.product).populate('materialsUsed')
-            const materials = product.materialsUsed
-
-            for (let i = 0; i < materials.length; i++) {
-                addMaterialQuantity(materials[i]._id, (differenceInQuantity * materials[i].amount))
-            }
-
-            report = { ...report, ...data }
-
         }
         const updatedReport = await Report.findByIdAndUpdate(id, report, { new: true }).lean()
 
