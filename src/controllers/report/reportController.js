@@ -159,106 +159,127 @@ exports.getOneReport = async (req, res) => {
     }
 }
 
-// exports.updateOneReport = async (req, res) => {
-//     const { params: { id } } = req
-//     try {
-//         // Checking id to valid.
-//         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-//             return res.status(400).send({
-//                 success: false,
-//                 data: null,
-//                 error: "ID is not valid"
-//             })
-//         }
+exports.updateOneReport = async (req, res) => {
+    const { params: { id } } = req
+    try {
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
 
-//         // Checking for exists.
-//         let report = await Report.findById(id).lean()
-//         if (!report) {
-//             return res.status(404).send({
-//                 success: false,
-//                 data: null,
-//                 error: "Report not found."
-//             })
-//         }
+        // Checking for exists.
+        let report = await Report.findById(id).lean()
+        if (!report) {
+            return res.status(404).send({
+                success: false,
+                data: null,
+                error: "Report not found."
+            })
+        }
 
-//         // Validation result.
-//         const errors = validationResult(req)
-//         if (!errors.isEmpty()) {
-//             const errorMessages = errors.array().map(error => error.msg);
-//             return res.status(400).send({
-//                 success: false,
-//                 data: null,
-//                 error: errorMessages
-//             });
-//         }
-//         const data = matchedData(req)
+        // Validation result.
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            const errorMessages = errors.array().map(error => error.msg);
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: errorMessages
+            });
+        }
+        const data = matchedData(req)
 
-//         // // Function to reduce the material from the database depending on the product.
-//         // const reduceMaterialQuantity = async function (id, amount) {
-//         //     const currentMaterial = await Material.findById(id).lean()
-//         //     if (currentMaterial) {
-//         //         const reduceMaterialQuantity = await Material.findByIdAndUpdate(id, {
-//         //             ...currentMaterial,
-//         //             quantity: currentMaterial.quantity - amount
-//         //         })
-//         //     }
-//         // }
+        // Function for reduce the material from the database depending on the product.
+        const reduceMaterialQuantity = async function (id, amount) {
+            const currentMaterial = await Material.findById(id).lean()
+            if (currentMaterial) {
+                const reduceMaterialQuantity = await Material.findByIdAndUpdate(id, {
+                    ...currentMaterial,
+                    quantity: currentMaterial.quantity - amount
+                })
+            }
+        }
 
-//         // // Function to add the material from to database depending on the product.
-//         // const addMaterialQuantity = async function (id, amount) {
-//         //     const currentMaterial = await Material.findById(id).lean()
-//         //     if (currentMaterial) {
-//         //         const addMaterialQuantity = await Material.findByIdAndUpdate(id, {
-//         //             ...currentMaterial,
-//         //             quantity: currentMaterial.quantity + amount
-//         //         })
-//         //     }
-//         // }
+        // Function for add the material from to database depending on the product.
+        const addMaterialQuantity = async function (id, amount) {
+            const currentMaterial = await Material.findById(id).lean()
+            if (currentMaterial) {
+                const addMaterialQuantity = await Material.findByIdAndUpdate(id, {
+                    ...currentMaterial,
+                    quantity: currentMaterial.quantity + amount
+                })
+            }
+        }
 
-//         // // Product before
-//         // const productBefore = await Product.findById(report.product).populate('materialsUsed')
-//         // const reportMaterials = product.materialsUsed
+        // Writing updates to database.
+        if (report.product == data.product && report.quantityProduced == data.quantityProduced) {
 
-//         // // Product after
-//         // const productAter = await Product.findById(data.product).populate('materialsUsed')
-//         // const reqMaterials = product.materialsUsed
+            report = { ...report, ...data }
 
-//         // Writing updates to database.
-//         if (report.product == data.product && report.quantityProduced == data.quantityProduced) {
-//             report = { ...report, ...data }
-//         } else if (report.product != data.product) {
-//             for (let i = 0; i < materials.length; i++) {
-//                 addMaterialQuantity(materials[i]._id, materials[i].amount)
-//             }
-//             report = {}
-//         } else if (report.quantityProduced != data.quantityProduced) {
-//             report = {}
-//         }
-//         const updatedReport = await Report.findByIdAndUpdate(id, report, { new: true }).lean()
+        } else if (report.product != data.product) {
 
-//         // Responsing.
-//         return res.status(201).send({
-//             succes: true,
-//             error: false,
-//             data: { updatedReport }
-//         })
-//     } catch (error) {
-//         // Error handling.
-//         console.log(error)
-//         if (error.message) {
-//             return res.status(400).send({
-//                 success: false,
-//                 data: null,
-//                 error: error.message
-//             })
-//         }
-//         return res.status(500).send({
-//             success: false,
-//             data: null,
-//             error: 'INTERNAL_SERVER_ERROR!'
-//         })
-//     }
-// }
+            // Product before
+            const productBefore = await Product.findById(report.product).populate('materialsUsed')
+            const reportMaterials = productBefore.materialsUsed
+
+            // Product after
+            const productAter = await Product.findById(data.product).populate('materialsUsed')
+            const reqMaterials = productAter.materialsUsed
+
+            for (let i = 0; i < reportMaterials.length; i++) {
+                addMaterialQuantity(reportMaterials[i]._id, (productBefore.quantityProduced * reportMaterials[i].amount))
+            }
+
+            for (let i = 0; i < reqMaterials.length; i++) {
+                reduceMaterialQuantity(reqMaterials[i]._id, (productAter.quantityProduced * reqMaterials[i].amount))
+            }
+
+            report = { ...report, ...data }
+
+        } else if (report.quantityProduced != data.quantityProduced && report.product == data.product) {
+
+            const differenceInQuantity = report.quantityProduced - data.quantityProduced
+
+            // Product
+            const product = await Product.findById(data.product).populate('materialsUsed')
+            const materials = product.materialsUsed
+
+            for (let i = 0; i < materials.length; i++) {
+                addMaterialQuantity(materials[i]._id, (differenceInQuantity * materials[i].amount))
+            }
+
+            report = { ...report, ...data }
+
+        }
+        const updatedReport = await Report.findByIdAndUpdate(id, report, { new: true }).lean()
+
+        // Responsing.
+        return res.status(201).send({
+            succes: true,
+            error: false,
+            data: { updatedReport }
+        })
+    } catch (error) {
+        // Error handling.
+        console.log(error)
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: 'INTERNAL_SERVER_ERROR!'
+        })
+    }
+}
 
 exports.deleteOneReport = async (req, res) => {
     const { params: { id } } = req
