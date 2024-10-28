@@ -2347,7 +2347,6 @@ td {
 }
 
 
-
 /* _______________________POPUP___________________ */
 /* Popup asosiy stili */
 .popup {
@@ -2444,13 +2443,6 @@ td {
     0%, 90% { opacity: 1; }
     100% { opacity: 0; visibility: hidden; }
   }
-
-
-.user-statistics {
-    text-align: center;
-    padding: 100px;
-    border:#000000 solid 2px;
-}
 
 /*  =============================== Statistics style ===================== */
 
