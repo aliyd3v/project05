@@ -1453,25 +1453,45 @@ td {
     text-decoration: none; /* Tagidagi chiziqni olib tashlash */
 }
 
-/* Mobil qurilmalar uchun media query */
+/* Telefonlar uchun max-width: 768px */
 @media (max-width: 768px) {
+    
+    .product-page-wrapper {
+        width: 100%; /* Ekran kengligiga moslashadi */
+        padding: 10px; /* Ichki bo'shliq qo'shildi */
+    }
+
     #product-creation-form {
-        width: 90%; /* Ekran kengligining 90% oladi */
-        padding: 20px; /* Ichki bo'shliqni kamaytirish */
+        width: 100%; /* Telefon ekraniga moslashish */
+        max-width: 100%; /* Kenglik 100% qilib qo'yildi */
+        padding: 20px; /* Ichki bo'shliqni moslashtirish */
     }
 
     /* Materiallar qatorlari */
     .material-item {
-        flex-direction: column; /* Vertikal joylashtirish */
+        flex-direction: row; /* Materiallar kompyuter stilida qolishi uchun o'ng va chapda joylashadi */
+        justify-content: space-between; /* Telefon uchun ham bir xil dizayn */
+        gap: 10px; /* Materiallar orasidagi bo'shliq saqlanadi */
     }
 
-    /* Amount inputi responsiv holati */
+    /* Amount input */
     .amount-input {
-        width: 100%; /* To'liq kenglikda */
-        margin-left: 0; /* Sondan masofani olib tashlash */
-        margin-top: 10px; /* Checkboxdan keyin bo'shliq */
+        width: 100px; /* Kompyuter stilini saqlab qolish */
+        margin-left: 10px; /* Kenglik va masofa moslashtirilgan */
+    }
+
+    /* Save va Cancel tugmalari */
+    .save-product-btn, 
+    .cancel-btn {
+        width: 48%; /* Har ikkala tugma bir qatorga moslashtirilgan */
+        margin-bottom: 10px; /* Masofa qo'shildi */
+    }
+
+    .action-buttons {
+        justify-content: space-between; /* Tugmalarni bir qator bo'lib joylashtirish */
     }
 }
+
 
 
 
@@ -1493,10 +1513,8 @@ td {
 }
 
 .users-table-container h2 {
-    text-align: center;
     margin-bottom: 20px;
-    color: #007bff;
-    /* Bright blue color for the header */
+    color: #007bff; /* Bright blue color for the header */
     font-size: 26px;
     font-weight: 600;
 }
@@ -1505,13 +1523,11 @@ td {
 .users-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0 auto;
-    /* Center the table */
+    margin: 0 auto; /* Center the table */
 }
 
 .users-table thead {
-    background-color: #007bff;
-    /* Bright blue for the header */
+    background-color: #007bff; /* Bright blue for the header */
     color: #fff;
 }
 
@@ -1523,14 +1539,12 @@ td {
 }
 
 .users-table tbody tr:nth-child(even) {
-    background-color: #f0f8ff;
-    /* Light blue for even rows */
+    background-color: #f0f8ff; /* Light blue for even rows */
 }
 
 /* Hover effect on rows */
 .users-table tbody tr:hover {
-    background-color: #cce5ff;
-    /* Brighter hover color */
+    background-color: #cce5ff; /* Brighter hover color */
     cursor: pointer;
 }
 
@@ -1538,7 +1552,6 @@ td {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    text-align: left;
 }
 
 .users-table td {
@@ -1562,19 +1575,38 @@ td {
     }
 }
 
-/* User link styling */
-.users-link {
-    color: #000000;
-    /* Black color for links */
-    text-decoration: none;
-    font-weight: 600;
+/* Edit and delete button styling */
+.edit-button, .delete-button {
+    font-size: 18px; /* Tugma o'lchamini belgilash */
+    margin: 0 5px; /* Tugmalar orasida bo'shliq */
+    cursor: pointer; /* Pointer kursorini ko'rsatish */
+    background: none; /* Tugma fonini olib tashlash */
+    border: none; /* Tugma chegarasini olib tashlash */
 }
 
-.users-link:hover {
-    text-decoration: underline;
-    color: #007bff;
-    /* Bright blue on hover */
+/* Icon styling */
+.edit-button i, .delete-button i {
+    font-size: 20px; /* Ikonkalar o'lchamini belgilash */
 }
+
+/* Edit button color */
+.edit-button {
+    color: #28a745; /* Green color for edit button */
+}
+
+.edit-button:hover {
+    color: #218838; /* Darker green on hover */
+}
+
+/* Delete button color */
+.delete-button {
+    color: #dc3545; /* Red color for delete button */
+}
+
+.delete-button:hover {
+    color: #c82333; /* Darker red on hover */
+}
+
 
 .one-user-container {
     display: flex;
@@ -2314,15 +2346,6 @@ td {
     }
 }
 
-
-/* -----------------------User_Statistics-----------------------------*/
-
-.user-statistics {
-    text-align: center;
-    padding: 100px;
-    border:#000000 solid 2px;
-}
-
 /*  =============================== Statistics style ===================== */
 
 .statistics-container {
@@ -2392,4 +2415,3 @@ td {
 .bg-success { background-color: #28a745; }
 .bg-warning { background-color: #ffc107; color: #212529; }
 .bg-danger { background-color: #dc3545; }
-

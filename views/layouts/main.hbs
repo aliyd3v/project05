@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
@@ -16,7 +17,11 @@
         <div class="sidebar" id="sidebar">
             <h2>Admin Panel</h2>
             <ul>
-                <li><a href="/api/statistics" class="active">Dashboard</a></li>
+                {{#if isStatistics}}
+                <li><a href="/api/statistics" class="active">Statistics</a></li>
+                {{else}}
+                <li><a href="/api/statistics">Statistics</a></li>
+                {{/if}}
 
                 {{#if isUsers}}
                 <li><a href="/api/users" class="active">Users</a></li>
@@ -35,6 +40,7 @@
                 {{else}}
                 <li><a href="/api/materials">Materials</a></li>
                 {{/if}}
+
                 <li><a href="#">Instruction</a></li>
             </ul>
         </div>
