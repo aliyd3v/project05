@@ -4,140 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Small Box Widgets</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
     <style>
-        /* General Reset */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f0f2f5;
-            color: #212529;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .small-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            width: 280px;
-            height: 180px;
-            padding: 20px;
-            color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-
-        .small-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .small-box .inner h3 {
-            font-size: 2.5rem;
-            margin: 0;
-            color: #ffffff;
-        }
-
-        .small-box .inner p {
-            font-size: 1rem;
-            margin: 5px 0 10px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .small-box-icon {
-            width: 40px;
-            height: 40px;
-            fill: #ffffff;
-            margin-top: 10px;
-        }
-
-        .small-box-footer {
-            display: inline-block;
-            color: rgba(255, 255, 255, 0.75);
-            font-weight: bold;
-            text-decoration: none;
-            transition: color 0.3s ease, text-decoration 0.3s ease;
-        }
-
-        .small-box-footer:hover {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-
-        /* Specific Box Colors */
-        .bg-primary { background-color: #007bff; }
-        .bg-success { background-color: #28a745; }
-        .bg-warning { background-color: #ffc107; color: #212529; }
-        .bg-danger { background-color: #dc3545; }
+        
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="statistics-container">
         <!-- Small Box Widget 1 -->
-        <div class="small-box bg-primary">
+        <div class="statistics-small-box bg-primary">
             <div class="inner">
                 <h3>150</h3>
                 <p>New Orders</p>
             </div>
-            <svg class="small-box-icon" viewBox="0 0 24 24">
+            <svg class="statistics-small-box-icon" viewBox="0 0 24 24">
                 <path d="M2.25 2.25a.75.75 0 000 1.5h1.386c.17 0 .318.114.362.278l2.558 9.592a3.752 3.752 0 00-2.806 3.63c0 .414.336.75.75.75h15.75a.75.75 0 000-1.5H5.378A2.25 2.25 0 017.5 15h11.218a.75.75 0 00.674-.421 60.358 60.358 0 002.96-7.228.75.75 0 00-.525-.965A60.864 60.864 0 005.68 4.509l-.232-.867A1.875 1.875 0 003.636 2.25H2.25zM3.75 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM16.5 20.25a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"></path>
             </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <a href="#" class="statistics-small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
 
         <!-- Small Box Widget 2 -->
-        <div class="small-box bg-success">
+        <div class="statistics-small-box bg-success">
             <div class="inner">
                 <h3>53<sup>%</sup></h3>
                 <p>Bounce Rate</p>
             </div>
-            <svg class="small-box-icon" viewBox="0 0 24 24">
+            <svg class="statistics-small-box-icon" viewBox="0 0 24 24">
                 <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
             </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <a href="#" class="statistics-small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
 
         <!-- Small Box Widget 3 -->
-        <div class="small-box bg-warning">
+        <div class="statistics-small-box bg-warning">
             <div class="inner">
                 <h3>44</h3>
                 <p>User Registrations</p>
             </div>
-            <svg class="small-box-icon" viewBox="0 0 24 24">
+            <svg class="statistics-small-box-icon" viewBox="0 0 24 24">
                 <path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"></path>
             </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <a href="#" class="statistics-small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
 
         <!-- Small Box Widget 4 -->
-        <div class="small-box bg-danger">
+        <div class="statistics-small-box bg-danger">
             <div class="inner">
                 <h3>65</h3>
                 <p>Unique Visitors</p>
             </div>
-            <svg class="small-box-icon" viewBox="0 0 24 24">
+            <svg class="statistics-small-box-icon" viewBox="0 0 24 24">
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M2.25 13.5a8.25 8.25 0 018.25-8.25.75.75 0 01.75.75v6.75H18a.75.75 0 01.75.75 8.25 8.25 0 01-16.5 0z"></path>
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M12.75 3a.75.75 0 01.75-.75 8.25 8.25 0 018.25 8.25.75.75 0 01-.75.75h-7.5a.75.75 0 01-.75-.75V3z"></path>
             </svg>
-            <a href="#" class="small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
+            <a href="#" class="statistics-small-box-footer">More info <i class="bi bi-link-45deg"></i></a>
         </div>
     </div>
 </body>
