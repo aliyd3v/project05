@@ -19,3 +19,32 @@
             </div>
         </form>
     </div>
+    
+     <!-- Success Popup -->
+  <div id="successPopup" class="popup success">
+    <div class="icon"><i class="fa-solid fa-circle-check"></i></i></div> <!-- Yashil belgi -->
+    <div class="message">Success! Operation completed.</div>
+    <div class="timer-bar"></div>
+  </div>
+
+  <!-- Error Popup -->
+  <div id="errorPopup" class="popup error">
+    <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div> <!-- Qizil belgi -->
+    <div class="message"></div>
+    <div class="timer-bar"></div>
+  </div>
+
+  <script>
+    // Popup ko'rsatish funksiyasi
+    function showPopup(type) {
+      const popup = document.getElementById(type + 'Popup');
+      popup.classList.add('show');
+      setTimeout(() => popup.classList.remove('show'), 5000); // 5 soniyadan so'ng yashirinadi
+    }
+
+    // Misol uchun: Success popupni ko'rsatish
+    showPopup('success');
+
+    // Error popupni ko'rsatish uchun quyidagi qatorni ishlatish mumkin:
+    // showPopup('error');
+  </script>

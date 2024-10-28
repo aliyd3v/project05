@@ -6,14 +6,25 @@
                 <th>Username</th>
                 <th>Name</th>
                 <th>createdAt</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
             {{#each allUsers}}
             <tr>
-                <td><a href="/api/user/{{id}}" class="users-link">{{username}}</a></td>
+                <td>{{username}}</td>
                 <td>{{name}}</td>
                 <td>{{formatDate createdAt}}</td>
+                <td>
+                    <button class="edit-button" onclick="location.href='/edit/user/{{id}}'">
+                        <i class="fas fa-edit"></i> <!-- Edit icon -->
+                    </button>
+                    <form action="/delete/user/{{id}}" method="POST" style="display:inline;">
+                        <button type="submit" class="delete-button">
+                            <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                        </button>
+                    </form>
+                </td>
             </tr>
             {{/each}}
         </tbody>
