@@ -2346,6 +2346,112 @@ td {
     }
 }
 
+
+
+/* _______________________POPUP___________________ */
+/* Popup asosiy stili */
+.popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 60px;
+    padding: 15px 20px;
+    color: #333;
+    background-color: #fff; /* Oq fon */
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s, transform 0.5s ease-in-out;
+    overflow: hidden;
+    z-index: 9999; /* Eng yuqori qatlam */
+  }
+
+  /* Ko'rinadigan popup */
+  .popup.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 10px);
+    animation: hidePopup 5s forwards;
+  }
+
+  /* Success popup */
+  .popup.success {
+    background-color: #e8f5e9; /* Yashil rangli fon */
+  }
+
+  /* Error popup */
+  .popup.error {
+    background-color: #fce4e4; /* Qizil rangli fon */
+  }
+
+  /* Icon stili */
+  .popup .icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+
+  /* Success ikonka */
+  .popup.success .icon {
+    color: #28a745;
+  }
+
+  /* Error ikonka */
+  .popup.error .icon {
+    color: #dc3545;
+  }
+
+  /* Matn stili */
+  .popup .message {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  /* Timer indikator */
+  .popup .timer-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    animation: timer 5s linear forwards;
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* Success timer */
+  .popup.success .timer-bar {
+    background-color: #28a745;
+  }
+
+  /* Error timer */
+  .popup.error .timer-bar {
+    background-color: #dc3545;
+  }
+
+  /* Timer animatsiyasi */
+  @keyframes timer {
+    from { width: 100%; }
+    to { width: 0; }
+  }
+
+  /* Popupning yo'qolish animatsiyasi */
+  @keyframes hidePopup {
+    0%, 90% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+
+.user-statistics {
+    text-align: center;
+    padding: 100px;
+    border:#000000 solid 2px;
+}
+
 /*  =============================== Statistics style ===================== */
 
 .statistics-container {
