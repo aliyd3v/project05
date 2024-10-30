@@ -871,6 +871,75 @@ body {
     transform: translateY(-2px);
 }
 
+.product-page-label {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #005f8c; /* Qora ko'k rang */
+    margin-bottom: 5px;
+    display: inline-block;
+    background-color: #b3e0ff; /* Yengil ko'k fon */
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+
+.product-page-value {
+    color: #1f1f1f; /* Qora rang */
+    font-size: 1.2em; /* Katta font o'lchami */
+    margin-left: 5px;
+    font-weight: 600; /* Qalin */
+    display: inline-block;
+    background-color: #99ccff; /* O'rta ko'k fon */
+    padding: 4px 10px; /* O'lchamni kattalashtirish */
+    border-radius: 3px;
+}
+
+.product-page-material-values {
+    margin-top: 12px;
+    padding-left: 10px;
+    border-left: 3px solid #b3e0ff;
+}
+
+.material-container {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: row; /* Yonma-yon joylashuv */
+    justify-content: space-between; /* Material nomi va miqdorini joylashishi uchun */
+    padding: 8px; /* Qatorlar o'rtasida joy bo'shligi */
+    border-radius: 5px; /* Burchaklarni yumshatish */
+}
+
+.material-container:nth-child(odd) {
+    background: linear-gradient(to right, #8fb4d4, #74a3c4) 
+}
+
+.material-container:nth-child(even) {
+    background-color: #b3e0ff; 
+}
+
+.material-value {
+    display: inline-block;
+    font-size: 1em; /* O'qish uchun qulay bo'lishi uchun o'lcham */
+    color: #004d66; /* To'q ko'k rang */
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+
+#product-material-name {
+    font-weight: bold;
+    color: #005f8c; /* Qora ko'k rang */
+    padding-right: 10px; /* O'zaro joylashuvni yaxshilash */
+}
+
+#product-material-amount {
+    color: #666;
+    background-color: #99ccff; /* O'rta ko'k rang */
+    padding: 5px 10px; /* O'lchamni kattalashtirish */
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+
+
 /* Responsiv dizayn uchun media query */
 @media (max-width: 480px) {
     .product-page-container {
