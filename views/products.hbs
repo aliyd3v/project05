@@ -12,12 +12,9 @@
             {{#if products}}
             {{#each products}}
             <tr>
-                <td>{{name}}</td>
+                <td><a href="/api/product/{{id}}">{{name}}</a></td>
                 <td>{{formatDate createdAt}}</td>
                 <td class="action-cell">
-                    <button class="view-button" onclick="location.href='/api/product/{{id}}'">
-                        <i class="fas fa-eye"></i>
-                    </button>
                     <button class="edit-button" onclick="location.href='/api/product/{{id}}/update'">
                         <i class="fas fa-edit"></i>
                     </button>
@@ -49,21 +46,18 @@
     let formToDelete;
 
     function openModal(button) {
-        // Modalni ko'rsatadi
         document.getElementById("confirmationModal").style.display = "block";
-        // O'chirish uchun kerakli formani saqlaydi
         formToDelete = button.closest("form");
     }
 
     function closeModal() {
-        // Modalni yashiradi
         document.getElementById("confirmationModal").style.display = "none";
     }
 
     document.getElementById("confirmDeleteButton").addEventListener("click", function() {
         if (formToDelete) {
-            formToDelete.submit(); // Agar tasdiqlangan bo'lsa, formani yuboradi
+            formToDelete.submit();
         }
-        closeModal(); // Modalni yopadi
+        closeModal();
     });
 </script>

@@ -286,18 +286,16 @@ body {
     text-align: center;
 }
 
-/* View button styling */
-.materials-table .view-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #007bff;
-    font-size: 20px;
-    margin-right: 10px;
+.materials-table a {
+    color: black; /* Link rangi */
+    text-decoration: none; /* Ostki chiziqni olib tashlash */
+    font-weight: bold; /* Qalin matn */
+    transition: color 0.3s ease; /* Rang o'zgarishining animatsiyasi */
 }
 
-.materials-table .view-button:hover {
-    color: #0056b3;
+.materials-table a:hover {
+    color: black; /* Hover holatida rang o'zgarishi */
+    text-decoration: underline; /* Hover holatida ostki chiziq qo'shish */
 }
 
 /* Edit button styling */
@@ -377,17 +375,40 @@ body {
 .one-material-info {
     width: 100%;
     margin-bottom: 20px;
+    padding: 12px; /* Yuqoriga va pastga bo'shliq berish */
+    background: linear-gradient(135deg, #F0F4F8, #D9E2EC); /* Yumshoq oqish va pastel kulrang gradient */
+    border-radius: 10px; /* Burchaklarni yumshatish */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Yumshoq soyalar */
 }
 
 .one-material-item {
     margin-bottom: 10px;
-    color: #f0f0f0;
-    font-size: 18px;
+    color: #444444; /* Yumshoq qora rang */
+    font-size: 18px; /* Katta font o'lchami */
 }
 
 .one-material-label {
-    font-weight: bold;
+    font-weight: bold; /* Qalin matn */
+    font-size: 1.1em; /* Font o'lchamini kattalashtirish */
+    color: #ffffff; /* Qora ko'k rang */
+    margin-bottom: 5px;
+    display: inline-block;
+    background: linear-gradient(135deg, #627D98, #3A506B); /* To'q kulrang-moviy gradient */
+    padding: 6px 10px;
+    border-radius: 5px;
 }
+
+.one-material-value {
+    color: #444444; /* Qora rang */
+    font-size: 1.1em; /* Katta font o'lchami */
+    margin-left: 8px; /* Joylashuvni yaxshilash */
+    font-weight: 600; /* Qalin */
+    display: inline-block;
+    background: linear-gradient(to right, #C7D3DD, #A5B9C8); /* O'rta ko'k fon */
+    padding: 4px 10px; /* O'lchamni kattalashtirish */
+    border-radius: 5px;
+}
+
 
 .one-material-button-group {
     display: flex;
@@ -739,6 +760,18 @@ body {
     font-size: 16px;
 }
 
+.product-table a {
+    color: black; /* Link rangi */
+    text-decoration: none; /* Ostki chiziqni olib tashlash */
+    font-weight: bold; /* Qalin matn */
+    transition: color 0.3s ease; /* Rang o'zgarishining animatsiyasi */
+}
+
+.product-table a:hover {
+    color: black; /* Hover holatida rang o'zgarishi */
+    text-decoration: underline; /* Hover holatida ostki chiziq qo'shish */
+}
+
 /* Responsive styling */
 @media (max-width: 768px) {
     .product-table-container {
@@ -761,16 +794,6 @@ body {
     text-align: center; /* O'rtada joylashish */
 }
 
-/* View ikonka uchun stil */
-.product-table .view-button {
-    background: none; /* Tugma fonini olib tashlash */
-    border: none; /* Tugma chegaraini olib tashlash */
-    cursor: pointer; /* Ko'rsatgichni qo'ziqorin qilish */
-    color: #007bff; /* View ikonkasi uchun yashil rang */
-    font-size: 20px; /* Ikonka hajmini belgilash */
-    margin-right: 10px; /* View ikonkasi va edit ikonkasi orasida masofa */
-}
-
 /* Edit ikonka uchun stil */
 .product-table .edit-button {
     background: none; /* Tugma fonini olib tashlash */
@@ -791,10 +814,6 @@ body {
 }
 
 /* Hover effektlari */
-.product-table .view-button:hover {
-    color: #0056b3; /* View ikonkasi uchun hover rang */
-}
-
 .product-table .edit-button:hover {
     color: #218838; /* Edit ikonkasi uchun hover rang */
 }
@@ -874,69 +893,81 @@ body {
 .product-page-label {
     font-weight: bold;
     font-size: 1.2em;
-    color: #005f8c; /* Qora ko'k rang */
+    color: #ffffff;
     margin-bottom: 5px;
     display: inline-block;
-    background-color: #b3e0ff; /* Yengil ko'k fon */
-    padding: 3px 6px;
-    border-radius: 3px;
+    background: linear-gradient(135deg, #627D98, #3A506B); /* To'q kulrang-moviy va pastel to'q ko'k gradient */
+    padding: 6px 14px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .product-page-value {
-    color: #1f1f1f; /* Qora rang */
-    font-size: 1.2em; /* Katta font o'lchami */
-    margin-left: 5px;
-    font-weight: 600; /* Qalin */
+    color: #444444;
+    font-size: 1.2em;
+    margin-left: 8px;
+    font-weight: 600;
     display: inline-block;
-    background-color: #99ccff; /* O'rta ko'k fon */
-    padding: 4px 10px; /* O'lchamni kattalashtirish */
-    border-radius: 3px;
+    background: linear-gradient(135deg, #F0F4F8, #D9E2EC); /* Yumshoq oqish va pastel kulrang gradient */
+    padding: 5px 14px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .product-page-material-values {
-    margin-top: 12px;
-    padding-left: 10px;
-    border-left: 3px solid #b3e0ff;
+    margin-top: 15px;
+    padding-left: 12px;
+    border-left: 4px solid #627D98;
 }
 
 .material-container {
-    margin: 5px 0;
+    margin: 6px 0;
     display: flex;
-    flex-direction: row; /* Yonma-yon joylashuv */
-    justify-content: space-between; /* Material nomi va miqdorini joylashishi uchun */
-    padding: 8px; /* Qatorlar o'rtasida joy bo'shligi */
-    border-radius: 5px; /* Burchaklarni yumshatish */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
 }
 
 .material-container:nth-child(odd) {
-    background: linear-gradient(to right, #8fb4d4, #74a3c4) 
+    background: linear-gradient(to right, #FFFCF2, #E4E4E4); /* Yumshoq krem va och kulrang gradient */
 }
 
 .material-container:nth-child(even) {
-    background-color: #b3e0ff; 
+    background: linear-gradient(to right, #C7D3DD, #A5B9C8); /* Pastel ko'k va pastel kulrang */
+}
+
+.material-container:hover {
+    transform: scale(1.02);
+    box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.15);
 }
 
 .material-value {
     display: inline-block;
-    font-size: 1em; /* O'qish uchun qulay bo'lishi uchun o'lcham */
-    color: #004d66; /* To'q ko'k rang */
-    padding: 3px 5px;
-    border-radius: 3px;
+    font-size: 1em;
+    color: #3A506B; /* To'q ko'k rang */
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 #product-material-name {
     font-weight: bold;
-    color: #005f8c; /* Qora ko'k rang */
-    padding-right: 10px; /* O'zaro joylashuvni yaxshilash */
+    color: #3A506B; /* To'q ko'k rang */
+    padding-right: 10px;
 }
 
 #product-material-amount {
-    color: #666;
-    background-color: #99ccff; /* O'rta ko'k rang */
-    padding: 5px 10px; /* O'lchamni kattalashtirish */
-    border-radius: 5px;
+    color: #ffffff;
+    background: #627D98; /* To'q kulrang-moviy */
+    padding: 6px 12px;
+    border-radius: 8px;
     font-weight: 500;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
+
 
 
 
