@@ -16,12 +16,12 @@
                 <td>{{name}}</td>
                 <td>{{formatDate createdAt}}</td>
                 <td>
-                    <button class="edit-button" onclick="location.href='/edit/user/{{id}}'">
-                        <i class="fas fa-edit"></i> <!-- Edit icon -->
+                    <button class="edit-button" onclick="location.href='/api/user/{{id}}/update'">
+                        <i class="fas fa-edit"></i>
                     </button>
-                    <form action="/delete/user/{{id}}" method="POST" style="display:inline;">
-                        <button type="submit" class="delete-button">
-                            <i class="fas fa-trash-alt"></i> <!-- Delete icon -->
+                    <form action="/api/user/{{id}}/delete" method="POST" class="delete-form" style="display:inline;">
+                        <button type="button" class="delete-button" onclick="openModal(this)">
+                            <i class="fas fa-trash-alt"></i>
                         </button>
                     </form>
                 </td>
@@ -30,3 +30,34 @@
         </tbody>
     </table>
 </div>
+
+<!-- Modal oynasi -->
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <p>Userni o'chirishni xohlaysizmi?</p>
+        <button id="confirmDeleteButton" class="confirm-button">Ha</button>
+        <button onclick="closeModal()" class="cancel-button">Yo'q</button>
+    </div>
+</div>
+<script>
+    let formToDelete;
+
+    function openModal(button) {
+        // Modalni ko'rsatadi
+        document.getElementById("confirmationModal").style.display = "block";
+        // O'chirish uchun kerakli formani saqlaydi
+        formToDelete = button.closest("form");
+    }
+
+    function closeModal() {
+        // Modalni yashiradi
+        document.getElementById("confirmationModal").style.display = "none";
+    }
+
+    document.getElementById("confirmDeleteButton").addEventListener("click", function() {
+        if (formToDelete) {
+            formToDelete.submit(); // Agar tasdiqlangan bo'lsa, formani yuboradi
+        }
+        closeModal(); // Modalni yopadi
+    });
+</script>

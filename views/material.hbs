@@ -1,17 +1,16 @@
-    <div class="one-material-container">
-        <h2 class="one-material-title">One Material</h2>
-        <div class="one-material-info">
-            <div class="one-material-item">
-                <span class="one-material-label">Material Name:</span>
-                <span class="one-material-value" id="material-name">{{material.name}}</span>
-            </div>
-            <div class="one-material-item">
-                <span class="one-material-label">Quantity:</span>
-                <span class="one-material-value" id="material-quantity">{{material.quantity}}</span>
-            </div>
+<div class="one-material-container">
+    <h2 class="one-material-title">One Material</h2>
+    <div class="one-material-info">
+        <div class="one-material-item">
+            <span class="one-material-label">Material Name:</span>
+            <span class="one-material-value" id="material-name">{{material.name}}</span>
         </div>
-        <div class="one-material-button-group">
-            <a href='/api/material/{{material.id}}/update' class="one-material-edit-button">Edit</a>
-            <a href="/api/materials" class="one-material-cancel-button">Cancel</a>
+        <div class="one-material-item">
+            <span class="one-material-label">Quantity:</span>
+            <span class="one-material-value" id="material-quantity">{{material.quantity}}</span>
         </div>
     </div>
+    <div class="one-material-button-group">
+        <a href="/api/materials" class="one-material-cancel-button">Cancel</a>
+    </div>
+</div>

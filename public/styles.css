@@ -219,9 +219,11 @@ body {
 
 
 /* ________________________________MATERIAL__STYLE______________________________ */
+/*           ------------------------ALL MATERIAL-----------------------         */
 
 /* Table container styling */
-.table-container {
+/* Materials table container styling */
+.materials-table-container {
     width: 100%;
     max-width: 900px;
     margin: 80px auto;
@@ -232,215 +234,197 @@ body {
     text-align: center;
 }
 
-.table-container h2 {
+.materials-table-container h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #007bff;
-    /* Bright blue color for the header */
     font-size: 26px;
     font-weight: 600;
 }
 
 /* Table styling */
-table {
+.materials-table {
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
-    /* Center the table */
 }
 
-thead {
+.materials-table thead {
     background-color: #007bff;
-    /* Bright blue for the header */
     color: #fff;
 }
 
-th,
-td {
+.materials-table th,
+.materials-table td {
     padding: 14px 20px;
     text-align: left;
     border-bottom: 2px solid #e9ecef;
 }
 
-tbody tr:nth-child(even) {
+.materials-table tbody tr:nth-child(even) {
     background-color: #f0f8ff;
-    /* Light blue for even rows */
 }
 
-/* Hover effect on rows */
-tbody tr:hover {
+.materials-table tbody tr:hover {
     background-color: #cce5ff;
-    /* Brighter hover color */
     cursor: pointer;
 }
 
-th {
+.materials-table th {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    text-align: left;
 }
 
-td {
+.materials-table td {
     color: #212529;
     font-size: 16px;
 }
 
+/* Action cell styling */
+.materials-table .action-cell {
+    text-align: center;
+}
+
+/* View button styling */
+.materials-table .view-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.materials-table .view-button:hover {
+    color: #0056b3;
+}
+
+/* Edit button styling */
+.materials-table .edit-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #28a745;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.materials-table .edit-button:hover {
+    color: #218838;
+}
+
+/* Delete button styling */
+.materials-table .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #dc3545;
+    font-size: 20px;
+}
+
+.materials-table .delete-button:hover {
+    color: #c82333;
+}
+
 /* Responsive styling */
 @media (max-width: 768px) {
-    .table-container {
-        padding: 10px;
+    .materials-table-container {
+        margin: 20px auto; /* Marginni kichraytirish */
+        padding: 10px; /* Paddingni kichraytirish */
     }
 
-    th,
-    td {
-        padding: 10px;
+    .materials-table th,
+    .materials-table td {
+        padding: 10px; /* Kichik ekranda joylashni o'zgartirish */
+        font-size: 14px; /* Font o'lchamini kichraytirish */
     }
 
-    table {
-        font-size: 14px;
+    .action-cell {
+        flex-direction: row; /* Tugmalarni yonma-yon joylash */
+        gap: 10px; /* Tugmalar orasidagi bo'shliq */
     }
 }
 
-/* Material link styling */
-.material-link {
-    color: #000000;
-    /* Black color for links */
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.material-link:hover {
-    text-decoration: underline;
-    color: #007bff;
-    /* Bright blue on hover */
-}
+/*------------------------------------------One Material----------------------------------------------- */
 
 .one-material-container {
     display: flex;
-    /* Flexbox ishlatish */
     flex-direction: column;
-    /* Elementlarni ustunlikda joylashtirish */
     justify-content: center;
-    /* Markazda joylashish */
     align-items: center;
-    /* Gorizontal markazlashtirish */
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to right, #8fb4d4, #74a3c4);
-    /* To'qroq gradient fon */
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     width: 100%;
-    /* Kenglikni 100% qilib o'rnatish */
     max-width: 400px;
-    /* Maksimal kenglik */
     margin: 0 auto;
-    /* Avtomatik marginlar bilan markazlashtirish */
     position: absolute;
-    /* Position o'zgartirildi */
     top: 50%;
-    /* Vertikal markazlashtirish */
     left: 50%;
-    /* Gorizontal markazlashtirish */
     transform: translate(-50%, -50%);
-    /* Markazlashtirish */
 }
 
 .one-material-title {
     text-align: center;
     margin-bottom: 20px;
     color: white;
-    /* Oq rang */
     font-size: 24px;
-    /* O'sish */
 }
 
 .one-material-info {
     width: 100%;
-    /* Material ma'lumotlarining kengligini 100% qilib o'rnatish */
     margin-bottom: 20px;
-    /* Tugmalardan oldin masofa qo'shish */
 }
 
 .one-material-item {
     margin-bottom: 10px;
-    /* Har bir element orasida masofa */
     color: #f0f0f0;
-    /* Oq rang */
     font-size: 18px;
-    /* O'sish */
 }
 
 .one-material-label {
     font-weight: bold;
-    /* Qalin harflar */
 }
 
 .one-material-button-group {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Tugmani markazlashtirish */
     width: 100%;
-    /* Tugma guruhining kengligini 100% qilib o'rnatish */
 }
 
-.one-material-edit-button,
 .one-material-cancel-button {
-    background-color: #007BFF;
-    /* Ko'k rang */
+    background-color: #ff6f61; /* Qizil rang */
     color: white;
     text-decoration: none;
-    /* Chiziqni olib tashlash */
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
+    width: 80%;
     font-size: 16px;
-    flex: 1;
-    /* Tugma kengligini tenglashtirish */
-    display: flex;
-    /* Flexbox ishlatish */
-    justify-content: center;
-    /* O'rtaga joylashtirish */
-    align-items: center;
-    /* Vertikal markazlashtirish */
+    text-align: center;
     transition: background-color 0.3s, transform 0.3s;
-    margin-right: 10px;
-    /* Tugmalar orasidagi masofa */
-}
-
-.one-material-edit-button:hover {
-    background-color: #0056b3;
-    /* Ko'k rangni qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
-}
-
-.one-material-cancel-button {
-    background-color: #ff6f61;
-    /* Qizil rang */
 }
 
 .one-material-cancel-button:hover {
-    background-color: #ff4a39;
-    /* Qizil rangni qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
+    background-color: #ff4a39; /* Qizil rangni qoraytirish */
+    transform: translateY(-2px); /* Yuqoriga ko'tarish */
 }
 
 /* Responsiv dizayn uchun media query */
 @media (max-width: 480px) {
     .one-material-container {
-        padding: 30px;
-        /* Mobil qurilmalarda paddingni kamaytirish */
+        padding: 30px; /* Mobil qurilmalarda paddingni kamaytirish */
     }
 
-    .one-material-edit-button,
     .one-material-cancel-button {
-        font-size: 14px;
-        /* Tugmalar shriftini kamaytirish */
+        font-size: 14px; /* Tugma shriftini kamaytirish */
     }
 }
 
+/* -----------------------------------Create Material--------------------------------------- */
 
 .create-material-container {
     display: flex;
@@ -590,120 +574,85 @@ td {
     }
 }
 
+/* ----------------------------------------Update Material------------------------------------- */
+
 .update-material-container {
     display: flex;
-    /* Flexbox ishlatish */
     flex-direction: column;
-    /* Elementlarni ustunlikda joylashtirish */
     justify-content: center;
-    /* Markazda joylashish */
     align-items: center;
-    /* Gorizontal markazlashtirish */
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to right, #8fb4d4, #74a3c4);
-    /* To'qroq gradient fon */
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     width: 100%;
-    /* Kenglikni 100% qilib o'rnatish */
     max-width: 400px;
-    /* Maksimal kenglik */
     margin: 0 auto;
-    /* Avtomatik marginlar bilan markazlashtirish */
     position: absolute;
-    /* Position o'zgartirildi */
     top: 50%;
-    /* Vertikal markazlashtirish */
     left: 50%;
-    /* Gorizontal markazlashtirish */
     transform: translate(-50%, -50%);
-    /* Markazlashtirish */
 }
 
 .update-material-title {
     text-align: center;
     margin-bottom: 20px;
     color: white;
-    /* Oq rang */
     font-size: 24px;
-    /* O'sish */
 }
 
 .update-material-item {
     margin-bottom: 15px;
-    /* Har bir element orasida masofa */
     width: 100%;
-    /* Kenglikni 100% qilib o'rnatish */
 }
 
 .update-material-label {
     display: block;
-    /* Labelni blok element sifatida joylashtirish */
     margin-bottom: 5px;
-    /* Label va input orasidagi masofa */
     color: #f0f0f0;
-    /* Oq rang */
     font-size: 18px;
-    /* O'sish */
 }
 
 .update-material-input {
     width: 100%;
-    /* Kenglikni 100% qilib o'rnatish */
     padding: 10px;
-    /* Input ichidagi masofa */
     border: none;
     border-radius: 10px;
-    /* Qirralarni yumshatish */
     font-size: 16px;
-    /* O'sish */
 }
 
 .update-material-button-group {
     display: flex;
+    flex-direction: column; /* Tugmalarni ustma-ust joylashtirish */
     justify-content: center;
-    /* Tugmalarni markazga joylashtirish */
     width: 100%;
     gap: 10px;
-    /* Tugmalar orasidagi masofa */
     margin-bottom: 20px;
-    /* Save tugmasidan pastda joylashishi uchun */
 }
 
-/* Save tugmasi uchun stil */
 .update-material-save-button {
     background-color: #28a745;
-    /* Yashil rang */
     color: white;
     border: none;
     padding: 12px 20px;
-    /* X va Y bo'yicha padding */
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s, transform 0.3s;
-    margin-bottom: 10px;
-    /* Tugma pastda joylashishi uchun */
-    width: 80%;
 }
 
 .update-material-save-button:hover {
     background-color: #218838;
-    /* Yashil rangni qoraytirish */
     transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
 }
 
-/* Cancel tugmasi uchun stil */
 .update-material-cancel-button {
     background-color: #ff6f61;
-    /* Qizil rang */
     color: white;
     text-decoration: none;
-    /* Chiziqni olib tashlash */
+    text-align: center;
     padding: 12px 20px;
-    /* X va Y bo'yicha padding */
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
@@ -712,166 +661,26 @@ td {
 
 .update-material-cancel-button:hover {
     background-color: #ff4a39;
-    /* Qizil rangni qoraytirish */
     transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
-}
-
-/* Delete tugmasi uchun stil */
-.update-material-delete-button {
-    background-color: #dc3545;
-    /* Qizil rang */
-    color: white;
-    text-decoration: none;
-    /* Chiziqni olib tashlash */
-    padding: 12px 20px;
-    /* X va Y bo'yicha padding */
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.update-material-delete-button:hover {
-    background-color: #c82333;
-    /* Qizil rangni qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
 }
 
 /* Responsiv dizayn uchun media query */
 @media (max-width: 480px) {
     .update-material-container {
         padding: 30px;
-        /* Mobil qurilmalarda paddingni kamaytirish */
     }
 
     .update-material-save-button,
-    .update-material-cancel-button,
-    .update-material-delete-button {
+    .update-material-cancel-button {
         font-size: 14px;
-        /* Tugmalar shriftini kamaytirish */
     }
 }
-
-.delete-material-container {
-    display: flex;
-    /* Flexbox ishlatish */
-    flex-direction: column;
-    /* Elementlarni ustunlikda joylashtirish */
-    justify-content: center;
-    /* Markazda joylashish */
-    align-items: center;
-    /* Gorizontal markazlashtirish */
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #8fb4d4, #74a3c4);
-    /* Gradient fon */
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.delete-material-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: white;
-    /* Oq rang */
-    font-size: 24px;
-    /* O'sish */
-}
-
-.delete-material-button-group {
-    display: flex;
-    flex-direction: column;
-    /* Tugmalarni ustma-ust joylashtirish */
-    gap: 10px;
-    /* Tugmalar orasidagi masofa */
-    width: 100%;
-    /* Tugmalar kengligini 100% qilib o'rnatish */
-}
-
-/* Yes tugmasi uchun stil */
-.delete-material-yes-button {
-    background-color: #28a745;
-    /* Yashil rang */
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.delete-material-yes-button:hover {
-    background-color: #218838;
-    /* Yashil rangni qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
-}
-
-/* No tugmasi uchun stil */
-.delete-material-no-button {
-    background-color: #dc3545;
-    /* Qizil rang */
-    color: white;
-    text-decoration: none;
-    /* Chiziqni olib tashlash */
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    /* Flexbox ishlatish */
-    justify-content: center;
-    /* O'rtaga joylashtirish */
-    align-items: center;
-    /* Vertikal markazlashtirish */
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.delete-material-no-button:hover {
-    background-color: #c82333;
-    /* Qizil rangni qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
-}
-
-/* Responsiv dizayn uchun media query */
-@media (max-width: 480px) {
-    .delete-material-container {
-        padding: 20px;
-        /* Mobil qurilmalarda paddingni kamaytirish */
-    }
-
-    .delete-material-title {
-        font-size: 20px;
-        /* Title shriftini kamaytirish */
-    }
-
-    .delete-material-yes-button,
-    .delete-material-no-button {
-        font-size: 14px;
-        /* Tugmalar shriftini kamaytirish */
-        padding: 10px;
-        /* Tugma ichidagi paddingni kamaytirish */
-    }
-}
-
-
-
 /* _______________________________PRODUCT__STYLE__________________________ */
 
+/* -------------------------------Products-------------------------------- */
 
 /* Table container styling */
+/* Products table container styling */
 .product-table-container {
     width: 100%;
     max-width: 900px;
@@ -883,26 +692,22 @@ td {
     text-align: center;
 }
 
-.product-table-container h1 {
-    text-align: center;
+.product-table-container h2 {
     margin-bottom: 20px;
-    color: #007bff;
-    /* Bright blue color for the header */
+    color: #007bff; /* Bright blue color for the header */
     font-size: 26px;
     font-weight: 600;
 }
 
-/* Table styling */
+/* Products table styling */
 .product-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 0 auto;
-    /* Center the table */
+    margin: 0 auto; /* Center the table */
 }
 
 .product-table thead {
-    background-color: #007bff;
-    /* Bright blue for the header */
+    background-color: #007bff; /* Bright blue for the header */
     color: #fff;
 }
 
@@ -914,14 +719,12 @@ td {
 }
 
 .product-table tbody tr:nth-child(even) {
-    background-color: #f0f8ff;
-    /* Light blue for even rows */
+    background-color: #f0f8ff; /* Light blue for even rows */
 }
 
 /* Hover effect on rows */
 .product-table tbody tr:hover {
-    background-color: #cce5ff;
-    /* Brighter hover color */
+    background-color: #cce5ff; /* Brighter hover color */
     cursor: pointer;
 }
 
@@ -929,7 +732,6 @@ td {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    text-align: left;
 }
 
 .product-table td {
@@ -953,26 +755,55 @@ td {
     }
 }
 
-/* Product link styling */
-.product-link {
-    color: #000000;
-    /* Black color for links */
-    text-decoration: none;
-    font-weight: 600;
+/* Action icons */
+/* Amallar ustuni uchun uslub */
+.product-table .action-cell {
+    text-align: center; /* O'rtada joylashish */
 }
 
-.product-link:hover {
-    text-decoration: underline;
-    color: #007bff;
-    /* Bright blue on hover */
+/* View ikonka uchun stil */
+.product-table .view-button {
+    background: none; /* Tugma fonini olib tashlash */
+    border: none; /* Tugma chegaraini olib tashlash */
+    cursor: pointer; /* Ko'rsatgichni qo'ziqorin qilish */
+    color: #007bff; /* View ikonkasi uchun yashil rang */
+    font-size: 20px; /* Ikonka hajmini belgilash */
+    margin-right: 10px; /* View ikonkasi va edit ikonkasi orasida masofa */
 }
 
-/* Barcha umumiy qoidalar faqat .product-page-container ichidagi elementlarga ta'sir qiladi */
-.product-page-container * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* Edit ikonka uchun stil */
+.product-table .edit-button {
+    background: none; /* Tugma fonini olib tashlash */
+    border: none; /* Tugma chegaraini olib tashlash */
+    cursor: pointer; /* Ko'rsatgichni qo'ziqorin qilish */
+    color: #28a745; /* Ikonka rangini belgilash */
+    font-size: 20px; /* Ikonka hajmini belgilash */
+    margin-right: 10px; /* Edit ikonkasi va delete ikonkasi orasida masofa */
 }
+
+/* Delete ikonka uchun stil */
+.product-table .delete-button {
+    background: none; /* Tugma fonini olib tashlash */
+    border: none; /* Tugma chegaraini olib tashlash */
+    cursor: pointer; /* Ko'rsatgichni qo'ziqorin qilish */
+    color: #dc3545; /* Delete ikonkasi uchun qizil rang */
+    font-size: 20px; /* Ikonka hajmini belgilash */
+}
+
+/* Hover effektlari */
+.product-table .view-button:hover {
+    color: #0056b3; /* View ikonkasi uchun hover rang */
+}
+
+.product-table .edit-button:hover {
+    color: #218838; /* Edit ikonkasi uchun hover rang */
+}
+
+.product-table .delete-button:hover {
+    color: #c82333; /* Delete ikonkasi uchun hover rang */
+}
+
+/* ------------------------------------One Product-------------------------------- */
 
 /* Product Page Sahifasi */
 .product-page-container {
@@ -1003,59 +834,40 @@ td {
 
 .product-page-info {
     width: 100%;
-    margin-bottom: 20px;
-    /* Tugmalardan oldin masofa qo'shish */
+    margin-bottom: 20px; /* Tugmalardan oldin masofa qo'shish */
 }
 
 .product-page-item {
-    margin-bottom: 10px;
-    /* Har bir element orasida masofa */
-    color: #f0f0f0;
-    /* Oq rang */
-    font-size: 18px;
-    /* O'sish */
+    margin-bottom: 10px; /* Har bir element orasida masofa */
+    color: #f0f0f0; /* Oq rang */
+    font-size: 18px; /* O'sish */
 }
 
 .product-page-label {
-    font-weight: bold;
-    /* Qalin harflar */
+    font-weight: bold; /* Qalin harflar */
 }
 
 .product-page-button-group {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Tugmalarni markazga joylashtirish */
     width: 100%;
 }
 
-.product-page-edit-button,
 .product-page-cancel-button {
-    background-color: #2196F3;
-    /* Ko'k rang */
+    background-color: #f44336; /* Qizil rang */
     color: white;
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     text-decoration: none;
-    width: 48%;
+    width: 80%; /* Tugma kengligini to'liq qilish */
     text-align: center;
     transition: background-color 0.3s, transform 0.3s;
 }
 
-.product-page-edit-button:hover {
-    background-color: #1976D2;
-    /* Ko'k rangni qoraytirish */
-    transform: translateY(-2px);
-}
-
-.product-page-cancel-button {
-    background-color: #f44336;
-    /* Qizil rang */
-}
-
 .product-page-cancel-button:hover {
-    background-color: #d32f2f;
-    /* Qizil rangni qoraytirish */
+    background-color: #d32f2f; /* Qizil rangni qoraytirish */
     transform: translateY(-2px);
 }
 
@@ -1065,12 +877,14 @@ td {
         padding: 30px;
     }
 
-    .product-page-edit-button,
     .product-page-cancel-button {
         font-size: 14px;
         padding: 10px;
     }
 }
+
+
+/* -----------------------------------Update Product----------------------------- */
 
 /* Barcha umumiy qoidalar faqat .update-product-container ichidagi elementlarga ta'sir qiladi */
 .update-product-container * {
@@ -1087,7 +901,6 @@ td {
     align-items: center;
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to right, #8fb4d4, #74a3c4);
-    /* Yangilangan fon ranglari */
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -1115,7 +928,6 @@ td {
 .update-product-label {
     font-weight: bold;
     color: #f0f0f0;
-    /* Oq rang */
 }
 
 .update-product-input {
@@ -1130,16 +942,15 @@ td {
 .update-product-button-group {
     display: flex;
     justify-content: center;
-    /* Markazda joylashish */
     width: 100%;
 }
 
 .update-product-save-button {
-    background-color: #4CAF50;
-    /* Yashil rang */
+    background-color: #28a745;
     color: white;
     padding: 12px;
     border-radius: 10px;
+    width: 100%;
     border: none;
     cursor: pointer;
     font-size: 16px;
@@ -1148,48 +959,31 @@ td {
 
 .update-product-save-button:hover {
     background-color: #45a049;
-    /* Yashil rangni qoraytirish */
     transform: translateY(-2px);
 }
 
-.update-product-cancel-delete-group {
+.update-product-cancel-group {
     display: flex;
-    justify-content: space-between;
-    /* Tugmalar orasida bo'sh joy qoldirish */
-    width: 100%;
+    justify-content: center;
     margin-top: 15px;
-    /* Formadan oldingi bo'sh joy */
+    width: 100%;
 }
 
-.update-product-cancel-button,
-.update-product-delete-button {
-    background-color: #2196F3;
-    /* Ko'k rang */
+.update-product-cancel-button {
+    background-color: #c62828;
     color: white;
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
+    width: 100%;
     font-size: 16px;
     text-decoration: none;
-    width: 48%;
     text-align: center;
     transition: background-color 0.3s, transform 0.3s;
 }
 
 .update-product-cancel-button:hover {
-    background-color: #1976D2;
-    /* Ko'k rangni qoraytirish */
-    transform: translateY(-2px);
-}
-
-.update-product-delete-button {
-    background-color: #f44336;
-    /* Qizil rang */
-}
-
-.update-product-delete-button:hover {
-    background-color: #d32f2f;
-    /* Qizil rangni qoraytirish */
+    background-color: #c82333;
     transform: translateY(-2px);
 }
 
@@ -1200,116 +994,16 @@ td {
     }
 
     .update-product-save-button,
-    .update-product-cancel-button,
-    .update-product-delete-button {
+    .update-product-cancel-button {
         font-size: 14px;
         padding: 10px;
+        width: 100%; /* Tugmalarni to'liq kenglikka o'tkazish */
+        margin-top: 10px; /* Tugmalar orasida bo'sh joy */
     }
 }
 
-/* Barcha umumiy qoidalar faqat .delete-product-container ichidagi elementlarga ta'sir qiladi */
-.delete-product-container * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
-/* Delete Product Sahifasi */
-.delete-product-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #8fb4d4, #74a3c4);
-    /* Yangilangan fon ranglari */
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.delete-product-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: white;
-    font-size: 24px;
-}
-
-.delete-product-button-group {
-    display: flex;
-    flex-direction: column;
-    /* Tugmalarni ustma-ust joylashtirish */
-    align-items: center;
-    /* Gorizontal markazlashtirish */
-    width: 100%;
-    /* Tugma guruhining kengligi 100% qilib o'rnatish */
-}
-
-/* Yes Tugmasi */
-.delete-product-yes-button {
-    background-color: #f44336;
-    /* Qizil rang */
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 320px;
-    /* Tugma kengligi */
-    transition: background-color 0.3s, transform 0.3s;
-    margin-bottom: 10px;
-    /* Tugmalar orasidagi masofa */
-}
-
-.delete-product-yes-button:hover {
-    background-color: #d32f2f;
-    /* Qizil rangni qoraytirish */
-    transform: translateY(-2px);
-}
-
-/* No Tugmasi */
-.delete-product-no-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #2196F3;
-    /* Ko'k rang */
-    color: white;
-    padding: 12px;
-    text-decoration: none;
-    /* Chiziqni olib tashlash */
-    border-radius: 10px;
-    width: 100%;
-    /* Tugma kengligi */
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.delete-product-no-button:hover {
-    background-color: #1976D2;
-    /* Ko'k rangni qoraytirish */
-    transform: translateY(-2px);
-}
-
-/* Responsiv dizayn uchun media query */
-@media (max-width: 480px) {
-    .delete-product-container {
-        padding: 30px;
-    }
-
-    .delete-product-yes-button,
-    .delete-product-no-button {
-        font-size: 14px;
-        padding: 10px;
-    }
-}
+/* ------------------------------Create Product-------------------------------- */
 
 /* Umumiy reset */
 .product-page-wrapper * {
@@ -1499,6 +1193,7 @@ td {
 
 /* ____________________________USER__STYLE___________________________ */
 
+/* ----------------------------Users----------------------------------- */
 
 /* Users table container styling */
 .users-table-container {
@@ -1607,6 +1302,7 @@ td {
     color: #c82333; /* Darker red on hover */
 }
 
+/* -------------------------------------One User------------------------------------- */
 
 .one-user-container {
     display: flex;
@@ -1745,6 +1441,8 @@ td {
     }
 }
 
+/* ------------------------------------Update User------------------------------- */
+
 .update-user-container {
     display: flex;
     /* Flexbox ishlatish */
@@ -1831,65 +1529,81 @@ td {
 }
 
 .update-user-save-button,
-.update-user-cancel-button {
-    padding: 12px;
-    /* Ichki bo'shliq */
-    border-radius: 10px;
-    /* Qirralarni yumshatish */
+.update-password-button {
+    padding: 12px; /* Ichki bo'shliq */
+    border-radius: 10px; /* Qirralarni yumshatish */
     cursor: pointer;
-    font-size: 16px;
-    /* O'sish */
-    border: none;
-    /* Chegarani olib tashlash */
-    transition: background-color 0.3s, transform 0.3s;
-    /* Animatsiya qo'shish */
+    font-size: 16px; /* Shriftsiz o'lchami */
+    color: white; /* Matn rangi */
+    width: 100%; /* Tugma kengligini 100% qilib o'rnatish */
+    text-align: center; /* Matnni markazga joylashtirish */
+    transition: background-color 0.3s, transform 0.3s; /* Animatsiya qo'shish */
+    margin-top: 10px; /* Yuqoridan bo'shliq */
 }
 
 .update-user-save-button {
-    background-color: #28a745;
-    /* Yashil rang */
-    color: white;
-    flex: 1;
-    /* Tugma kengligini tenglashtirish */
-    margin-right: 10px;
-    /* Tugmalar orasida masofa */
+    background-color: #28a745; /* Yashil rang */
 }
 
-.update-user-cancel-button {
-    background-color: #ffc107;
-    /* Sarı rang */
-    color: white;
-    text-decoration: none;
-    /* Chiziqni olib tashlash */
-    display: flex;
-    /* Flexbox ishlatish */
-    flex: 1;
-    justify-content: center;
-    /* O'rtaga joylashtirish */
-    align-items: center;
-    /* Vertikal markazlashtirish */
+.update-password-button {
+    background-color: #17a2b8; /* Ko'k rang */
 }
 
 .update-user-save-button:hover {
-    background-color: #218838;
-    /* Tugma rangini qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
+    background-color: #218838; /* Hoverda tugma rangini qoraytirish */
+    transform: translateY(-2px); /* Yuqoriga ko'tarish */
+}
+
+.update-password-button:hover {
+    background-color: #138496; /* Hoverda tugma rangini qoraytirish */
+    transform: translateY(-2px); /* Yuqoriga ko'tarish */
+}
+
+
+.update-user-save-button {
+    background-color: #28a745; /* Yashil rang */
+    color: white;
+    padding: 12px; /* Ichki bo'shliq */
+    border-radius: 10px; /* Qirralarni yumshatish */
+    cursor: pointer;
+    font-size: 16px; /* Shriftsiz o'lchami */
+    border: none; /* Chegarani olib tashlash */
+    width: 100%; /* Tugma kengligini 100% qilib o'rnatish */
+    text-align: center; /* Matnni markazga joylashtirish */
+    transition: background-color 0.3s, transform 0.3s; /* Animatsiya qo'shish */
+    margin-right: 10px; /* O'ng tomondan masofa qo'shish */
+}
+
+.update-user-cancel-button {
+    background-color: #ffc107; /* Sarı rang */
+    color: white; /* Matn rangi */
+    text-decoration: none; /* Chiziqni olib tashlash */
+    display: flex; /* Flexbox ishlatish */
+    justify-content: center; /* O'rtaga joylashtirish */
+    align-items: center; /* Vertikal markazlashtirish */
+    padding: 12px; /* Ichki bo'shliq */
+    border-radius: 10px; /* Qirralarni yumshatish */
+    cursor: pointer; /* Kursor ko'rsatkichi */
+    font-size: 16px; /* O'sish */
+    width: 200px; /* Tugma kengligini 100% qilib o'rnatish */
+    max-width: 500px; /* Maksimal kenglik */
+    margin-top: 10px; /* Yuqoridan bo'shliq */
+    transition: background-color 0.3s, transform 0.3s; /* Animatsiya qo'shish */
 }
 
 .update-user-cancel-button:hover {
-    background-color: #e0a800;
-    /* Tugma rangini qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
+    background-color: #e0a800; /* Hoverda tugma rangini qoraytirish */
+    transform: translateY(-2px); /* Yuqoriga ko'tarish */
 }
 
-.update-password-container {
+
+
+.cancel-button-container {
     margin: 15px 0;
     /* Tugmalar orasidagi masofa */
 }
 
-/* Update Password tugmasi uchun stil */
+
 .update-password-button {
     display: inline-block;
     /* Inline-block qilib o'zgartirish */
@@ -1903,23 +1617,16 @@ td {
     cursor: pointer;
     font-size: 16px;
     /* O'sish */
+    text-align: center;
+    /* Matnni markazga joylashtirish */
     text-decoration: none;
     /* Chiziqni olib tashlash */
     width: 100%;
     /* Tugma kengligini 100% qilib o'rnatish */
-    text-align: center;
-    /* Matnni markazga joylashtirish */
-    margin: 5px 0;
-    /* Tugma ustidan va ostidan masofa */
+    margin-top: 10px;
+    /* Yuqoridan bo'shliq */
     transition: background-color 0.3s, transform 0.3s;
     /* Animatsiya qo'shish */
-}
-
-.update-password-button:hover {
-    background-color: #138496;
-    /* Tugma rangini qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
 }
 
 /* Delete button styling */
@@ -1962,12 +1669,13 @@ td {
 
     .update-user-save-button,
     .update-user-cancel-button,
-    .update-password-button,
-    .update-user-delete-button {
+    .update-password-button {
         font-size: 14px;
         /* Tugmalar shriftini kamaytirish */
     }
 }
+
+/* ----------------------------------Update Password----------------------- */
 
 /* Barcha umumiy qoidalar faqat .password-change-container ichidagi elementlarga ta'sir qiladi */
 .password-change-container * {
@@ -2087,116 +1795,60 @@ td {
     }
 }
 
-
-/* O'chirish sahnasi uchun stil */
-.delete-user-container {
-    display: flex;
-    flex-direction: column;
-    /* Ustunlikda joylashtirish */
-    justify-content: center;
-    /* Markazda joylashish */
-    align-items: center;
-    /* Gorizontal markazlashtirish */
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #8fb4d4, #74a3c4);
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+/* Modalni yashirish uchun */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
     width: 100%;
-    /* Kenglikni 100% qilib o'rnatish */
-    max-width: 400px;
-    /* Maksimal kenglik */
-    margin: 0 auto;
-    /* Avtomatik marginlar bilan markazlashtirish */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal kontent */
+.modal-content {
     position: absolute;
-    /* Position o'zgartirildi */
     top: 50%;
-    /* Vertikal markazlashtirish */
     left: 50%;
-    /* Gorizontal markazlashtirish */
     transform: translate(-50%, -50%);
-    /* Markazlashtirish */
-}
-
-.delete-user-title {
+    background-color: #fff;
+    padding: 20px;
+    width: 300px;
     text-align: center;
-    margin-bottom: 20px;
-    color: white;
-    font-size: 24px;
-    /* O'sish */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.delete-user-yes-button {
-    background-color: #dc3545;
-    /* Qizil rang */
-    color: white;
-    padding: 12px;
-    /* Ichki bo'shliq */
-    border-radius: 10px;
-    /* Qirralarni yumshatish */
-    cursor: pointer;
-    font-size: 16px;
-    /* O'sish */
-    width: 320px;
-    /* Tugma kengligini 100% qilib o'rnatish */
-    margin-bottom: 10px;
-    /* Tugmalardan oldin masofa qo'shish */
+/* Tugma stillari */
+.confirm-button, .cancel-button {
+    padding: 10px 20px;
+    margin: 5px;
     border: none;
-    /* Chegarani olib tashlash */
-    transition: background-color 0.3s, transform 0.3s;
-    /* Animatsiya qo'shish */
-}
-
-.delete-user-yes-button:hover {
-    background-color: #c82333;
-    /* Tugma rangini qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
-}
-
-.delete-user-no-button {
-    display: inline-block;
-    /* Inline-block qilib o'zgartirish */
-    background-color: #007bff;
-    /* Ko'k rang */
-    color: white;
-    padding: 12px;
-    /* Ichki bo'shliq */
-    border-radius: 10px;
-    /* Qirralarni yumshatish */
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    /* O'sish */
-    text-decoration: none;
-    /* Chiziqni olib tashlash */
-    width: 100%;
-    /* Tugma kengligini 100% qilib o'rnatish */
-    text-align: center;
-    /* Matnni markazga joylashtirish */
-    transition: background-color 0.3s, transform 0.3s;
-    /* Animatsiya qo'shish */
 }
 
-.delete-user-no-button:hover {
-    background-color: #0056b3;
-    /* Tugma rangini qoraytirish */
-    transform: translateY(-2px);
-    /* Yuqoriga ko'tarish */
+.confirm-button {
+    background-color: #f44336;
+    color: #fff;
 }
 
-/* Responsiv dizayn uchun media query */
-@media (max-width: 480px) {
-    .delete-user-container {
-        padding: 30px;
-        /* Mobil qurilmalarda paddingni kamaytirish */
-    }
-
-    .delete-user-yes-button,
-    .delete-user-no-button {
-        font-size: 14px;
-        /* Tugmalar shriftini kamaytirish */
-    }
+.cancel-button {
+    background-color: #ccc;
+    color: #000;
 }
+
+.confirm-button:hover {
+    background-color: #d32f2f;
+}
+
+.cancel-button:hover {
+    background-color: #bdbdbd;
+}
+
+/* ------------------------------------Create User--------------------------------- */
 
 .create-user-container {
     display: flex;
