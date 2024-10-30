@@ -28,7 +28,7 @@ exports.createUser = async (req, res) => {
             return res.status(400).send({
                 success: false,
                 data: null,
-                error: "Username is already used."
+                error: { message: "Username is already used." }
             })
         }
 
@@ -44,7 +44,11 @@ exports.createUser = async (req, res) => {
         })
 
         // Responsing.
-        return res.redirect('/api/users')
+        return res.status(201).send({
+            success: true,
+            error: false,
+            message: `User is created successful. Username: ${data.username}`
+        })
     } catch (error) {
         // Error handling.
         console.log(error);

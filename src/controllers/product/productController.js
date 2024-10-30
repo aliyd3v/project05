@@ -83,18 +83,18 @@ exports.getAllProducts = async (req, res) => {
         // Find all products
         const products = await Product.find()
 
-        res.render('products', {
-            title: 'Products',
-            products,
-            isProducts: true
-        })
-
         // Responsing
         if (!products.length) {
-            return res.status(200).send({
-                success: true,
-                error: null,
-                message: "Product is empty."
+            return res.render('products', {
+                title: 'Products',
+                products: false,
+                isProducts: true
+            })
+        } else {
+            return res.render('products', {
+                title: 'Products',
+                products,
+                isProducts: true
             })
         }
     } catch (error) {
@@ -139,10 +139,29 @@ exports.getOneProduct = async (req, res) => {
             })
         }
 
+        const productMaterials = []
+        const gettingMaterial = async function (id) {
+            const material = await Material.findById(id)
+            return material.name
+        }
+        for (let i = 0; i < product.materialsUsed.length; i++) {
+            const materialName = await gettingMaterial(product.materialsUsed[i]._id)
+            productMaterials.push({
+                name: materialName,
+                amount: product.materialsUsed[i].amount
+            })
+        }
+
+        const data = {
+            _id: product._id,
+            name: product.name,
+            productMaterials
+        }
+
         // Responsing.
         return res.render('product', {
             title: 'Product',
-            product
+            data
         })
     } catch (error) {
         // Error handling.
