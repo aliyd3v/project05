@@ -194,11 +194,40 @@ exports.getUpdateOneProduct = async (req, res) => {
             })
         }
 
-        const product = await Product.findById(id)
+        // Find product by id.
+        const product = await Product.findById(id).populate("materialsUsed")
+
+        // Checking product for exists.
+        if (!product) {
+            return res.status(404).send({
+                success: false,
+                data: null,
+                error: "Product not found!"
+            })
+        }
+
+        const productMaterials = []
+        const gettingMaterial = async function (id) {
+            const material = await Material.findById(id)
+            return material.name
+        }
+        for (let i = 0; i < product.materialsUsed.length; i++) {
+            const materialName = await gettingMaterial(product.materialsUsed[i]._id)
+            productMaterials.push({
+                name: materialName,
+                amount: product.materialsUsed[i].amount
+            })
+        }
+
+        const data = {
+            _id: product._id,
+            name: product.name,
+            productMaterials
+        }
 
         return res.render('product-update', {
             title: 'Update product',
-            product
+            data
         })
 
     } catch (error) {
