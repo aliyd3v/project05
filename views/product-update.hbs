@@ -3,8 +3,27 @@
     <form class="update-product-form" action="/api/product/{{product.id}}/update" method="post">
         <div class="update-product-item">
             <label for="product-name" class="update-product-label">Product Name:</label>
-            <input type="text" id="product-name" name="name" class="update-product-input" value="{{product.name}}" required>
+            <input type="text" id="product-name" name="name" class="update-product-input" value="{{data.name}}" required>
         </div>
+
+        <div class="update-product-materials">
+            {{#each data.productMaterials}}
+            <div class="update-product-material">
+                <select id="material-name-{{@index}}" name="materials[{{@index}}][name]" class="update-product-input material-name" required>
+                    {{#each name}}<option value="Material">{{name}}</option>{{/each}}
+                </select>
+                <input type="number" id="material-amount-{{@index}}" name="materials[{{@index}}][amount]" class="update-product-input material-amount" value="{{amount}}" required>
+                <button type="button" class="update-product-remove-material-button" onclick="removeMaterial(this)">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+            {{/each}}
+        </div>
+
+        <button type="button" class="update-product-add-material-button" onclick="addMaterial()">
+            <i class="fas fa-plus"></i>
+        </button>
+
         <div class="update-product-button-group">
             <button type="submit" class="update-product-save-button">Save</button>
         </div>
@@ -13,3 +32,33 @@
         <a href="/api/products" class="update-product-cancel-button">Cancel</a>
     </div>
 </div>
+
+<script>
+    function addMaterial() {
+        const materialsContainer = document.querySelector('.update-product-materials');
+        const index = materialsContainer.children.length;
+
+        const newMaterialDiv = document.createElement('div');
+        newMaterialDiv.className = 'update-product-material';
+
+        newMaterialDiv.innerHTML = `
+            <label for="material-name-${index}" class="update-product-label">Material Name:</label>
+            <select id="material-name-${index}" name="materials[${index}][name]" class="update-product-input material-name" required>
+                <option value="Material 1">Material 1</option>
+                <option value="Material 2">Material 2</option>
+                <option value="Material 3">Material 3</option>
+            </select>
+            <input type="number" id="material-amount-${index}" name="materials[${index}][amount]" class="update-product-input material-amount" required placeholder="Amount">
+            <button type="button" class="update-product-remove-material-button" onclick="removeMaterial(this)">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        `;
+        
+        materialsContainer.appendChild(newMaterialDiv);
+    }
+
+    function removeMaterial(button) {
+        const materialDiv = button.parentElement;
+        materialDiv.remove();
+    }
+</script>
