@@ -1,4 +1,4 @@
-exports.addToMaterialValidationSchema = {
+exports.changeMaterialQuantityValidationSchema = {
     quantity: {
         isInt: {
             errorMessage: "Homashyoning o'lchamini raqamlarda kiriting!"
