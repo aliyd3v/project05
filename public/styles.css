@@ -1000,7 +1000,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #8fb4d4, #74a3c4);
+    background: linear-gradient(135deg, #6e8efb, #a777e3);    /* Zamonaviy gradient */
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -1018,6 +1018,7 @@ body {
     margin-bottom: 20px;
     color: white;
     font-size: 24px;
+    font-weight: 600;
 }
 
 .update-product-item {
@@ -1031,12 +1032,65 @@ body {
 }
 
 .update-product-input {
-    width: 100%;
+    width: calc(100% - 50px);
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: none;
+    border-radius: 8px;
     font-size: 16px;
     margin-top: 5px;
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.update-product-input:focus {
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(255, 127, 95, 0.5);
+    outline: none;
+}
+
+.update-product-material {
+    margin-bottom: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Material nomi va miqdori orasidagi bo'sh joy */
+}
+
+.update-product-remove-material-button {
+    background-color: transparent;
+    color: #c62828;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 20px; /* Ikonka o'lchami */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Ikonkani o'rtada joylashtirish */
+}
+
+.update-product-remove-material-button {
+    color: #d32f2f;
+}
+
+.update-product-add-material-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Ikonkani o'rtada joylashtirish */
+    font-size: 20px; /* Ikonka o'lchami */
+}
+
+.update-product-add-material-button {
+    background-color: #218838;
+    transform: translateY(-2px);
 }
 
 .update-product-button-group {
@@ -1046,10 +1100,10 @@ body {
 }
 
 .update-product-save-button {
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 8px;
     width: 100%;
     border: none;
     cursor: pointer;
@@ -1058,7 +1112,7 @@ body {
 }
 
 .update-product-save-button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
     transform: translateY(-2px);
 }
 
@@ -1073,7 +1127,7 @@ body {
     background-color: #c62828;
     color: white;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     width: 100%;
     font-size: 16px;
@@ -1083,7 +1137,7 @@ body {
 }
 
 .update-product-cancel-button:hover {
-    background-color: #c82333;
+    background-color: #b71c1c;
     transform: translateY(-2px);
 }
 
@@ -1094,13 +1148,15 @@ body {
     }
 
     .update-product-save-button,
-    .update-product-cancel-button {
+    .update-product-cancel-button,
+    .add-material-button {
         font-size: 14px;
         padding: 10px;
-        width: 100%; /* Tugmalarni to'liq kenglikka o'tkazish */
-        margin-top: 10px; /* Tugmalar orasida bo'sh joy */
+        width: 100%;
+        margin-top: 10px;
     }
 }
+
 
 
 /* ------------------------------Create Product-------------------------------- */
