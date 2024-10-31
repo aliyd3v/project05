@@ -61,6 +61,7 @@ exports.getAllMaterials = async (req, res) => {
       });
     }
   } catch (error) {
+    // Error handling.
     console.log(error);
     if (error.message) {
       return res.status(400).send({
@@ -77,10 +78,146 @@ exports.getAllMaterials = async (req, res) => {
   }
 };
 
-exports.getOneMaterial = async (req, res) => {
+exports.addToMaterial = async (req, res) => {
+  const { params: { id } } = req
   try {
-    const id = req.params.id;
+    // Checking id to valid.
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: "ID is not valid",
+      });
+    }
 
+    // Checking material for exists.
+    const material = await Material.findById(id);
+    if (!material) {
+      return res.status(404).send({
+        success: false,
+        data: null,
+        error: { message: "Material is not found!" }
+      })
+    }
+
+    // Validation result.
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorMessages = errors.array().map((error) => error.msg);
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: errorMessages,
+      });
+    }
+    const data = matchedData(req);
+
+    // Writing changes to database.
+    const update = await Material.findByIdAndUpdate(id, {
+      ...material,
+      updatedAt: new Date(),
+      quantity: material.quantity + data.quantity
+    })
+
+    // Responsing.
+    return res.status(201).send({
+      success: true,
+      error: false,
+      data: { message: "Material is added successful." }
+    })
+  } catch (error) {
+    // Error handling.
+    console.log(error);
+    if (error.message) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: error.message,
+      });
+    }
+    return res.status(500).send({
+      success: false,
+      data: null,
+      error: "INTERVAL_SERVER_ERROR",
+    });
+  }
+}
+exports.reduceFromMaterial = async (req, res) => {
+  const { params: { id } } = req
+  try {
+    // Checking id to valid.
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: "ID is not valid",
+      });
+    }
+
+    // Checking material for exists.
+    const material = await Material.findById(id);
+    if (!material) {
+      return res.status(404).send({
+        success: false,
+        data: null,
+        error: { message: "Material is not found!" }
+      })
+    }
+
+    // Validation result.
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorMessages = errors.array().map((error) => error.msg);
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: errorMessages,
+      });
+    }
+    const data = matchedData(req);
+
+    if (material.quantity < data.quantity) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: { message: "Kiritayotgan miqdoringiz bazadagi miqdordan ko'p!" }
+      })
+    }
+
+    // Writing changes to database.
+    const update = await Material.findByIdAndUpdate(id, {
+      ...material,
+      updatedAt: new Date(),
+      quantity: material.quantity - data.quantity
+    })
+
+    // Responsing.
+    return res.status(201).send({
+      success: true,
+      error: false,
+      data: { message: "Material is reduced successful." }
+    })
+  } catch (error) {
+    // Error handling.
+    console.log(error);
+    if (error.message) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        error: error.message,
+      });
+    }
+    return res.status(500).send({
+      success: false,
+      data: null,
+      error: "INTERVAL_SERVER_ERROR",
+    });
+  }
+}
+
+exports.getOneMaterial = async (req, res) => {
+  const id = req.params.id;
+  try {
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
       return res.status(400).send({

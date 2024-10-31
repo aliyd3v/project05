@@ -1,7 +1,8 @@
 const { checkSchema } = require('express-validator')
-const { getAllMaterials, createMaterial, updateMaterial, deleteMaterial, getOneMaterial, getUpdateMaterial, getCreateMaterial, deleteAllMaterials, getDdelteMaterial } = require('../../controllers/material/materialController')
+const { getAllMaterials, createMaterial, updateMaterial, deleteMaterial, getOneMaterial, getUpdateMaterial, getCreateMaterial, deleteAllMaterials, getDdelteMaterial, addToMaterial, reduceFromMaterial } = require('../../controllers/material/materialController')
 const { materialSchema, updateMaterialSchema } = require('../../util/validators/materialValidate')
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware')
+const { changeMaterialQuantityValidationSchema } = require('../../util/validators/addToMaterialValidation')
 
 const router = require('express').Router()
 
@@ -15,5 +16,7 @@ router
     .get('/material/:id/delete', roleAccessMiddleware(['admin']), getDdelteMaterial)
     .post('/material/:id/delete', roleAccessMiddleware(['admin']), deleteMaterial)
     .post('/materials/delete', roleAccessMiddleware(['admin']), deleteAllMaterials)
+    .post('/material/:id/add', roleAccessMiddleware(['admin']), checkSchema(changeMaterialQuantityValidationSchema), addToMaterial)
+    .post('/material/:id/reduce', roleAccessMiddleware(['admin']), checkSchema(changeMaterialQuantityValidationSchema), reduceFromMaterial)
 
 module.exports = router
