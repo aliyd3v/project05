@@ -13,7 +13,20 @@ exports.getCreateProduct = async (req, res) => {
             materials
         })
     } catch (error) {
-
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
     }
 }
 
