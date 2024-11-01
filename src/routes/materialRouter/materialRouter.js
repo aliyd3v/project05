@@ -2,7 +2,7 @@ const { checkSchema } = require('express-validator')
 const { getAllMaterials, createMaterial, updateMaterial, deleteMaterial, getOneMaterial, getUpdateMaterial, getCreateMaterial, deleteAllMaterials, getDdelteMaterial, addToMaterial, reduceFromMaterial } = require('../../controllers/material/materialController')
 const { materialSchema, updateMaterialSchema } = require('../../util/validators/materialValidate')
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware')
-const { changeMaterialQuantityValidationSchema } = require('../../util/validators/addToMaterialValidation')
+const { changeMaterialQuantityValidationSchema } = require('../../util/validators/changeMaterialQuantityValidation')
 
 const router = require('express').Router()
 
