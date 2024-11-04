@@ -299,6 +299,26 @@ exports.deleteOneReport = async (req, res) => {
             })
         }
 
+        // Function for add the material from to database depending on the product.
+        const addMaterialQuantity = async function (id, amount) {
+            const currentMaterial = await Material.findById(id).lean()
+            if (currentMaterial) {
+                const addMaterialQuantity = await Material.findByIdAndUpdate(id, {
+                    ...currentMaterial,
+                    quantity: currentMaterial.quantity + amount
+                })
+            }
+        }
+
+        // Product
+        const product = await Product.findById(data.product).populate('materialsUsed')
+        const materials = product.materialsUsed
+
+        // Adding to database removed product materials amount.
+        for (let i = 0; i < materials.length; i++) {
+            addMaterialQuantity(materials[i]._id, materials[i].amount)
+        }
+
         // Deleting from database.
         await Report.findByIdAndDelete(id)
 
