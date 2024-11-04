@@ -5,6 +5,7 @@ const productRouter = require('./productRouter/productRouter')
 const logoutRouter = require('./authRouter/logoutRouter')
 const reportRouter = require('./reportRouter/reportRouter')
 const statisticsRouter = require('./statisticsRouter/statisticsRouter')
+const helperRouter = require('./helperRouter/helperRouter')
 const { jwtAccessMiddleware } = require('../middlewares/jwt-access-middleware')
 
 exports.appRouter = (app) => {
@@ -15,4 +16,5 @@ exports.appRouter = (app) => {
     app.use('/api', jwtAccessMiddleware, productRouter)
     app.use('/api', jwtAccessMiddleware, reportRouter)
     app.use('/api', jwtAccessMiddleware, statisticsRouter)
+    app.use('/', jwtAccessMiddleware, helperRouter)
 }
