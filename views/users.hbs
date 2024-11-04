@@ -3,18 +3,11 @@
     <div class="app-content-header"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
             <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">Simple Tables</h3>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            Simple Tables
-                        </li>
-                    </ol>
-                </div>
-            </div> <!--end::Row-->
+                        <div class="col-md-6">
+                            <h4>Bakers</h4>
+                        </div>
+                        <div class="col-md-6 text-end"> <a href="/api/create-user" class="btn btn-primary">Add baker</a> </div>
+                    </div><!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content Header--> <!--begin::App Content-->
     <div class="app-content"> <!--begin::Container-->
@@ -22,13 +15,11 @@
             <div class="row">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h3 class="card-title">Simple Full Width Table</h3>
+                        <h3 class="card-title">Bakers list</h3>
                         <div class="card-tools">
                             <ul class="pagination pagination-sm float-end">
                                 <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
                                 <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                                <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                                <li class="page-item"> <a class="page-link" href="#">3</a> </li>
                                 <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
                             </ul>
                         </div>
@@ -37,11 +28,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Created at</th>
-                                    <th >Reports amount</th>
+                                    <th style="width: 7%;">#</th>
+                                    <th style="width: 20%; margin: 0 auto;">Name</th>
+                                    <th style="width: 20%; margin: 0 auto;">Username</th>
+                                    <th style="width: 20%; margin: 0 auto;">Reports amount</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,10 +40,8 @@
                                     <td>{{number}}</td>
                                     <td><a href="/api/user/{{id}}"
                                             style="text-decoration:none; color: black;">{{name}}</a></td>
-                                    <td>
-                                        {{username}}
-                                    </td>
-                                    <td>{{createdAt}}</td>
+                                    <td><a href="/api/user/{{id}}"
+                                            style="text-decoration:none; color: black;">{{username}}</a></td></td>
                                     <td>{{reportsAmount}}</td>
                                 </tr>
                                 {{/each}}
@@ -65,3 +53,9 @@
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
 </main> <!--end::App Main-->
+
+
+{{!--
+<a class="btn btn-primary" href="/api/user/{{id}}/update">Edit</a>
+<a class="btn btn-success" href="/user/:id/delete">Delete</a>
+--}}
