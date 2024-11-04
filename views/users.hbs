@@ -1,63 +1,67 @@
-<div class="users-table-container">
-    <h2>Foydalanuvchilar Jadvali</h2>
-    <table class="users-table">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Name</th>
-                <th>createdAt</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each allUsers}}
-            <tr>
-                <td>{{username}}</td>
-                <td>{{name}}</td>
-                <td>{{formatDate createdAt}}</td>
-                <td>
-                    <button class="edit-button" onclick="location.href='/api/user/{{id}}/update'">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <form action="/api/user/{{id}}/delete" method="POST" class="delete-form" style="display:inline;">
-                        <button type="button" class="delete-button" onclick="openModal(this)">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-</div>
-
-<!-- Modal oynasi -->
-<div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <p>Userni o'chirishni xohlaysizmi?</p>
-        <button id="confirmDeleteButton" class="confirm-button">Ha</button>
-        <button onclick="closeModal()" class="cancel-button">Yo'q</button>
-    </div>
-</div>
-<script>
-    let formToDelete;
-
-    function openModal(button) {
-        // Modalni ko'rsatadi
-        document.getElementById("confirmationModal").style.display = "block";
-        // O'chirish uchun kerakli formani saqlaydi
-        formToDelete = button.closest("form");
-    }
-
-    function closeModal() {
-        // Modalni yashiradi
-        document.getElementById("confirmationModal").style.display = "none";
-    }
-
-    document.getElementById("confirmDeleteButton").addEventListener("click", function() {
-        if (formToDelete) {
-            formToDelete.submit(); // Agar tasdiqlangan bo'lsa, formani yuboradi
-        }
-        closeModal(); // Modalni yopadi
-    });
-</script>
+<!--begin::App Main-->
+<main class="app-main"> <!--begin::App Content Header-->
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Simple Tables</h3>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-end">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Simple Tables
+                        </li>
+                    </ol>
+                </div>
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content Header--> <!--begin::App Content-->
+    <div class="app-content"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Simple Full Width Table</h3>
+                        <div class="card-tools">
+                            <ul class="pagination pagination-sm float-end">
+                                <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">1</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">2</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">3</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
+                            </ul>
+                        </div>
+                    </div> <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Created at</th>
+                                    <th >Reports amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each allUsers}}
+                                <tr class="align-middle">
+                                    <td>{{number}}</td>
+                                    <td><a href="/api/user/{{id}}"
+                                            style="text-decoration:none; color: black;">{{name}}</a></td>
+                                    <td>
+                                        {{username}}
+                                    </td>
+                                    <td>{{createdAt}}</td>
+                                    <td>{{reportsAmount}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div> <!-- /.card-body -->
+                </div> <!-- /.card -->
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content-->
+</main> <!--end::App Main-->

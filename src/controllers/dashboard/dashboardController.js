@@ -18,7 +18,6 @@ exports.getDashboard = async (req, res) => {
             products,
             reports,
             isStatistics: true,
-            layout: false
         })
     } catch (error) {
         // Error handling.

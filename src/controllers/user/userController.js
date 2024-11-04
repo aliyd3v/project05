@@ -1,6 +1,7 @@
 const { checkSchema, validationResult, matchedData } = require('express-validator');
 const { User } = require('../../models/userModel')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { Report } = require('../../models/reportModel');
 
 exports.getCreateUser = async (req, res) => {
     res.render('create-user', {
@@ -83,8 +84,19 @@ exports.getAllUsers = async (req, res) => {
         const allUsers = []
         for (let i = 0; i < users.length; i++) {
             const user = users[i]
+            const userReports = await Report.find({ producedBy: user.id })
             if (user.role != 'admin')
-                allUsers.push({ id: user._id, name: user.name, username: user.username, createdAt: user.createdAt.toLocaleDateString() })
+                allUsers.push({
+                    id: user._id,
+                    name: user.name,
+                    username: user.username,
+                    createdAt: user.createdAt.toLocaleDateString(),
+                    reportsAmount: userReports.length
+                })
+        }
+
+        for (let i = 0; i < allUsers.length; i++) {
+            allUsers[i].number = i + 1
         }
 
         return res.render('users', {
