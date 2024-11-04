@@ -1,9 +1,9 @@
-const { getAllStatistics } = require('../../controllers/statistics/statisticsController')
+const { getDashboard } = require('../../controllers/dashboard/dashboardController')
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware')
 
 const router = require('express').Router()
 
 router
-.get('/statistics', roleAccessMiddleware(['admin']), getAllStatistics)
+.get('/dashboard', roleAccessMiddleware(['admin']), getDashboard)
 
 module.exports = router

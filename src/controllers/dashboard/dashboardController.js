@@ -3,21 +3,22 @@ const { Product } = require("../../models/productModel")
 const { Report } = require("../../models/reportModel")
 const { User } = require("../../models/userModel")
 
-exports.getAllStatistics = async (req, res) => {
+exports.getDashboard = async (req, res) => {
     try {
         const users = await User.find()
         const usersLength = users.length
         const materials = await Material.find()
         const products = await Product.find()
         const reports = await Report.find()
-        return res.render('statistics', {
-            title: "Statistics",
+        return res.render('dashboard', {
+            title: "Dashboard",
             users,
             usersLength,
             materials,
             products,
             reports,
-            isStatistics: true
+            isStatistics: true,
+            layout: false
         })
     } catch (error) {
         // Error handling.

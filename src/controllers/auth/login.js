@@ -16,6 +16,27 @@ const generateToken = (id, role) => {
 
 exports.loginPage = async (req, res) => {
     try {
+        // Checking token to exists & valid.
+        const token = req.cookies.authcookie;
+        if (token) {
+            const { role } = jwt.verify(token, process.env.JWT_SECRET_KEY);
+            if (role) {
+                if (role == 'admin') {
+                    // Redirecting.
+                    return res.redirect('/api/dashboard')
+                } else if (role == 'baker') {
+                    // Redirecting.
+                    return res.redirect('/api/create-report')
+                }
+            }
+
+            // Rendering.
+            return res.render('login', {
+                layout: false
+            })
+        }
+
+        // Rendering.
         return res.render('login', {
             layout: false
         })
@@ -81,7 +102,7 @@ exports.login = async (req, res) => {
 
         // Send to endpoint.
         if (role == 'admin') {
-            return res.redirect('/api/statistics')
+            return res.redirect('/api/dashboard')
         } else {
             return res.redirect('/api/create-report')
         }
