@@ -10,16 +10,16 @@
             <div class="card-header">
               <div class="card-title">Add baker</div>
             </div> <!--end::Header--> <!--begin::Form-->
-            <form id="create-user-forum"> <!--begin::Body-->
+            <form action="/api/create-user" method="post"> <!--begin::Body-->
               <div class="card-body">
-                <div class="row mb-3"> <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                  <div class="col-sm-10"> <input type="text" class="form-control" id="inputName" required> </div>
+                <div class="row mb-3"> <label for="name" class="col-sm-2 col-form-label">Name</label>
+                  <div class="col-sm-10"> <input type="text" class="form-control" name="name" id="name" required> </div>
                 </div>
-                <div class="row mb-3"> <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
-                  <div class="col-sm-10"> <input type="text" class="form-control" id="inputUsername" required> </div>
+                <div class="row mb-3"> <label for="username" class="col-sm-2 col-form-label">Username</label>
+                  <div class="col-sm-10"> <input type="text" name="username" class="form-control" id="username" required> </div>
                 </div>
-                <div class="row mb-3"> <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                  <div class="col-sm-10"> <input type="password" class="form-control" id="inputPassword" required> </div>
+                <div class="row mb-3"> <label for="password" class="col-sm-2 col-form-label">Password</label>
+                  <div class="col-sm-10"> <input type="password" name="password" class="form-control" id="password" required> </div>
                 </div>
               </div> <!--end::Body--> <!--begin::Footer-->
               <div class="card-footer"> <button type="submit" class="btn btn-warning">Add</button> <a class="btn float-end" href="/api/users">Cancel</a> </div> <!--end::Footer-->

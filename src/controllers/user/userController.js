@@ -189,8 +189,8 @@ exports.getUpgdateOneUser = async (req, res) => {
         }
 
         // Rendering.
-        res.render('user-update', {
-            title: 'Update user',
+        return res.render('user-update', {
+            title: 'Update baker',
             user
         })
     } catch (error) {

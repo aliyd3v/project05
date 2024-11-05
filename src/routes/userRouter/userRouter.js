@@ -4,8 +4,8 @@ const { createUserValidationSchema } = require('../../util/validators/createUser
 const { roleAccessMiddleware } = require('../../middlewares/role-access-middleware');
 const { updateUserValidationSchema } = require('../../util/validators/updateUserValidation');
 const { udpatePasswordValidationSchema } = require('../../util/validators/updateUserPasswordValidation');
-
 const router = require('express').Router()
+
 router
     .get('/create-user', roleAccessMiddleware(['admin']), getCreateUser)
     .post('/create-user', roleAccessMiddleware(['admin']), checkSchema(createUserValidationSchema), createUser)

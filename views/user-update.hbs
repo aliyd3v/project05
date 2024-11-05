@@ -1,22 +1,33 @@
-<div class="update-user-container">
-    <h2 class="update-user-title">Update User</h2>
-    <form class="update-user-form" action="/api/user/{{user.id}}/update" method="POST">
-        <div class="update-user-info">
-            <div class="update-user-item">
-                <label for="name" class="update-user-label">Name:</label>
-                <input type="text" id="name" name="name" required class="update-user-input" value="{{user.name}}">
-            </div>
-            <div class="update-user-item">
-                <label for="username" class="update-user-label">Username:</label>
-                <input type="text" id="username" name="username" required class="update-user-input" value="{{user.username}}">
-            </div>
-        </div>
-        <div class="update-user-button-group">
-            <button type="submit" class="update-user-save-button">Save</button>
-            <a href="/api/user/{{user.id}}/update-password" class="update-password-button">Update Password</a>
-        </div>
-    </form>
-    <div class="cancel-button-container">
-        <a href="/api/users" class="update-user-cancel-button">Cancel</a>
-    </div>
-</div>
+<!--begin::App Main-->
+<main class="app-main"> <!--begin::App Content-->
+  <div class="app-content"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Row-->
+      <div class="row g-4"> <!--begin::Col-->
+        <div class="col-12">
+        </div> <!--end::Col--> <!--begin::Col-->
+        <div class="col-md-6"> <!--begin::Horizontal Form-->
+          <div class="card card-warning card-outline mb-4"> <!--begin::Header-->
+            <div class="card-header">
+              <div class="card-title">Add baker</div>
+            </div> <!--end::Header--> <!--begin::Form-->
+            <form action="/api/user/{{user._id}}/update" method="post"> <!--begin::Body-->
+              <div class="card-body">
+                <div class="row mb-3"> <label for="name" class="col-sm-2 col-form-label">Name</label>
+                  <div class="col-sm-10"> <input type="text" class="form-control" name="name" id="name" required value="{{user.name}}"> </div>
+                </div>
+                <div class="row mb-3"> <label for="username" class="col-sm-2 col-form-label">Username</label>
+                  <div class="col-sm-10"> <input type="text" name="username" class="form-control" id="username" required value="{{user.username}}"> </div>
+                </div>
+              </div> <!--end::Body--> <!--begin::Footer-->
+              <div class="card-footer"> <button type="submit" class="btn btn-warning">Add</button> <a class="btn float-end" href="/api/users">Cancel</a> </div> <!--end::Footer-->
+            </form> <!--end::Form-->
+          </div> <!--end::Horizontal Form-->
+        </div> <!--end::Col-->
+      </div> <!--end::Row-->
+    </div> <!--end::Container-->
+  </div> <!--end::App Content-->
+</main> <!--end::App Main-->
+
+<script>
+
+</script>
