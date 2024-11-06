@@ -10,8 +10,8 @@ const { jwtAccessMiddleware } = require('../middlewares/jwt-access-middleware')
 
 exports.appRouter = (app) => {
     app.get('/', helperRouter)
-    app.use('/api', jwtAccessMiddleware, helperRouter)
     app.use('/api', loginRouter)
+    app.use('/api', jwtAccessMiddleware, helperRouter)
     app.use('/api', jwtAccessMiddleware, logoutRouter)
     app.use('/api', jwtAccessMiddleware, userRouter)
     app.use('/api', jwtAccessMiddleware, materialRouter)

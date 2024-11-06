@@ -28,27 +28,23 @@ exports.loginPage = async (req, res) => {
                     // Redirecting.
                     return res.redirect('/api/create-report')
                 }
+            } else {
+                // Rendering.
+                return res.render('login', {
+                    layout: false
+                })
             }
-
+        } else {
             // Rendering.
             return res.render('login', {
                 layout: false
             })
         }
-
-        // Rendering.
-        return res.render('login', {
-            layout: false
-        })
     } catch (error) {
-        // Handling errors.
+        // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
