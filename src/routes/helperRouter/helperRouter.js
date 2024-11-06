@@ -1,8 +1,9 @@
-const { redirect } = require('../../controllers/helper/helper')
+const { redirect, badRequest } = require('../../controllers/helper/helper')
 
 const router = require('express').Router()
 
 router
-.get('/', redirect)
+    .get('/', redirect)
+    .get('/bad-request', badRequest)
 
-module.exports = router
+    module.exports = router

@@ -18,3 +18,10 @@ exports.redirect = async (req, res) => {
         return res.redirect('/api/create-report')
     }
 }
+
+exports.badRequest = (req, res) => {
+    return res.render('bad-request', {
+        layout: false,
+        title: 'Bad request!'
+    })
+}

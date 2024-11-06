@@ -1,7 +1,23 @@
-    <div class="delete-user-container">
-        <h2 class="delete-user-title">Foydalanuvchini o'chirishni xohlaysizmi?</h2>
-        <form class="delete-user-form" action="/api/user/{{user.id}}/delete" method="POST">
-            <button type="submit" class="delete-user-yes-button">Yes</button>
-        </form>
-        <a href="/api/user/{{user.id}}/update" class="delete-user-no-button">No</a>
-    </div>
+<!--begin::App Main-->
+<main class="app-main"> <!--begin::App Content-->
+    <div class="app-content"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row g-4"> <!--begin::Col-->
+                <div class="col-12">
+                </div> <!--end::Col--> <!--begin::Col-->
+                <div class="col-md-6"> <!--begin::Horizontal Form-->
+                    <div class="card card-warning card-outline mb-4"> <!--begin::Header-->
+                        <div class="card-header">
+                            <div class="card-title">Do you want delete baker <strong>{{user.name}}</strong>?</div>
+                        </div> <!--end::Header--> <!--begin::Form-->
+                        <form action="/api/user/{{user.id}}/delete" method="post"> <!--begin::Body-->
+                                <div class="card-footer"> <button type="submit" class="btn btn-danger">Delete</button>
+                                    <a class="btn float-end" href="/api/user/{{user._id}}">Cancel</a>
+                                
+                        </form> <!--end::Form-->
+                    </div> <!--end::Horizontal Form-->
+                </div> <!--end::Col-->
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content-->
+</main> <!--end::App Main-->

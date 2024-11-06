@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt');
 const { Report } = require('../../models/reportModel');
 
 exports.getCreateUser = async (req, res) => {
-    res.render('create-user', {
-        title: 'Create user'
+    return res.render('create-user', {
+        title: 'Add baker'
     })
 }
 
@@ -15,21 +15,29 @@ exports.createUser = async (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             const errorMessages = errors.array().map(error => error.msg);
-            return res.status(400).send({
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: errorMessages
-            });
+                message: errorMessages
+            }
+            return res.render('create-user', {
+                title: 'Add baker',
+                alert
+            })
         }
         const data = matchedData(req)
 
         // Checking username to exists.
         const condidat = await User.findOne({ username: data.username })
         if (condidat) {
-            return res.status(400).send({
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: { message: "Username is already used." }
+                message: "Username is already used! Please enter another username."
+            }
+            return res.render('create-user', {
+                title: 'Add baker',
+                alert
             })
         }
 
@@ -44,21 +52,24 @@ exports.createUser = async (req, res) => {
             password: passwordHash
         })
 
-        // Responsing.
-        return res.status(201).send({
+        // Alert.
+        const alert = {
             success: true,
-            error: false,
-            message: `User is created successful. Username: ${data.username}`
+            message: `User is created successful.`
+        }
+        const user = newUser
+
+        // Rendering.
+        res.render('user', {
+            title: `${user.name}`,
+            alert,
+            user
         })
     } catch (error) {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -73,14 +84,14 @@ exports.getAllUsers = async (req, res) => {
         // Finding all users.
         const users = await User.find()
         if (!users.length) {
-            return res.status(200).send({
-                success: true,
-                error: false,
-                message: 'Users is empty.'
+            // Rendering.
+            return res.render('users', {
+                title: 'Users',
+                isUsers: true
             })
         }
 
-        // Give all users without admins.
+        // Get all users without admin.
         const allUsers = []
         for (let i = 0; i < users.length; i++) {
             const user = users[i]
@@ -99,8 +110,9 @@ exports.getAllUsers = async (req, res) => {
             allUsers[i].number = i + 1
         }
 
+        // Rendering.
         return res.render('users', {
-            title: 'Users',
+            title: 'Bakers',
             allUsers,
             isUsers: true
         })
@@ -109,11 +121,7 @@ exports.getAllUsers = async (req, res) => {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -128,35 +136,56 @@ exports.getOneUser = async (req, res) => {
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: "ID is not valid"
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
 
         // Finding user by id & checking to exists.
         const user = await User.findById(id)
         if (!user) {
-            return res.status(404).send({
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: 'User not found!'
+                message: 'Baker not found!'
+            }
+
+            // Get all users without admin.
+            const users = await User.find()
+            const allUsers = []
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i]
+                const userReports = await Report.find({ producedBy: user.id })
+                if (user.role != 'admin')
+                    allUsers.push({
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        createdAt: user.createdAt.toLocaleDateString(),
+                        reportsAmount: userReports.length
+                    })
+            }
+            for (let i = 0; i < allUsers.length; i++) {
+                allUsers[i].number = i + 1
+            }
+
+            // Rendering.
+            return res.render('users', {
+                title: 'Bakers',
+                allUsers,
+                isUsers: true,
+                alert
             })
         }
 
+        // Rendering.
         return res.render('user', {
-            title: 'User',
+            title: `${user.name}`,
             user
         })
     } catch (error) {
+        // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -171,20 +200,43 @@ exports.getUpgdateOneUser = async (req, res) => {
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: "ID is not valid"
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
 
-        // Checking user to exists.
+        // Finding user by id & checking to exists.
         const user = await User.findById(id)
         if (!user) {
-            return res.status(404).send({
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: "User not found!"
+                message: 'Baker not found!'
+            }
+
+            // Get all users without admin.
+            const users = await User.find()
+            const allUsers = []
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i]
+                const userReports = await Report.find({ producedBy: user.id })
+                if (user.role != 'admin')
+                    allUsers.push({
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        createdAt: user.createdAt.toLocaleDateString(),
+                        reportsAmount: userReports.length
+                    })
+            }
+            for (let i = 0; i < allUsers.length; i++) {
+                allUsers[i].number = i + 1
+            }
+
+            // Rendering.
+            return res.render('users', {
+                title: 'Bakers',
+                allUsers,
+                isUsers: true,
+                alert
             })
         }
 
@@ -194,13 +246,10 @@ exports.getUpgdateOneUser = async (req, res) => {
             user
         })
     } catch (error) {
+        // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -215,54 +264,109 @@ exports.updateOneUser = async (req, res) => {
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: "ID is not valid"
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
 
         // Finding user by id & checking to exists.
-        const user = await User.findById(id)
-        if (!user) {
-            return res.status(404).send({
+        const oldUser = await User.findById(id)
+        if (!oldUser) {
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: 'User not found!'
+                message: 'Baker not found!'
+            }
+
+            // Get all users without admin.
+            const users = await User.find()
+            const allUsers = []
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i]
+                const userReports = await Report.find({ producedBy: user.id })
+                if (user.role != 'admin')
+                    allUsers.push({
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        createdAt: user.createdAt.toLocaleDateString(),
+                        reportsAmount: userReports.length
+                    })
+            }
+            for (let i = 0; i < allUsers.length; i++) {
+                allUsers[i].number = i + 1
+            }
+
+            // Rendering.
+            return res.render('users', {
+                title: 'Bakers',
+                allUsers,
+                isUsers: true,
+                alert
             })
         }
 
         // Validation result.
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
-            const errorMessages = errors.array().map(error => error.msg)
-            return res.status(400).send({
+            const errorMessages = errors.array().map(error => error.msg);
+            const user = await User.findById(id)
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: errorMessages
+                message: errorMessages
+            }
+            // Rendering.
+            return res.render('user-update', {
+                title: 'Update baker',
+                user,
+                alert
             })
         }
         const data = matchedData(req)
 
-        // Updating and writing changes to database.
-        const updating = {
-            name: data.name || user.name,
-            username: data.username || user.username
+        if (data.username != oldUser.username) {
+            const condidat = await User.findOne({ username: data.username })
+            if (condidat) {
+                // Alert.
+                const alert = {
+                    success: false,
+                    message: 'With tish usename already exists baker! Please enter another username.'
+                }
+                const user = data
+                user._id = id
+                // Rendering.
+                return res.render('user-update', {
+                    title: 'Update baker',
+                    user,
+                    alert
+                })
+            }
         }
 
-        await User.findByIdAndUpdate(id, updating)
+        // Updating and writing changes to database.
+        const updating = {
+            name: data.name,
+            username: data.username
+        }
+        let updatedUser = await User.findByIdAndUpdate(id, updating)
+        const user = await User.findById(id)
 
-        // Responsing.
-        return res.redirect(`/api/user/${id}`)
+        // Alert.
+        const alert = {
+            success: true,
+            message: `Baker is updated successful.`
+        }
+
+        // Rendering.
+        return res.render('user', {
+            title: `${updatedUser.name}`,
+            user,
+            alert
+        })
     } catch (error) {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -277,20 +381,43 @@ exports.getUpdatePassword = async (req, res) => {
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: "ID is not valid"
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
 
-        // Checking user to exists.
+        // Finding user by id & checking to exists.
         const user = await User.findById(id)
         if (!user) {
-            return res.status(404).send({
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: "User not found!"
+                message: 'Baker not found!'
+            }
+
+            // Get all users without admin.
+            const users = await User.find()
+            const allUsers = []
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i]
+                const userReports = await Report.find({ producedBy: user.id })
+                if (user.role != 'admin')
+                    allUsers.push({
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        createdAt: user.createdAt.toLocaleDateString(),
+                        reportsAmount: userReports.length
+                    })
+            }
+            for (let i = 0; i < allUsers.length; i++) {
+                allUsers[i].number = i + 1
+            }
+
+            // Rendering.
+            return res.render('users', {
+                title: 'Bakers',
+                allUsers,
+                isUsers: true,
+                alert
             })
         }
 
@@ -303,11 +430,7 @@ exports.getUpdatePassword = async (req, res) => {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -322,20 +445,43 @@ exports.updateUserPassword = async (req, res) => {
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: "ID is not valid"
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
 
         // Finding user by id & checking to exists.
         const user = await User.findById(id)
         if (!user) {
-            return res.status(404).send({
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: 'User not found!'
+                message: 'Baker not found!'
+            }
+
+            // Get all users without admin.
+            const users = await User.find()
+            const allUsers = []
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i]
+                const userReports = await Report.find({ producedBy: user.id })
+                if (user.role != 'admin')
+                    allUsers.push({
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        createdAt: user.createdAt.toLocaleDateString(),
+                        reportsAmount: userReports.length
+                    })
+            }
+            for (let i = 0; i < allUsers.length; i++) {
+                allUsers[i].number = i + 1
+            }
+
+            // Rendering.
+            return res.render('users', {
+                title: 'Bakers',
+                allUsers,
+                isUsers: true,
+                alert
             })
         }
 
@@ -343,10 +489,16 @@ exports.updateUserPassword = async (req, res) => {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             const errorMessages = errors.array().map(error => error.msg)
-            return res.status(400).send({
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: errorMessages
+                message: errorMessages
+            }
+            // Rendering.
+            return res.render('update-user-password', {
+                title: 'Update password',
+                user,
+                alert
             })
         }
         const data = matchedData(req)
@@ -361,21 +513,23 @@ exports.updateUserPassword = async (req, res) => {
             password: passwordHash
         }, { new: true })
 
-        // Responsing.
-        return res.status(201).send({
+        // Alert.
+        const alert = {
             success: true,
-            error: false,
-            message: "User password is updated successful."
+            message: 'Password has been updated successful!'
+        }
+
+        // Rendering.
+        return res.render('user', {
+            title: 'User',
+            user,
+            alert
         })
     } catch (error) {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -390,14 +544,45 @@ exports.getDeleteOneUser = async (req, res) => {
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: "ID is not valid"
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
 
+        // Finding user by id & checking to exists.
         const user = await User.findById(id)
+        if (!user) {
+            // Alert.
+            const alert = {
+                success: false,
+                message: 'Baker not found!'
+            }
+
+            // Get all users without admin.
+            const users = await User.find()
+            const allUsers = []
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i]
+                const userReports = await Report.find({ producedBy: user.id })
+                if (user.role != 'admin')
+                    allUsers.push({
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        createdAt: user.createdAt.toLocaleDateString(),
+                        reportsAmount: userReports.length
+                    })
+            }
+            for (let i = 0; i < allUsers.length; i++) {
+                allUsers[i].number = i + 1
+            }
+
+            // Rendering.
+            return res.render('users', {
+                title: 'Bakers',
+                allUsers,
+                isUsers: true,
+                alert
+            })
+        }
 
         res.render('delete-user', {
             title: 'Delete user',
@@ -408,11 +593,7 @@ exports.getDeleteOneUser = async (req, res) => {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -427,37 +608,88 @@ exports.deleteOneUser = async (req, res) => {
     try {
         // Checking id to valid.
         if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-            return res.status(400).send({
+            return res.status(400).redirect('/api/bad-request')
+        }
+
+        // Finding user by id & checking to exists.
+        const user = await User.findById(id)
+        if (!user) {
+            // Alert.
+            const alert = {
                 success: false,
-                data: null,
-                error: "ID is not valid"
+                message: 'Baker not found!'
+            }
+
+            // Get all users without admin.
+            const users = await User.find()
+            const allUsers = []
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i]
+                const userReports = await Report.find({ producedBy: user.id })
+                if (user.role != 'admin')
+                    allUsers.push({
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        createdAt: user.createdAt.toLocaleDateString(),
+                        reportsAmount: userReports.length
+                    })
+            }
+            for (let i = 0; i < allUsers.length; i++) {
+                allUsers[i].number = i + 1
+            }
+
+            // Rendering.
+            return res.render('users', {
+                title: 'Bakers',
+                allUsers,
+                isUsers: true,
+                alert
             })
         }
 
-        // Checking for exists.
-        const user = await User.findById(id)
-        if (!user) {
-            return res.status(404).send({
-                success: false,
-                data: null,
-                error: "User not found!"
-            })
-        }
+        const name = user.name
 
         // Deleting from database.
         await User.findByIdAndDelete(id)
 
-        // Responsing.
-        return res.redirect('/api/users')
+        // Alert.
+        const alert = {
+            success: false,
+            message: `Baker ${name} has been deleted successful.`
+        }
+
+        // Get all users without admin.
+        const users = await User.find()
+        const allUsers = []
+        for (let i = 0; i < users.length; i++) {
+            const user = users[i]
+            const userReports = await Report.find({ producedBy: user.id })
+            if (user.role != 'admin')
+                allUsers.push({
+                    id: user._id,
+                    name: user.name,
+                    username: user.username,
+                    createdAt: user.createdAt.toLocaleDateString(),
+                    reportsAmount: userReports.length
+                })
+        }
+        for (let i = 0; i < allUsers.length; i++) {
+            allUsers[i].number = i + 1
+        }
+
+        // Rendering.
+        return res.render('users', {
+            title: 'Bakers',
+            allUsers,
+            isUsers: true,
+            alert
+        })
     } catch (error) {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
@@ -473,7 +705,6 @@ exports.deleteAllBakers = async (req, res) => {
         const bakers = await User.find({
             role: 'baker'
         })
-        console.log(bakers)
         if (!bakers) {
             return res.status(200).send({
                 success: false,
@@ -495,11 +726,7 @@ exports.deleteAllBakers = async (req, res) => {
         // Error handling.
         console.log(error);
         if (error.message) {
-            return res.status(400).send({
-                success: false,
-                data: null,
-                error: error.message
-            })
+            return res.status(400).redirect('/api/bad-request')
         }
         return res.status(500).send({
             success: false,
