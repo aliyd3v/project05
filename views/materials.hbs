@@ -1,68 +1,61 @@
-<div class="materials-table-container">
-    <h2>Materials</h2>
-    <table class="materials-table">
-        <thead>
-            <tr>
-                <th>Material Name</th>
-                <th>Quantity</th>
-                <th>UpdatedAt</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each material}}
-            <tr>
-                <td><a href="/api/material/{{id}}">{{name}}</a></td>
-                <td>{{quantity}}</td>
-                {{#if updatedAt}}
-                <td>{{formatDate updatedAt}}</td>
-                {{else}}
-                <td>{{formatDate createdAt}}</td>
-                {{/if}}
-                <td class="action-cell">
-                    <button class="edit-button" onclick="location.href='/api/material/{{id}}/update'">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <form action="/api/material/{{id}}/delete" method="POST" class="delete-form" style="display:inline;">
-                        <button type="button" class="delete-button" onclick="openModal(this)">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-</div>
+<main class="app-main"> <!--begin::App Content Header-->
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Materials</h3>
+                </div>
+                <div class="col-sm-6 text-end">
+                    <a href="/api/create-material" class="btn btn-primary mt-2">Create Material</a>
+                </div>
 
-<!-- Modal oynasi -->
-<div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <p>Materialni o'chirishni xohlaysizmi?</p>
-        <button id="confirmDeleteButton" class="confirm-button">Ha</button>
-        <button onclick="closeModal()" class="cancel-button">Yo'q</button>
-    </div>
-</div>
-
-<script>
-    let formToDelete;
-
-    function openModal(button) {
-        // Modalni ko'rsatadi
-        document.getElementById("confirmationModal").style.display = "block";
-        // O'chirish uchun kerakli formani saqlaydi
-        formToDelete = button.closest("form");
-    }
-
-    function closeModal() {
-        // Modalni yashiradi
-        document.getElementById("confirmationModal").style.display = "none";
-    }
-
-    document.getElementById("confirmDeleteButton").addEventListener("click", function() {
-        if (formToDelete) {
-            formToDelete.submit(); // Agar tasdiqlangan bo'lsa, formani yuboradi
-        }
-        closeModal(); // Modalni yopadi
-    });
-</script>
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content Header--> <!--begin::App Content-->
+    <div class="app-content"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row" style="width: 95%; margin: 0 auto;">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Simple Full Width Table</h3>
+                        <div class="card-tools">
+                            <ul class="pagination pagination-sm float-end">
+                                <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">1</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
+                            </ul>
+                        </div>
+                    </div> <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%; text-align: center;">#</th>
+                                    <th style="width: 25%; text-align: center;">Name</th>
+                                    <th style="width: 20%; text-align: center;">Created at</th>
+                                    <th style="width: 15%; text-align: center;">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each allMaterials}}
+                                <tr class="align-middle tbody-hover" style="cursor: pointer;"
+                                    onclick="window.location.href='/api/material/{{id}}'">
+                                    <td style="text-align: center;">{{number}}</td>
+                                    <td style="text-align: center;">
+                                        {{name}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{formatDate createdAt}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{quantity}}
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div> <!-- /.card-body -->
+                </div> <!--end::Row-->
+            </div> <!--end::Container-->
+        </div> <!--end::App Content-->
+</main> <!--end::App Main-->

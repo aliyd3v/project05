@@ -1,17 +1,46 @@
-<div class="one-material-container">
-    <h2 class="one-material-title">Material</h2>
-    <div class="one-material-info">
-    <div class="one-material-item">
-        <span class="one-material-label">Material Name:</span>
-        <span class="one-material-value" id="material-name">{{material.name}}</span>
+<main class="app-main">
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3 class="mb-0">Material</h3>
+                </div>
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
     </div>
-    <div class="one-material-item">
-        <span class="one-material-label">Quantity:</span>
-        <span class="one-material-value" id="material-quantity">{{material.quantity}}</span>
-    </div>
-</div>
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card card-warning card-outline mb-4">
+                        <div class="card-header">
+                            <div class="card-title">Material</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" name="name" value="{{material.name}}"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="quantity" name="quantity"
+                                        value="{{material.quantity}}" disabled>
+                                </div>
+                            </div>
 
-    <div class="one-material-button-group">
-        <a href="/api/materials" class="one-material-cancel-button">Cancel</a>
+                            <div class="update-cancel-container d-flex justify-content-between">
+                                <button onclick="window.location.href='/api/material/{{material.id}}/update'"
+                                    type="submit" class="btn btn-warning" style="width: 80px;">Edit</button>
+                                <a href="/api/materials" class="btn btn-light">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</main>
