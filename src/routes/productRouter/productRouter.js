@@ -7,8 +7,8 @@ const { udpateProductValidationSchema } = require('../../util/validators/udpateP
 const router = require('express').Router()
 
 router
-    .get('/product', roleAccessMiddleware(['admin']), getCreateProduct)
-    .post('/product', roleAccessMiddleware(['admin']), checkSchema(createProductValidationSchema), createProduct)
+    .get('/create-product', roleAccessMiddleware(['admin']), getCreateProduct)
+    .post('/create-product', roleAccessMiddleware(['admin']), checkSchema(createProductValidationSchema), createProduct)
     .get('/products', roleAccessMiddleware(['admin']), getAllProducts)
     .get('/product/:id', roleAccessMiddleware(['admin']), getOneProduct)
     .get('/product/:id/update', roleAccessMiddleware(['admin']), getUpdateOneProduct)

@@ -1,63 +1,90 @@
-<div class="product-table-container">
-    <h2>Mahsulotlar Jadvali</h2>
-    <table class="product-table">
-        <thead>
-            <tr>
-                <th>Mahsulot Nom</th>
-                <th>Yaratilgan</th>
-                <th>Amallar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#if products}}
-            {{#each products}}
-            <tr>
-                <td><a href="/api/product/{{id}}">{{name}}</a></td>
-                <td>{{formatDate createdAt}}</td>
-                <td class="action-cell">
-                    <button class="edit-button" onclick="location.href='/api/product/{{id}}/update'">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <form action="/api/product/{{id}}/delete" method="POST" class="delete-form" style="display:inline;">
-                        <button type="button" class="delete-button" onclick="openModal(this)">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            {{/each}}
-            {{else}}
-            <p>Empty</p>
-            {{/if}}
-        </tbody>
-    </table>
-</div>
-
-<!-- Modal oynasi -->
-<div id="confirmationModal" class="modal">
-    <div class="modal-content">
-        <p>Mahsulotni o'chirishni xohlaysizmi?</p>
-        <button id="confirmDeleteButton" class="confirm-button">Ha</button>
-        <button onclick="closeModal()" class="cancel-button">Yo'q</button>
-    </div>
-</div>
+<!--begin::App Main-->
+<main class="app-main"> <!--begin::App Content Header-->
+    <div class="app-content-header"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                {{#if alert}}
+                {{#if alert.success}}
+                <div class="alert alert-success" id="alert" role="alert">
+                    {{alert.message}}
+                </div>
+                {{else}}
+                <div class="alert alert-danger" id="alert" role="alert">
+                    {{alert.message}}
+                </div>
+                {{/if}}
+                {{else}}
+                {{/if}}
+                <div class="col-md-6">
+                    <h4>Products</h4>
+                </div>
+                <div class="col-md-6 text-end"> <a href="/api/create-product" class="btn btn-primary">Add product</a> </div>
+            </div><!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content Header--> <!--begin::App Content-->
+    <div class="app-content"> <!--begin::Container-->
+        <div class="container-fluid"> <!--begin::Row-->
+            <div class="row">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Products list</h3>
+                        <div class="card-tools">
+                            <ul class="pagination pagination-sm float-end">
+                                <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">1</a> </li>
+                                <li class="page-item"> <a class="page-link" href="#">&raquo;</a> </li>
+                            </ul>
+                        </div>
+                    </div> <!-- /.card-header -->
+                    <div class="card-body p-0">
+                        <table class="table">
+                            <thead>
+                                {{#if products}}
+                                <tr>
+                                    <th style="width: 7%;">#</th>
+                                    <th style="width: 20%; margin: 0 auto;">Name</th>
+                                    <th style="width: 20%; margin: 0 auto;">Materials</th>
+                                    <th style="width: 20%; margin: 0 auto;">Created at</th>
+                                </tr>
+                                {{/if}}
+                            </thead>
+                            <tbody>
+                                {{#if products}}
+                                {{#each products}}
+                                <tr class="align-middle" id="{{id}}"
+                                    style="{user-select: none; cursor: pointer;}">
+                                    <td>{{number}}</td>
+                                    <td><a href="/api/user/{{id}}"
+                                            style="text-decoration:none; color: black;">{{name}}</a></td>
+                                    <td><a href="/api/user/{{id}}"
+                                            style="text-decoration:none; color: black;">{{materialsUsed.length}} material</a></td>
+                                    </td>
+                                    <td>{{formatDate createdAt}}</td>
+                                </tr>
+                                {{/each}}
+                                {{else}}
+                                <p style="font-size: x-large; text-align: center;">Products is empty!</p>
+                                {{/if}}
+                            </tbody>
+                        </table>
+                    </div> <!-- /.card-body -->
+                </div> <!-- /.card -->
+            </div> <!--end::Row-->
+        </div> <!--end::Container-->
+    </div> <!--end::App Content-->
+</main> <!--end::App Main-->
 
 <script>
-    let formToDelete;
+    let alert = document.getElementById('alert')
+    setTimeout(() => {
+        alert.style.display = "none"
+    }, 3000)
 
-    function openModal(button) {
-        document.getElementById("confirmationModal").style.display = "block";
-        formToDelete = button.closest("form");
-    }
+    let userPage = document.querySelectorAll(".align-middle")
+    userPage.forEach(item => {
+        item.addEventListener('click', () => {
+            window.location.href = `/api/product/${item.id}  `
+        })
 
-    function closeModal() {
-        document.getElementById("confirmationModal").style.display = "none";
-    }
-
-    document.getElementById("confirmDeleteButton").addEventListener("click", function() {
-        if (formToDelete) {
-            formToDelete.submit();
-        }
-        closeModal();
-    });
+    })
 </script>

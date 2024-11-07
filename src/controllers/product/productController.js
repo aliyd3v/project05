@@ -96,6 +96,11 @@ exports.getAllProducts = async (req, res) => {
         // Find all products
         const products = await Product.find()
 
+        // Adding number for every product
+        for (let i = 0; i < products.length; i++) {
+            products[i].number = i + 1
+        }
+
         // Responsing
         if (!products.length) {
             return res.render('products', {
@@ -168,12 +173,13 @@ exports.getOneProduct = async (req, res) => {
         const data = {
             _id: product._id,
             name: product.name,
-            productMaterials
+            productMaterials,
+            createdAt: product.createdAt
         }
 
-        // Responsing.
+        // Rendering.
         return res.render('product', {
-            title: 'Product',
+            title: `${product.name}`,
             data
         })
     } catch (error) {
