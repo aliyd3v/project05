@@ -46,15 +46,21 @@ exports.createMaterial = async (req, res) => {
 
 exports.getAllMaterials = async (req, res) => {
   try {
-    const material = await Material.find();
+    const materials = await Material.find();
+    const allMaterials = []
+    allMaterials.push(...materials)
+
+    for (let i = 0; i < allMaterials.length; i++) {
+      allMaterials[i].number = i+1
+    }
 
     res.render("materials", {
       title: "Materials",
       isMaterials: true,
-      material,
+      allMaterials
     });
 
-    if (!material) {
+    if (!materials) {
       return res.status(404).send({
         success: false,
         error: "Material not found!",
@@ -174,7 +180,7 @@ exports.reduceFromMaterial = async (req, res) => {
         error: errorMessages,
       });
     }
-    const data = matchedData(req);
+    const data = matchedData(req);    
 
     if (material.quantity < data.quantity) {
       return res.status(400).send({
@@ -311,17 +317,13 @@ exports.updateMaterial = async (req, res) => {
     const data = matchedData(req);
 
     // Writing changes to database.
-    const oldMaterial = await Material.findById(id);
     const updateData = {
       name: data.name,
       quantity: data.quantity,
       updatedAt: new Date(),
     };
 
-    await Material.findByIdAndUpdate(id, {
-      ...oldMaterial,
-      ...updateData
-    }, { new: true });
+    await Material.findByIdAndUpdate(id, updateData);
 
     res.redirect(`/api/material/${id}`)
 
