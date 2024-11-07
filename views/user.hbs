@@ -37,6 +37,11 @@
                                     <div class="col-sm-10"> <input type="text" class="form-control" id="username"
                                             value="{{user.username}}" disabled> </div>
                                 </div>
+                                <div class="row mb-3"> <label for="createdAt"
+                                        class="col-sm-2 col-form-label">Created at</label>
+                                    <div class="col-sm-10"> <p type="date" class="form-control" id="createdAt"
+                                             disabled> {{formatDate user.createdAt}}</div>
+                                </div>
                                 <div class="row mb-3"> <label for="username"
                                         class="col-sm-2 col-form-label">Password</label>
                                     <div class="col-sm-10"> <a type="submit"
