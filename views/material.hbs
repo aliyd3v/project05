@@ -2,9 +2,18 @@
     <div class="app-content-header"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
             <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">Material</h3>
+                {{#if alert}}
+                {{#if alert.success}}
+                <div class="alert alert-success" id="alert" role="alert">
+                    {{alert.message}}
                 </div>
+                {{else}}
+                <div class="alert alert-danger" id="alert" role="alert">
+                    {{alert.message}}
+                </div>
+                {{/if}}
+                {{else}}
+                {{/if}}
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div>
@@ -20,8 +29,8 @@
                             <div class="row mb-3">
                                 <label for="name" class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="name" name="name" value="{{material.name}}"
-                                        disabled>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{material.name}}" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -44,3 +53,10 @@
         </div>
     </div>
 </main>
+
+<script>
+    let alert = document.getElementById('alert')
+    setTimeout(() => {
+        alert.style.display = "none"
+    }, 3000)
+</script>
