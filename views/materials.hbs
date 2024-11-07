@@ -2,14 +2,19 @@
     <div class="app-content-header"> <!--begin::Container-->
         <div class="container-fluid"> <!--begin::Row-->
             <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0">Materials</h3>
+                {{#if alert}}
+                {{#if alert.success}}
+                <div class="alert alert-success" id="alert" role="alert">
+                    {{alert.message}}
                 </div>
-                <div class="col-sm-6 text-end">
-                    <a href="/api/create-material" class="btn btn-primary mt-2">Create Material</a>
+                {{else}}
+                <div class="alert alert-danger" id="alert" role="alert">
+                    {{alert.message}}
                 </div>
-
-            </div> <!--end::Row-->
+                {{/if}}
+                {{else}}
+                {{/if}}
+            </div>
         </div> <!--end::Container-->
     </div> <!--end::App Content Header--> <!--begin::App Content-->
     <div class="app-content"> <!--begin::Container-->
@@ -17,7 +22,7 @@
             <div class="row" style="width: 95%; margin: 0 auto;">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h3 class="card-title">Simple Full Width Table</h3>
+                        <h3 class="card-title">Materials</h3>
                         <div class="card-tools">
                             <ul class="pagination pagination-sm float-end">
                                 <li class="page-item"> <a class="page-link" href="#">&laquo;</a> </li>
@@ -32,8 +37,8 @@
                                 <tr>
                                     <th style="width: 5%; text-align: center;">#</th>
                                     <th style="width: 25%; text-align: center;">Name</th>
-                                    <th style="width: 20%; text-align: center;">Created at</th>
                                     <th style="width: 15%; text-align: center;">Quantity</th>
+                                    <th style="width: 20%; text-align: center;">Created at</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,10 +50,10 @@
                                         {{name}}
                                     </td>
                                     <td style="text-align: center;">
-                                        {{formatDate createdAt}}
+                                        {{quantity}}
                                     </td>
                                     <td style="text-align: center;">
-                                        {{quantity}}
+                                        {{formatDate createdAt}}
                                     </td>
                                 </tr>
                                 {{/each}}
