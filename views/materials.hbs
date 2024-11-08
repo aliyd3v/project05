@@ -14,6 +14,10 @@
                 {{/if}}
                 {{else}}
                 {{/if}}
+                <div class="col-md-6">
+                    <h4>Materials</h4>
+                </div>
+                <div class="col-md-6 text-end"> <a href="/api/create-material" class="btn btn-primary">Add Material</a> </div>
             </div>
         </div> <!--end::Container-->
     </div> <!--end::App Content Header--> <!--begin::App Content-->
@@ -34,14 +38,17 @@
                     <div class="card-body p-0">
                         <table class="table">
                             <thead>
+                                {{#if allMaterials}}
                                 <tr>
                                     <th style="width: 5%; text-align: center;">#</th>
                                     <th style="width: 25%; text-align: center;">Name</th>
                                     <th style="width: 15%; text-align: center;">Quantity</th>
                                     <th style="width: 20%; text-align: center;">Created at</th>
                                 </tr>
+                                {{/if}}
                             </thead>
                             <tbody>
+                                {{#if allMaterials}}
                                 {{#each allMaterials}}
                                 <tr class="align-middle tbody-hover" style="cursor: pointer;"
                                     onclick="window.location.href='/api/material/{{id}}'">
@@ -57,6 +64,9 @@
                                     </td>
                                 </tr>
                                 {{/each}}
+                                {{else}}
+                                <p style="font-size: x-large; text-align: center;">Materials is empty!</p>
+                                {{/if}}
                             </tbody>
                         </table>
                     </div> <!-- /.card-body -->
