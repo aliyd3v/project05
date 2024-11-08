@@ -59,6 +59,13 @@ exports.createMaterial = async (req, res) => {
 exports.getAllMaterials = async (req, res) => {
   try {
     const materials = await Material.find();
+    if (!materials) {
+      return res.render("materials", {
+        title: "Materials",
+        isMaterials: true
+      });
+    }
+
     const allMaterials = [];
     allMaterials.push(...materials);
 
@@ -66,18 +73,11 @@ exports.getAllMaterials = async (req, res) => {
       allMaterials[i].number = i + 1;
     }
 
-    res.render("materials", {
+    return res.render("materials", {
       title: "Materials",
       isMaterials: true,
       allMaterials,
     });
-
-    if (!materials) {
-      return res.status(404).send({
-        success: false,
-        error: "Material not found!",
-      });
-    }
   } catch (error) {
     // Error handling.
     console.log(error);
@@ -463,12 +463,18 @@ exports.deleteMaterial = async (req, res) => {
       };
 
       const materials = await Material.find()
+      const allMaterials = [];
+      allMaterials.push(...materials);
+
+      for (let i = 0; i < allMaterials.length; i++) {
+        allMaterials[i].number = i + 1;
+      }
 
       return res.render("materials", {
         title: "Materials",
-        materials,
+        allMaterials,
         isMaterials: true,
-        alert,
+        alert
       });
     }
 
@@ -480,13 +486,19 @@ exports.deleteMaterial = async (req, res) => {
       message: `Material is deleted successful.`,
     };
 
-    const materials = await Material.find();
+    const materials = await Material.find()
+    const allMaterials = [];
+    allMaterials.push(...materials);
+
+    for (let i = 0; i < allMaterials.length; i++) {
+      allMaterials[i].number = i + 1;
+    }
 
     return res.render("materials", {
       title: "Materials",
-      materials,
+      allMaterials,
       isMaterials: true,
-      alert,
+      alert
     });
   } catch (error) {
     // Error handling.
