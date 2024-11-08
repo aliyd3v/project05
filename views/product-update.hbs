@@ -1,64 +1,55 @@
-<div class="update-product-container">
-    <h2 class="update-product-title">Update Product</h2>
-    <form class="update-product-form" action="/api/product/{{product.id}}/update" method="post">
-        <div class="update-product-item">
-            <label for="product-name" class="update-product-label">Product Name:</label>
-            <input type="text" id="product-name" name="name" class="update-product-input" value="{{data.name}}" required>
-        </div>
-
-        <div class="update-product-materials">
-            {{#each data.productMaterials}}
-            <div class="update-product-material">
-                <select id="material-name-{{@index}}" name="materials[{{@index}}][name]" class="update-product-input material-name" required>
-                    {{#each name}}<option value="Material">{{name}}</option>{{/each}}
-                </select>
-                <input type="number" id="material-amount-{{@index}}" name="materials[{{@index}}][amount]" class="update-product-input material-amount" value="{{amount}}" required>
-                <button type="button" class="update-product-remove-material-button" onclick="removeMaterial(this)">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-            {{/each}}
-        </div>
-
-        <button type="button" class="update-product-add-material-button" onclick="addMaterial()">
-            <i class="fas fa-plus"></i>
-        </button>
-
-        <div class="update-product-button-group">
-            <button type="submit" class="update-product-save-button">Save</button>
-        </div>
-    </form>
-    <div class="update-product-cancel-group">
-        <a href="/api/products" class="update-product-cancel-button">Cancel</a>
-    </div>
-</div>
+<!--begin::App Main-->
+<main class="app-main"> <!--begin::App Content-->
+  <div class="app-content"> <!--begin::Container-->
+    <div class="container-fluid"> <!--begin::Row-->
+      <div class="row g-4"> <!--begin::Col-->
+                {{#if alert}}
+                {{#if alert.success}}
+                <div class="alert alert-success" id="alert" role="alert">
+                    {{alert.message}}
+                </div>
+                {{else}}
+                <div class="alert alert-danger" id="alert" role="alert">
+                    {{alert.message}}
+                </div>
+                {{/if}}
+                {{else}}
+                {{/if}}
+        <div class="col-12">
+        </div> <!--end::Col--> <!--begin::Col-->
+        <div class="col-md-6"> <!--begin::Horizontal Form-->
+          <div class="card card-warning card-outline mb-4"> <!--begin::Header-->
+            <div class="card-header">
+              <div class="card-title">Update product</div>
+            </div> <!--end::Header--> <!--begin::Form-->
+            <form action="/api/user/{{data._id}}/update" method="post"> <!--begin::Body-->
+              <div class="card-body">
+                <div class="row mb-3"> <label for="name" class="col-sm-2 col-form-label">Name</label>
+                  <div class="col-sm-10"> <input type="text" class="form-control" name="name" id="name" required
+                      value="{{data.name}}"> </div>
+                </div>
+                <div class="row mb-3"> <label for="username" class="col-sm-2 col-form-label">Materials</label>
+                  <div class="col-sm-10"> <a type="submit" href="/api/product/{{data._id}}/delete"
+                        class="btn btn-primary" name="save" value="create">Update used materials</a>  </div>
+                </div>
+                <div class="row mb-3"> <label for="username" class="col-sm-2 col-form-label">Delete</label>
+                  <div class="col-sm-10"> <a type="submit" href="/api/product/{{data._id}}/delete"
+                        class="btn btn-danger" name="save" value="create">Delete product</a>  </div>
+                </div>
+              </div> <!--end::Body--> <!--begin::Footer-->
+              <div class="card-footer"> <button type="submit" class="btn btn-warning">Update</button> <a
+                  class="btn float-end" href="/api/product/{{data._id}}">Cancel</a> </div> <!--end::Footer-->
+            </form> <!--end::Form-->
+          </div> <!--end::Horizontal Form-->
+        </div> <!--end::Col-->
+      </div> <!--end::Row-->
+    </div> <!--end::Container-->
+  </div> <!--end::App Content-->
+</main> <!--end::App Main-->
 
 <script>
-    function addMaterial() {
-        const materialsContainer = document.querySelector('.update-product-materials');
-        const index = materialsContainer.children.length;
-
-        const newMaterialDiv = document.createElement('div');
-        newMaterialDiv.className = 'update-product-material';
-
-        newMaterialDiv.innerHTML = `
-            <label for="material-name-${index}" class="update-product-label">Material Name:</label>
-            <select id="material-name-${index}" name="materials[${index}][name]" class="update-product-input material-name" required>
-                <option value="Material 1">Material 1</option>
-                <option value="Material 2">Material 2</option>
-                <option value="Material 3">Material 3</option>
-            </select>
-            <input type="number" id="material-amount-${index}" name="materials[${index}][amount]" class="update-product-input material-amount" required placeholder="Amount">
-            <button type="button" class="update-product-remove-material-button" onclick="removeMaterial(this)">
-                <i class="fas fa-trash-alt"></i>
-            </button>
-        `;
-        
-        materialsContainer.appendChild(newMaterialDiv);
-    }
-
-    function removeMaterial(button) {
-        const materialDiv = button.parentElement;
-        materialDiv.remove();
-    }
+    let alert = document.getElementById('alert')
+    setTimeout(() => {
+        alert.style.display = "none"
+    }, 3000)
 </script>

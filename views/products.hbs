@@ -43,7 +43,6 @@
                                 <tr>
                                     <th style="width: 7%;">#</th>
                                     <th style="width: 20%; margin: 0 auto;">Name</th>
-                                    <th style="width: 20%; margin: 0 auto;">Materials</th>
                                     <th style="width: 20%; margin: 0 auto;">Created at</th>
                                 </tr>
                                 {{/if}}
@@ -54,11 +53,8 @@
                                 <tr class="align-middle" id="{{id}}"
                                     style="{user-select: none; cursor: pointer;}">
                                     <td>{{number}}</td>
-                                    <td><a href="/api/user/{{id}}"
+                                    <td><a href="/api/product/{{id}}"
                                             style="text-decoration:none; color: black;">{{name}}</a></td>
-                                    <td><a href="/api/user/{{id}}"
-                                            style="text-decoration:none; color: black;">{{materialsUsed.length}} material</a></td>
-                                    </td>
                                     <td>{{formatDate createdAt}}</td>
                                 </tr>
                                 {{/each}}

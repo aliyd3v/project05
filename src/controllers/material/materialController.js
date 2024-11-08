@@ -1,5 +1,6 @@
 const { validationResult, matchedData } = require("express-validator");
 const { Material } = require("../../models/materialModel");
+const { Product } = require("../../models/productModel");
 
 exports.getCreateMaterial = async (req, res) => {
   res.render("create-material", {
@@ -478,6 +479,9 @@ exports.deleteMaterial = async (req, res) => {
       });
     }
 
+    console.log(usedProducts)
+
+    // Delete material from database.
     await Material.findByIdAndDelete(id);
 
     // Alert.
