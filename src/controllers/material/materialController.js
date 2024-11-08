@@ -135,7 +135,7 @@ exports.addToMaterial = async (req, res) => {
       id,
       {
         updatedAt: new Date(),
-        quantity: Number(material.quantity) + Number(data.quantity)
+        quantity: Number(material.quantity) + Number(data.quantity),
       },
       { new: true }
     );
@@ -248,29 +248,31 @@ exports.getOneMaterial = async (req, res) => {
     if (!material) {
       // Alert.
       const alert = {
-          success: false,
-          message: 'Material not found!'
-      }
-    }
+        success: false,
+        message: "Material not found!",
+      };
 
+      return res.render("materials", {
+        title: "Materials",
+        material,
+        alert,
+      });
+    }
 
     return res.render("material", {
       title: "Material",
       material,
     });
   } catch (error) {
+    // Error handling.
     console.log(error);
     if (error.message) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: error.message,
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
     return res.status(500).send({
       success: false,
       data: null,
-      error: "INTERVAL_SERVER_ERROR",
+      error: "INTERLA_SERVER_ERROR",
     });
   }
 };
@@ -281,13 +283,24 @@ exports.getUpdateMaterial = async (req, res) => {
   try {
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).send({
+      return res.status(400).redirect("/api/bad-request");
+    }
+
+    const material = await Material.findById(id);
+
+    if (!material) {
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: "ID is not valid",
+        message: "Material not found!",
+      };
+
+      return res.render("materials", {
+        title: "Materials",
+        material,
+        alert,
       });
     }
-    const material = await Material.findById(id);
 
     return res.render("material-update", {
       title: "Update material",
@@ -316,10 +329,22 @@ exports.updateMaterial = async (req, res) => {
   try {
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).send({
+      return res.status(400).redirect("/api/bad-request");
+    }
+
+    const material = await Material.findById(id);
+
+    if (!material) {
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: "ID is not valid",
+        message: "Material not found!",
+      };
+
+      return res.render("materials", {
+        title: "Materials",
+        material,
+        alert,
       });
     }
 
@@ -352,27 +377,23 @@ exports.updateMaterial = async (req, res) => {
       success: true,
       message: `Material is updated successful.`,
     };
-    const material = updatedMateril;
 
     // Rendering.
     res.render("material", {
       title: "Material",
       alert,
-      material,
+      updatedMateril,
     });
   } catch (error) {
+    // Error handling.
     console.log(error);
     if (error.message) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: error.message,
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
     return res.status(500).send({
       success: false,
       data: null,
-      error: "INTERVAL_SERVER_ERROR",
+      error: "INTERLA_SERVER_ERROR",
     });
   }
 };
@@ -383,31 +404,42 @@ exports.getDdelteMaterial = async (req, res) => {
 
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).send({
+      return res.status(400).redirect("/api/bad-request");
+    }
+
+    const material = await Material.findById(id);
+
+    if (!material) {
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: "ID is not valid",
+        message: "Material not found!",
+      };
+
+      const materials = await Material.find();
+
+      return res.render("materials", {
+        title: "Materials",
+        materials,
+        isMaterials: true,
+        alert,
       });
     }
-    const material = await Material.findById(id);
 
     res.render("delete-material", {
       title: "Delete material",
       material,
     });
   } catch (error) {
+    // Error handling.
     console.log(error);
     if (error.message) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: error.message,
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
     return res.status(500).send({
       success: false,
       data: null,
-      error: "INTERVAL_SERVER_ERROR",
+      error: "INTERLA_SERVER_ERROR",
     });
   }
 };
@@ -418,29 +450,54 @@ exports.deleteMaterial = async (req, res) => {
 
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).send({
+      return res.status(400).redirect("/api/bad-request");
+    }
+
+    const material = await Material.findById(id);
+
+    if (!material) {
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: "ID is not valid",
+        message: "Material not found!",
+      };
+
+      const materials = await Material.find()
+
+      return res.render("materials", {
+        title: "Materials",
+        materials,
+        isMaterials: true,
+        alert,
       });
     }
 
     await Material.findByIdAndDelete(id);
 
-    res.redirect("/api/materials");
+    // Alert.
+    const alert = {
+      success: true,
+      message: `Material is deleted successful.`,
+    };
+
+    const materials = await Material.find();
+
+    return res.render("materials", {
+      title: "Materials",
+      materials,
+      isMaterials: true,
+      alert,
+    });
   } catch (error) {
+    // Error handling.
     console.log(error);
     if (error.message) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: error.message,
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
     return res.status(500).send({
       success: false,
       data: null,
-      error: "INTERVAL_SERVER_ERROR",
+      error: "INTERLA_SERVER_ERROR",
     });
   }
 };
