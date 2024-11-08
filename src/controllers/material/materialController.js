@@ -63,7 +63,7 @@ exports.getAllMaterials = async (req, res) => {
     if (!materials) {
       return res.render("materials", {
         title: "Materials",
-        isMaterials: true
+        isMaterials: true,
       });
     }
 
@@ -100,20 +100,32 @@ exports.addToMaterial = async (req, res) => {
   try {
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: "ID is not valid",
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
 
     // Checking material for exists.
-    const material = await Material.findById(id);
-    if (!material) {
-      return res.status(404).send({
+    const oldmaterial = await Material.findById(id);
+    if (!oldmaterial) {
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: { message: "Material is not found!" },
+        message: "Material not found!",
+      };
+
+      const materials = await Material.find();
+
+      const allMaterials = [];
+      allMaterials.push(...materials);
+
+      for (let i = 0; i < allMaterials.length; i++) {
+        allMaterials[i].number = i + 1;
+      }
+
+      return res.render("materials", {
+        title: "Materials",
+        isMaterials: true,
+        allMaterials,
+        alert
       });
     }
 
@@ -121,42 +133,51 @@ exports.addToMaterial = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg);
-      return res.status(400).send({
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: errorMessages,
+        message: errorMessages,
+      };
+      return res.render("material-update", {
+        alert,
       });
     }
     const data = matchedData(req);
-
-    console.log(data);
 
     // Writing changes to database.
     const update = await Material.findByIdAndUpdate(
       id,
       {
         updatedAt: new Date(),
-        quantity: Number(material.quantity) + Number(data.quantity),
+        quantity: Number(oldmaterial.quantity) + Number(data.quantity),
       },
       { new: true }
     );
 
-    // Responsing.
-    return res.redirect("/api/materials");
+    const material = await Material.findById(id)
+
+    // Alert.
+    const alert = {
+      success: true,
+      message: `Material is updated successful.`,
+    };
+
+    // Rendering.
+    res.render("material", {
+      title: "Material",
+      alert,
+      material,
+    });
   } catch (error) {
     // Error handling.
     console.log(error);
     if (error.message) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: error.message,
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
     return res.status(500).send({
       success: false,
       data: null,
-      error: "INTERVAL_SERVER_ERROR",
+      error: "INTERLA_SERVER_ERROR",
     });
   }
 };
@@ -168,20 +189,32 @@ exports.reduceFromMaterial = async (req, res) => {
   try {
     // Checking id to valid.
     if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: "ID is not valid",
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
 
     // Checking material for exists.
-    const material = await Material.findById(id);
-    if (!material) {
-      return res.status(404).send({
+    const oldmaterial = await Material.findById(id);
+    if (!oldmaterial) {
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: { message: "Material is not found!" },
+        message: "Material not found!",
+      };
+
+      const materials = await Material.find();
+
+      const allMaterials = [];
+      allMaterials.push(...materials);
+
+      for (let i = 0; i < allMaterials.length; i++) {
+        allMaterials[i].number = i + 1;
+      }
+
+      return res.render("materials", {
+        title: "Materials",
+        isMaterials: true,
+        allMaterials,
+        alert
       });
     }
 
@@ -189,21 +222,28 @@ exports.reduceFromMaterial = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map((error) => error.msg);
-      return res.status(400).send({
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: errorMessages,
+        message: errorMessages,
+      };
+      return res.render("material-update", {
+        alert,
       });
     }
     const data = matchedData(req);
 
-    console.log(data);
-
-    if (material.quantity < data.quantity) {
-      return res.status(400).send({
+    if (oldmaterial.quantity < data.quantity) {
+      // Alert.
+      const alert = {
         success: false,
-        data: null,
-        error: { message: "Kiritayotgan miqdoringiz bazadagi miqdordan ko'p!" },
+        message: "Kiritayotgan miqdoringiz bazadagi miqdordan ko'p!",
+      };
+
+      return res.render("material-update", {
+        title: "Material update",
+        material,
+        alert,
       });
     }
 
@@ -212,27 +252,35 @@ exports.reduceFromMaterial = async (req, res) => {
       id,
       {
         updatedAt: new Date(),
-        quantity: material.quantity - data.quantity,
+        quantity: oldmaterial.quantity - data.quantity,
       },
       { new: true }
     );
 
-    // Responsing.
-    return res.redirect("/api/materials");
+    const material = await Material.findById(id)
+
+    // Alert.
+    const alert = {
+      success: true,
+      message: `Material is updated successful.`,
+    };
+
+    // Rendering.
+    res.render("material", {
+      title: "Material",
+      alert,
+      material,
+    });
   } catch (error) {
     // Error handling.
     console.log(error);
     if (error.message) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        error: error.message,
-      });
+      return res.status(400).redirect("/api/bad-request");
     }
     return res.status(500).send({
       success: false,
       data: null,
-      error: "INTERVAL_SERVER_ERROR",
+      error: "INTERLA_SERVER_ERROR",
     });
   }
 };
@@ -333,19 +381,29 @@ exports.updateMaterial = async (req, res) => {
       return res.status(400).redirect("/api/bad-request");
     }
 
-    const material = await Material.findById(id);
+    const oldmaterial = await Material.findById(id);
 
-    if (!material) {
+    if (!oldmaterial) {
       // Alert.
       const alert = {
         success: false,
         message: "Material not found!",
       };
 
+      const materials = await Material.find();
+
+      const allMaterials = [];
+      allMaterials.push(...materials);
+
+      for (let i = 0; i < allMaterials.length; i++) {
+        allMaterials[i].number = i + 1;
+      }
+
       return res.render("materials", {
         title: "Materials",
-        material,
-        alert,
+        isMaterials: true,
+        allMaterials,
+        alert
       });
     }
 
@@ -372,6 +430,7 @@ exports.updateMaterial = async (req, res) => {
     };
 
     const updatedMateril = await Material.findByIdAndUpdate(id, updateData);
+    const material = await Material.findById(id)
 
     // Alert.
     const alert = {
@@ -383,7 +442,7 @@ exports.updateMaterial = async (req, res) => {
     res.render("material", {
       title: "Material",
       alert,
-      updatedMateril,
+      material,
     });
   } catch (error) {
     // Error handling.
@@ -463,7 +522,7 @@ exports.deleteMaterial = async (req, res) => {
         message: "Material not found!",
       };
 
-      const materials = await Material.find()
+      const materials = await Material.find();
       const allMaterials = [];
       allMaterials.push(...materials);
 
@@ -475,11 +534,11 @@ exports.deleteMaterial = async (req, res) => {
         title: "Materials",
         allMaterials,
         isMaterials: true,
-        alert
+        alert,
       });
     }
 
-    console.log(usedProducts)
+    console.log(usedProducts);
 
     // Delete material from database.
     await Material.findByIdAndDelete(id);
@@ -490,7 +549,7 @@ exports.deleteMaterial = async (req, res) => {
       message: `Material is deleted successful.`,
     };
 
-    const materials = await Material.find()
+    const materials = await Material.find();
     const allMaterials = [];
     allMaterials.push(...materials);
 
@@ -502,7 +561,7 @@ exports.deleteMaterial = async (req, res) => {
       title: "Materials",
       allMaterials,
       isMaterials: true,
-      alert
+      alert,
     });
   } catch (error) {
     // Error handling.
