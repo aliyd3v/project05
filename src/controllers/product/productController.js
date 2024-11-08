@@ -157,29 +157,32 @@ exports.getOneProduct = async (req, res) => {
             })
         }
 
-        const productMaterials = []
+        const materialsUsed = []
         const gettingMaterial = async function (id) {
             const material = await Material.findById(id)
-            return material.name
+            if (material) {
+                return material.name
+            }
         }
         for (let i = 0; i < product.materialsUsed.length; i++) {
             const materialName = await gettingMaterial(product.materialsUsed[i]._id)
-            productMaterials.push({
-                name: materialName,
-                amount: product.materialsUsed[i].amount
-            })
+            if (materialName) {
+                materialsUsed.push({
+                    name: materialName,
+                    amount: product.materialsUsed[i].amount
+                })
+            }
         }
-
         const data = {
             _id: product._id,
             name: product.name,
-            productMaterials,
+            materialsUsed,
             createdAt: product.createdAt
         }
 
         // Rendering.
         return res.render('product', {
-            title: `${product.name}`,
+            title: `Product ${product.name}`,
             data
         })
     } catch (error) {
@@ -225,14 +228,16 @@ exports.getUpdateOneProduct = async (req, res) => {
             })
         }
 
-        const productMaterials = []
+        const materialsUsed = []
         const gettingMaterial = async function (id) {
             const material = await Material.findById(id)
-            return material.name
+            if (material) {
+                return material.name
+            }
         }
         for (let i = 0; i < product.materialsUsed.length; i++) {
             const materialName = await gettingMaterial(product.materialsUsed[i]._id)
-            productMaterials.push({
+            materialsUsed.push({
                 name: materialName,
                 amount: product.materialsUsed[i].amount
             })
@@ -241,7 +246,7 @@ exports.getUpdateOneProduct = async (req, res) => {
         const data = {
             _id: product._id,
             name: product.name,
-            productMaterials
+            materialsUsed
         }
 
         return res.render('product-update', {
