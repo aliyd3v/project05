@@ -217,7 +217,7 @@ exports.getUpdateOneProduct = async (req, res) => {
         }
 
         // Find product by id.
-        const product = await Product.findById(id).populate("materialsUsed")
+        const product = await Product.findById(id)
 
         // Checking product for exists.
         if (!product) {
@@ -228,25 +228,9 @@ exports.getUpdateOneProduct = async (req, res) => {
             })
         }
 
-        const materialsUsed = []
-        const gettingMaterial = async function (id) {
-            const material = await Material.findById(id)
-            if (material) {
-                return material.name
-            }
-        }
-        for (let i = 0; i < product.materialsUsed.length; i++) {
-            const materialName = await gettingMaterial(product.materialsUsed[i]._id)
-            materialsUsed.push({
-                name: materialName,
-                amount: product.materialsUsed[i].amount
-            })
-        }
-
         const data = {
             _id: product._id,
-            name: product.name,
-            materialsUsed
+            name: product.name
         }
 
         return res.render('product-update', {
@@ -271,8 +255,152 @@ exports.getUpdateOneProduct = async (req, res) => {
         })
     }
 }
+exports.getUpdateOneProductMaterials = async (req, res) => {
+    const { params: { id } } = req
+
+    try {
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
+        // Find product by id.
+        const product = await Product.findById(id).populate("materialsUsed")
+
+        // Checking product for exists.
+        if (!product) {
+            return res.status(404).send({
+                success: false,
+                data: null,
+                error: "Product not found!"
+            })
+        }
+
+        const materialsUsed = []
+        const gettingMaterial = async function (id) {
+            const material = await Material.findById(id)
+            if (material) {
+                return material.name
+            }
+        }
+        for (let i = 0; i < product.materialsUsed.length; i++) {
+            const materialName = await gettingMaterial(product.materialsUsed[i]._id)
+            if (materialName) {
+                materialsUsed.push({
+                    name: materialName,
+                    amount: product.materialsUsed[i].amount
+                })
+            }
+        }
+
+        const data = {
+            _id: product._id,
+            name: product.name,
+            materialsUsed
+        }
+
+        const materials = await Material.find()
+
+        return res.render('product-materials-update', {
+            title: 'Update used materials',
+            data,
+            materials
+        })
+
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
 
 exports.updatOneProduct = async (req, res) => {
+    const { params: { id } } = req
+    try {
+        // Checking id to valid.
+        if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: "ID is not valid"
+            })
+        }
+
+        // Checking product for exists.
+        const product = await Product.findById(id)
+        if (!product) {
+            return res.status(404).send({
+                success: false,
+                data: null,
+                error: "Product not found!"
+            })
+        }
+
+        // Validation result.
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            const errorMessages = errors.array().map(error => error.msg)
+            return res.status(400).send({
+                success: false,
+                data: false,
+                error: errorMessages
+            })
+        }
+        const data = matchedData(req)
+
+        // Writing updates to database.
+        const materialsUsed = data.materialsUsed.map(object => {
+            return {
+                _id: object.material,
+                amount: object.amount
+            }
+        })
+        const updateProduct = await Product.findByIdAndUpdate(id, {
+            ...product,
+            name: data.name,
+            materialsUsed
+        })
+
+        // Responsing.
+        return res.status(201).send({
+            success: true,
+            error: false,
+            message: 'Product is updated successful.',
+            data: { updateProduct }
+        })
+    } catch (error) {
+        // Error handling.
+        console.log(error);
+        if (error.message) {
+            return res.status(400).send({
+                success: false,
+                data: null,
+                error: error.message
+            })
+        }
+        return res.status(500).send({
+            success: false,
+            data: null,
+            error: "INTERLA_SERVER_ERROR"
+        })
+    }
+}
+exports.updatOneProductMaterials = async (req, res) => {
     const { params: { id } } = req
     try {
         // Checking id to valid.
