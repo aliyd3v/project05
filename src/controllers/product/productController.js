@@ -32,6 +32,9 @@ exports.getCreateProduct = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
     try {
+
+        console.log(req.body)
+
         // Validation result.
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
