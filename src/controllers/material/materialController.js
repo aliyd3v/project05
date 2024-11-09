@@ -159,7 +159,7 @@ exports.addToMaterial = async (req, res) => {
     // Alert.
     const alert = {
       success: true,
-      message: `Material is updated successful.`,
+      message: `Material quantity is added successful.`,
     };
 
     // Rendering.
@@ -262,7 +262,7 @@ exports.reduceFromMaterial = async (req, res) => {
     // Alert.
     const alert = {
       success: true,
-      message: `Material is updated successful.`,
+      message: `Material quantity is removed successful.`,
     };
 
     // Rendering.
@@ -538,7 +538,6 @@ exports.deleteMaterial = async (req, res) => {
       });
     }
 
-    console.log(usedProducts);
 
     // Delete material from database.
     await Material.findByIdAndDelete(id);
