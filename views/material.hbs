@@ -44,10 +44,49 @@
                             <div class="update-cancel-container d-flex justify-content-between">
                                 <button onclick="window.location.href='/api/material/{{material.id}}/update'"
                                     type="submit" class="btn btn-warning" style="width: 80px;">Edit</button>
+
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#quantityModal">
+                                    Add / Remove Quantity
+                                </button>
                                 <a href="/api/materials" class="btn btn-light">Cancel</a>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantity Modal oyna -->
+    <div class="modal fade" id="quantityModal" tabindex="-1" aria-labelledby="quantityModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quantityModalLabel">Quantity Qo'shish / O'chirish</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Add Quantity form -->
+                    <form id="add-quantity-form" action="/api/material/{{material.id}}/add" method="POST" class="mb-3">
+                        <div class="mb-3">
+                            <label for="addQuantityInput" class="form-label">Quantity Qo'shish</label>
+                            <input type="number" class="form-control" id="addQuantityInput" name="quantity" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Add</button>
+                    </form>
+
+                    <!-- Remove Quantity form -->
+                    <form id="remove-quantity-form" action="/api/material/{{material.id}}/reduce" method="POST">
+                        <div class="mb-3">
+                            <label for="removeQuantityInput" class="form-label">Quantity O'chirish</label>
+                            <input type="number" class="form-control" id="removeQuantityInput" name="quantity" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100">Remove</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
                 </div>
             </div>
         </div>
