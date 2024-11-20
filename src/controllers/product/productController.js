@@ -32,9 +32,6 @@ exports.getCreateProduct = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
     try {
-
-        console.log(req.body)
-
         // Validation result.
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -71,10 +68,6 @@ exports.createProduct = async (req, res) => {
 
         // Responsing.
         return res.status(201).send({
-            success: true,
-            error: false,
-            message: 'Product is created successful.',
-            data: newProduct
         })
     } catch (error) {
         // Error handling.

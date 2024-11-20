@@ -1,3 +1,72 @@
+<style>
+    /* Jadval qatorining o'lchamlarini sozlash */
+    .table-responsive table tr {
+        height: 40px;
+        /* Qator balandligini o'rnatish */
+    }
+
+    .table-responsive table td,
+    .table-responsive table th {
+        padding: 10px 15px;
+        /* Yana ko'proq bo'shliq va o'quv uchun o'lchamlar */
+        text-align: center;
+    }
+
+    /* Jadvaldagi qatorlar o'rtasidagi masofani sozlash */
+    .table-responsive table tr:not(:last-child) {
+        border-bottom: 1px solid #ddd;
+        /* Qatorlar orasiga chiziq qo'shish */
+    }
+
+    /* Jadvalga responsivlik qo'shish */
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    /* Kichik ekranlar uchun maxsus o'lchamlar */
+    @media (max-width: 768px) {
+        .table-responsive table tr {
+            height: auto;
+            /* Kichik ekranlarda qator balandligini avtomatik qilish */
+        }
+
+        .table-responsive table td,
+        .table-responsive table th {
+            padding: 8px;
+            /* Kichik ekranlarda paddingni kamaytirish */
+            font-size: 0.9em;
+            /* Kichik ekranlarda matn o'lchamini kichraytirish */
+        }
+    }
+
+    .card-body {
+        overflow-x: auto;
+        /* Gorizontal scrollni faollashtirish */
+        padding: 15px;
+        /* Ichki bo'shliqni qo'shish */
+    }
+
+    .table {
+        width: 100%;
+        /* Jadvalni div ichiga moslashtirish */
+        max-width: 100%;
+        /* Jadval o'lchami divdan katta bo'lmasin */
+        table-layout: auto;
+        /* Jadval ustunlarini avtomatik joylash */
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap;
+        /* Jadvaldagi yozuvlarni qatorga sig'dirish */
+        text-align: center;
+        /* Matnni markazlashtirish */
+    }
+</style>
+
+
 <!--begin::App Main-->
 <main class="app-main"> <!--begin::App Content-->
     <div class="app-content"> <!--begin::Container-->
@@ -19,116 +88,139 @@
             <div class="row g-4"> <!--begin::Col-->
                 <div class="col-12">
                 </div> <!--end::Col--> <!--begin::Col-->
-                <div class="col-md-6"> <!--begin::Horizontal Form-->
-                    <div class="card card-warning card-outline mb-4"> <!--begin::Header-->
+                <div class="col-md-6"><!--begin::Form Validation-->
+                    <div class="card card-info card-outline mb-4"> <!--begin::Header-->
                         <div class="card-header">
-                            <div class="card-title">Add product</div>
+                            <div class="card-title">Product yaratish</div>
                         </div> <!--end::Header--> <!--begin::Form-->
-                        <form action="/api/create-product" method="post"> <!--begin::Body-->
-                            <div class="card-body">
-                                <div class="row mb-3"> <label for="name" class="col-sm-2 col-form-label">Name</label>
-                                    <div class="col-sm-10"> <input type="text" class="form-control" name="name"
-                                            id="name" required> </div>
-                                </div>
-                                <div class="app-content"> <!--begin::Container-->
-                                    <div class="container-fluid">
-                                        <!--begin::Row-->
-                                        <div class="row">
-                                            <div class="card mb-4">
-                                                <div class="card-header">
-                                                    <h4 class="card-title">Materials for using.</h4>
-                                                </div> <!-- /.card-header -->
-                                                <div class="card-body p-0">
-                                                    <table class="table" id="materialsTable">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width: 20%; margin: 0 auto;">Material name
-                                                                </th>
-                                                                <th style="width: 20%; margin: 0 auto;">Amount for using
-                                                                </th>
-                                                                <th style="width: 10%; margin: 0 auto;">Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="materialsBody">
-                                                            <tr id="noMaterialsMessage">
-                                                                <td colspan="3" style="text-align: center;">Materials is
-                                                                    empty!</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <div class="d-flex justify-content-center my-2">
-                                                        <button type="button" class="btn btn-primary" id="addMaterialBtn">Add
-                                                            Material</button>
-                                                    </div>
-                                                </div> <!-- /.card-body -->
-                                            </div> <!-- /.card -->
-                                        </div> <!--end::Row-->
-                                    </div> <!--end::Container-->
-                                </div> <!--end::App Content-->
+                        <form class="needs-validation" id="create-product-form"> <!--begin::Body-->
+                            <div class="card-body"> <!--begin::Row-->
+                                <div class="row g-3"> <!--begin::Col-->
+                                    <div class="col-12">
+                                        <label for="validationCustom01" class="form-label">Material nomi</label>
+                                        <input type="text" name="name" class="form-control" id="validationCustom01"
+                                            required>
+                                    </div> <!--end::Col-->
 
-                                <script>
-                                    document.getElementById('addMaterialBtn').addEventListener('click', function () {
-                                        const noMaterialsMessage = document.getElementById('noMaterialsMessage');
-                                        if (noMaterialsMessage) noMaterialsMessage.style.display = 'none';
+                                    <div class="card mb-4">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Foydalaniladigan materiallar</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Materialni tanlash</th>
+                                                        <th>Miqdor</th>
+                                                        <th>O'chirish</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="material-rows">
+                                                    <tr>
+                                                        <td>
+                                                            <select class="form-select" required>
+                                                                <option value="" disabled selected>Tanlang</option>
+                                                                {{#each materials}}
+                                                                <option value="{{_id}}">{{name}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="number" step="0.0001"
+                                                                placeholder="Miqdor kiriting" /></td>
+                                                        <td>
+                                                            <button type="button" class="delete-row">O'chirish</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" id="add-row">Yangi qator qo'shish</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.card -->
+                                </div> <!--end::Row-->
+                            </div> <!--end::Body-->
 
-                                        const newRow = document.createElement('tr');
-                                        newRow.innerHTML = `
-            <td>
-                <select id="materialSelect" class="form-select">
-                    <option value="">Select material</option>
-                    {{#each materials}}
-                    <option value="{{this.id}}">{{this.name}}</option>
-                    {{/each}}
-                </select>
-            </td>
-            <td>
-                <input type="number" id="amountInput" class="form-control" min="1" placeholder="Enter amount">
-            </td>
-            <td>
-                <button class="btn btn-success" id="confirmAddBtn">&#10003;</button>
-            </td>
-        `;
-
-                                        document.getElementById('materialsBody').appendChild(newRow);
-
-                                        document.getElementById('confirmAddBtn').addEventListener('click', function () {
-                                            const materialSelect = document.getElementById('materialSelect');
-                                            const amountInput = document.getElementById('amountInput');
-                                            const selectedMaterial = materialSelect.options[materialSelect.selectedIndex].text;
-                                            const selectedValue = materialSelect.value;
-                                            const amount = amountInput.value;
-
-                                            if (selectedValue && amount) {
-                                                const confirmedRow = document.createElement('tr');
-                                                confirmedRow.innerHTML = `
-                    <td>${selectedMaterial}</td>
-                    <td>${amount}</td>
-                    <td>
-                        <button class="btn btn-danger deleteBtn">Delete</button>
-                    </td>
-                `;
-                                                document.getElementById('materialsBody').replaceChild(confirmedRow, newRow);
-
-                                                confirmedRow.querySelector('.deleteBtn').addEventListener('click', function () {
-                                                    confirmedRow.remove();
-                                                    if (!document.querySelector('#materialsBody tr')) {
-                                                        noMaterialsMessage.style.display = 'table-row';
-                                                    }
-                                                });
-                                            } else {
-                                                alert('Please select a material and enter an amount.');
-                                            }
-                                        });
-                                    });
-                                </script>
-
-                            </div> <!--end::Body--> <!--begin::Footer-->
-                            <div class="card-footer"> <button type="submit" class="btn btn-warning">Add</button> <a
-                                    class="btn float-end" href="/api/products">Cancel</a> </div> <!--end::Footer-->
-                        </form> <!--end::Form-->
-                    </div> <!--end::Horizontal Form-->
+                            <!--begin::Footer-->
+                            <div class="card-footer">
+                                <button class="btn btn-info" type="submit">Yaratish</button>
+                            </div> <!--end::Footer-->
+                        </form>
+                    </div> <!--end::Form Validation-->
                 </div> <!--end::Col-->
             </div> <!--end::Row-->
         </div> <!--end::Container-->
     </div> <!--end::App Content-->
 </main> <!--end::App Main-->
+
+<script>
+    // Yangi qator qo'shish
+    let rowNumber = 2;
+    document.getElementById('add-row').addEventListener('click', function () {
+        const row = document.createElement('tr');
+        row.classList.add('align-middle');
+        row.innerHTML = `
+                                                    <tr>
+                                                        <td>
+                                                            <select class="form-select" required>
+                                                                <option value="" disabled selected>Tanlang</option>
+                                                                {{#each materials}}
+                                                                <option value="{{_id}}">{{name}}</option>
+                                                                {{/each}}
+                                                            </select>
+                                                        </td>
+                                                        <td><input type="number" step="0.0001" placeholder="Miqdor kiriting" /></td>
+                                                        <td>
+                                                            <button type="button" class="delete-row">O'chirish</button>
+                                                        </td>
+                                                    </tr>
+        `;
+        document.getElementById('material-rows').appendChild(row);
+    });
+
+    // Qatorni o'chirish uchun event delegation qo'shish
+    document.getElementById('material-rows').addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('delete-row')) {
+            e.target.closest('tr').remove(); // Qatorni o'chirish
+        }
+    });
+
+    // Forma yuborilishi va fetch orqali ma'lumot jo'natish
+    document.getElementById('create-product-form').addEventListener('submit', function (e) {
+        e.preventDefault();  // Forma yuborilishini oldini olish
+
+        // Forma ma'lumotlarini olish
+        const formData = new FormData(this);
+        const materialsUsed = [];
+
+        // Jadval qatorlaridan materiallarni to'plash
+        document.querySelectorAll('#material-rows tr').forEach(function (row) {
+            const material = row.querySelector('select').value;
+            const amount = row.querySelector('input').value;
+            if (material && amount) {
+                materialsUsed.push({ material, amount });
+            }
+        });
+
+        // fetch orqali ma'lumot yuborish
+        fetch('/api/create-product', {
+            method: 'POST',
+            body: JSON.stringify({
+                name: formData.get('name'),
+                materialsUsed: materialsUsed
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setTimeout(() => {
+                    window.location.href = '/api/products'; // Mahsulotlar sahifasiga yo'naltirish
+                }, 1000);
+                alert("Mahsulot muvaffaqiyatli yaratildi!");
+            })
+            .catch(error => {
+                console.error('Xato:', error);
+            });
+    });
+</script>
