@@ -69,10 +69,6 @@ exports.createProduct = async (req, res) => {
 
         // Responsing.
         return res.status(201).send({
-            success: true,
-            error: false,
-            message: 'Product is created successful.',
-            data: newProduct
         })
     } catch (error) {
         // Error handling.
