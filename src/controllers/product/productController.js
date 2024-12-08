@@ -35,6 +35,7 @@ exports.createProduct = async (req, res) => {
         // Validation result.
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
+            console.log(errors)
             const errorMessages = errors.array().map(error => error.msg)
             return res.status(400).send({
                 success: false,
