@@ -22,7 +22,7 @@ exports.createProductValidationSchema = {
         }
     },
     'materialsUsed.*.amount': {
-        isInt: true,
+        numeric: true,
         notEmpty: {
             errorMessage: 'Amount cannot be empty'
         }

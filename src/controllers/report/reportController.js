@@ -3,10 +3,24 @@ const { Report } = require("../../models/reportModel")
 const { Product } = require("../../models/productModel")
 const { Material } = require("../../models/materialModel")
 const { verify } = require("jsonwebtoken")
+const { User } = require("../../models/userModel")
 
 exports.createReportPage = async (req, res) => {
+    // Getting user id, name and username.
+    const token = req.cookies.authcookie;
+    const { id } = verify(token, process.env.JWT_SECRET_KEY)
+    const user = await User.findById(id)
+    if (!user) {
+        return res.status(403).send({
+            succes: false,
+            data: null,
+            error: "Access denied!"
+        })
+    }
+
     return res.render('create-report', {
-        layout: false
+        layout: false,
+        user
     })
 }
 
@@ -31,6 +45,14 @@ exports.createReport = async (req, res) => {
         // taking user id.
         const token = req.cookies.authcookie;
         const user = verify(token, process.env.JWT_SECRET_KEY)
+        const existsUser = await User.findById(user.id)
+        if (!existsUser) {
+            return res.status(403).send({
+                succes: false,
+                data: null,
+                error: "Access denied!"
+            })
+        }
 
         // Writing new report to database.
         const newReport = await Report.create({
