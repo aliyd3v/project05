@@ -33,22 +33,15 @@
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response)
         thisForm.querySelector('.loading').classList.remove('d-block');
         if (response.success == true) {
           thisForm.querySelector('.sent-message').classList.add('d-block');
           thisForm.reset();
         } else {
-          throw new Error(response ? response : 'Form submission failed and no error message returned from: ' + action);
-        }
-        if (response.success) {
-          return response.data.message;
-        } else {
-          throw new Error(`${response.error.message}`);
+          throw new Error(response.error.message);
         }
       })
       .catch((error) => {
-        console.log(error)
         displayError(thisForm, error);
       });
   }
