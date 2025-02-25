@@ -1426,7 +1426,6 @@ section,
 .book-a-table .php-email-form input[type=number],
 .book-a-table .php-email-form input[type=date],
 .book-a-table .php-email-form input[type=time],
-.book-a-table .php-email-form textarea,
 .book-a-table .php-email-form select {
   font-size: 14px;
   padding: 10px 15px;
@@ -1442,7 +1441,6 @@ section,
 .book-a-table .php-email-form input[type=number]:focus,
 .book-a-table .php-email-form input[type=date]:focus,
 .book-a-table .php-email-form input[type=time]:focus,
-.book-a-table .php-email-form textarea:focus,
 .book-a-table .php-email-form select:focus {
   border-color: var(--accent-color);
 }
@@ -1452,7 +1450,6 @@ section,
 .book-a-table .php-email-form input[type=number]::placeholder,
 .book-a-table .php-email-form input[type=date]::placeholder,
 .book-a-table .php-email-form input[type=time]::placeholder,
-.book-a-table .php-email-form textarea::placeholder,
 .book-a-table .php-email-form select::placeholder {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
