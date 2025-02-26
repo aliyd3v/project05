@@ -303,49 +303,24 @@
         <div id="tables" class="d-flex flex-wrap"></div>
 
         <div id="next2-container" class="text-center mt-3">
-          <button id="next2" style="cursor: alias;" type="submit" disabled>Next</button>
+          <button id="next2" style="cursor: not-allowed;" type="submit" disabled>Next</button>
         </div>
 
-        <!-- <script>
-          $(document).ready(function () {
-            let tables = [
-              { id: 1, status: 'available' },
-              { id: 2, status: 'occupied' },
-              { id: 3, status: 'available' },
-              { id: 4, status: 'occupied' },
-              { id: 5, status: 'available' }
-            ];
-
-            function renderTables() {
-              $('#tables').html('');
-              tables.forEach(table => {
-                let div = $(`<div class='table-box ${table.status}' data-id='${table.id}'>${table.id}</div>`);
-                $('#tables').append(div);
-              });
-            }
-
-            renderTables();
-
-            $(document).on('click', '.available', function () {
-              $('.table-box').removeClass('selected');
-              $(this).addClass('selected');
-              $('#next').removeAttr('disabled').removeClass('btn-secondary').addClass('btn-primary');
-            });
-          });
-        </script> -->
-
         <form id="bookingForm" class="php-email-form">
-          <div class="row gy-4">
+          <div class="row gy-4" id="container-bookingForm">
             <div class="col-lg-4 col-md-6">
-              <input type="text" name="customer_name" class="form-control" id="name" placeholder="Your Name"
-                required="">
+              <input type="text" name="customer_name" class="form-control" id="name" placeholder="Your Name" required>
             </div>
             <div class="col-lg-4 col-md-6">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
             </div>
             <div class="col-lg-4 col-md-6">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" required="">
+              <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" required>
             </div>
+            <input type="text" id="date-for-booking" name="date" hidden>
+            <input type="text" id="time-for-booking" name="time" hidden>
+            <input type="text" id="hour-for-booking" name="hour" hidden>
+            <input type="number" id="stol-for-booking" name="stol_number" hidden>
           </div>
 
           <div class="text-center mt-3">
@@ -354,7 +329,7 @@
             <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm
               your
               reservation. Thank you!</div>
-            <button type="submit">Book a Table</button>
+            <button type="submit" id="lastBookingButton">Book a Table</button>
           </div>
         </form><!-- End Reservation Form -->
 

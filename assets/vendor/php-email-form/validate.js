@@ -10,6 +10,8 @@
   bookingForm.style.display = 'none'
   let next2Container = document.getElementById('next2-container')
   next2Container.style.display = 'none'
+  let next2Button = document.getElementById('next2')
+
 
   selectTableForm.forEach(function (e) {
     e.addEventListener('submit', function (event) {
@@ -44,6 +46,9 @@
           document.getElementById('booking-form').style.display = 'none'
           renderTables(response.data.available_stols, response.data.allStolsLength)
           next2Container.style.display = ''
+          document.getElementById('date-for-booking').setAttribute('value', thisForm.date.value)
+          document.getElementById('time-for-booking').setAttribute('value', thisForm.time.value)
+          document.getElementById('hour-for-booking').setAttribute('value', thisForm.hour.value)
           thisForm.reset();
         } else {
           throw new Error(response.error.message);
@@ -56,7 +61,10 @@
 
   function renderTables(availableTables, allStolsLength) {
     tablesContainer.innerHTML = "";
-    availableTables.forEach(tableId => {
+    for (let i = 1; i <= allStolsLength; i++) {
+      availableTables.includes(i) ? renderingAvailableTable(i) : renderingOccupiedTable(i)
+    }
+    function renderingAvailableTable(tableId) {
       let div = document.createElement("div");
       div.classList.add("table-box", "available");
       div.dataset.id = tableId;
@@ -64,32 +72,29 @@
       div.addEventListener("click", function () {
         document.querySelectorAll(".table-box").forEach(t => t.classList.remove("selected"));
         div.classList.add("selected");
-        bookingForm.style.display = "block";
-        bookingForm.querySelector("input[name='table_id']").value = tableId;
+        next2Button.removeAttribute('disabled')
+        next2Button.style.cursor = "pointer";
       });
       tablesContainer.appendChild(div);
-    });
+    };
+    function renderingOccupiedTable(tableId) {
+      let div = document.createElement("div");
+      div.classList.add("table-box", "occupied");
+      div.dataset.id = tableId;
+      div.textContent = `${tableId}`;
+      tablesContainer.appendChild(div);
+    };
+
   }
 
-  $(document).on('click', '.available', function () {
-    $('.table-box').removeClass('selected');
-    $(this).addClass('selected');
-    $('#next').removeAttr('disabled')
-  });
-
-  function transferDataToSecondForm(data) {
-    Object.keys(data).forEach(key => {
-      let input = document.createElement("input");
-      input.type = "hidden";
-      input.name = key;
-      input.value = data[key];
-      secondForm.appendChild(input);
-    });
-    let tableInput = document.createElement("input");
-    tableInput.type = "hidden";
-    tableInput.name = "table_id";
-    secondForm.appendChild(tableInput);
-  }
+  next2Button.addEventListener('click', function () {
+    let selectedTable = document.querySelector('.selected').getAttribute('data-id')
+    document.getElementById('stol-for-booking').setAttribute('value', selectedTable)
+    tablesContainer.style.display = 'none'
+    tablesContainer.removeAttribute('class')
+    next2Container.style.display = 'none'
+    bookingForm.style.display = ''
+  })
 
   forms.forEach(function (e) {
     e.addEventListener('submit', function (event) {
@@ -122,6 +127,14 @@
       .then(response => {
         thisForm.querySelector('.loading').classList.remove('d-block');
         if (response.success == true) {
+          document.querySelector('#bookingForm input[name=customer_name]').setAttribute('type', 'hidden')
+          document.querySelector('#bookingForm input[name=customer_name]').removeAttribute('class')
+          document.querySelector('#bookingForm input[name=email]').setAttribute('type', 'hidden')
+          document.querySelector('#bookingForm input[name=email]').removeAttribute('class')
+          document.querySelector('#bookingForm input[name=phone]').setAttribute('type', 'hidden')
+          document.querySelector('#bookingForm input[name=phone]').removeAttribute('class')
+          document.getElementById('container-bookingForm').style.display = 'none'
+          document.getElementById('lastBookingButton').style.display = 'none'
           thisForm.querySelector('.sent-message').classList.add('d-block');
           thisForm.reset();
         } else {
