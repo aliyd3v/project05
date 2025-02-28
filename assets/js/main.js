@@ -1,5 +1,113 @@
-(function() {
+(function () {
   "use strict";
+
+  const url = 'http://localhost:3030/api'
+
+  fetch(`${url}/categories`)
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        renderCategories(res.data.categories)
+        isotope()
+      }
+    })
+    .catch(error => console.log(error))
+
+  function renderCategories(categories) {
+    let categoriesUl = document.getElementById('categories-ul')
+    for (let i = 0; i < categories.length; i++) {
+      let li = document.createElement('li')
+      li.setAttribute('data-filter', `.filter-${categories[i].en_name}`)
+      li.textContent = `${categories[i].en_name}`
+      categoriesUl.appendChild(li)
+    }
+  }
+
+  fetch(`${url}/meals`)
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        renderMeals(res.data.meals)
+      }
+    })
+    .catch(error => console.log(error))
+
+  function renderMeals(meals) {
+    let mainContainer = document.getElementById('meals-container');
+    let mealsContainer = document.createElement('div');
+    mealsContainer.innerHTML = '';
+
+    (function eachMeals(meals) {
+      mealsContainer.classList.add("row", "isotope-container")
+      mealsContainer.setAttribute('data-aos', 'fade-up')
+      mealsContainer.setAttribute('data-aos-delay', '200')
+
+      for (let i = 0; i < meals.length; i++) {
+        renderingMeal(meals[i])
+      }
+      mainContainer.appendChild(mealsContainer)
+    })(meals)
+
+    function renderingMeal(meal) {
+      let div = document.createElement("div");
+      let filter = `filter-${meal.category.en_name}`
+      div.classList.add("col-lg-6", "menu-item", "isotope-item", filter);
+      let img = document.createElement('img')
+      img.src = `${meal.image_url}`
+      img.classList.add('menu-img')
+      let divIn = document.createElement('div')
+      divIn.classList.add('menu-content')
+      let a = document.createElement('a')
+      a.textContent = `${meal.en_name}`
+      let span = document.createElement('span')
+      span.textContent = `$${meal.price}`
+      let divIn2 = document.createElement('div')
+      divIn2.classList.add('menu-ingredients')
+      divIn2.textContent = `${meal.en_description}`
+      div.dataset.id = meal._id;
+      divIn.appendChild(a)
+      divIn.appendChild(span)
+      div.appendChild(img)
+      div.appendChild(divIn)
+      div.appendChild(divIn2)
+      mealsContainer.appendChild(div);
+    };
+  }
+  function isotope() {
+    /**
+     * Init isotope layout and filters
+    */
+    document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
+      let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
+      let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
+      let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
+
+      let initIsotope;
+      imagesLoaded(isotopeItem.querySelector('.isotope-container'), function () {
+        initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
+          itemSelector: '.isotope-item',
+          layoutMode: layout,
+          filter: filter,
+          sortBy: sort
+        });
+      });
+
+      isotopeItem.querySelectorAll('.isotope-filters li').forEach(function (filters) {
+        filters.addEventListener('click', function () {
+          isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
+          this.classList.add('filter-active');
+          initIsotope.arrange({
+            filter: this.getAttribute('data-filter')
+          });
+          if (typeof aosInit === 'function') {
+            aosInit();
+          }
+        }, false);
+      });
+
+    });
+  }
+
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
@@ -42,7 +150,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -102,43 +210,10 @@
   });
 
   /**
-   * Init isotope layout and filters
-   */
-  document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
-    let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
-    let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
-    let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
-
-    let initIsotope;
-    imagesLoaded(isotopeItem.querySelector('.isotope-container'), function() {
-      initIsotope = new Isotope(isotopeItem.querySelector('.isotope-container'), {
-        itemSelector: '.isotope-item',
-        layoutMode: layout,
-        filter: filter,
-        sortBy: sort
-      });
-    });
-
-    isotopeItem.querySelectorAll('.isotope-filters li').forEach(function(filters) {
-      filters.addEventListener('click', function() {
-        isotopeItem.querySelector('.isotope-filters .filter-active').classList.remove('filter-active');
-        this.classList.add('filter-active');
-        initIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        if (typeof aosInit === 'function') {
-          aosInit();
-        }
-      }, false);
-    });
-
-  });
-
-  /**
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -156,7 +231,7 @@
   /**
    * Correct scrolling position upon page load for URLs containing hash links.
    */
-  window.addEventListener('load', function(e) {
+  window.addEventListener('load', function (e) {
     if (window.location.hash) {
       if (document.querySelector(window.location.hash)) {
         setTimeout(() => {

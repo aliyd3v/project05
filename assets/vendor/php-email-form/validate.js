@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const url = 'http://localhost:3030'
+  const url = 'http://localhost:3030/api'
 
   let selectTableForm = document.querySelectorAll('.select-table-form')
   let forms = document.querySelectorAll('.php-email-form');
@@ -19,7 +19,7 @@
 
       let thisForm = this;
 
-      let action = `${url}/api/booking/availability`;
+      let action = `${url}/booking/availability`;
 
       thisForm.querySelector('.loading').classList.add('d-block');
       thisForm.querySelector('.error-message').classList.remove('d-block');
@@ -102,7 +102,7 @@
 
       let thisForm = this;
 
-      let action = `${url}/api/booking/create`;
+      let action = `${url}/booking/create`;
 
       thisForm.querySelector('.loading').classList.add('d-block');
       thisForm.querySelector('.error-message').classList.remove('d-block');
