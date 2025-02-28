@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const url = 'http://localhost:3030/api'
+  const url = 'https://dashboard.aif.uz/api'
 
   let selectTableForm = document.querySelectorAll('.select-table-form')
   let forms = document.querySelectorAll('.php-email-form');
