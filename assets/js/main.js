@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const url = 'http://localhost:3030/api'
+  const url = 'https://dashboard.aif.uz/api'
 
   etap1()
   etap3()
