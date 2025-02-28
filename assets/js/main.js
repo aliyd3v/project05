@@ -3,80 +3,87 @@
 
   const url = 'http://localhost:3030/api'
 
-  fetch(`${url}/categories`)
-    .then(res => res.json())
-    .then(res => {
-      if (res.success) {
-        renderCategories(res.data.categories)
-        isotope()
-      }
-    })
-    .catch(error => console.log(error))
+  etap1()
+  etap3()
 
-  function renderCategories(categories) {
-    let categoriesUl = document.getElementById('categories-ul')
-    for (let i = 0; i < categories.length; i++) {
-      let li = document.createElement('li')
-      li.setAttribute('data-filter', `.filter-${categories[i].en_name}`)
-      li.textContent = `${categories[i].en_name}`
-      categoriesUl.appendChild(li)
+  function etap1() {
+    fetch(`${url}/categories`)
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          renderCategories(res.data.categories)
+          etap2()
+        }
+      })
+      .catch(error => console.log(error))
+
+    function renderCategories(categories) {
+      let categoriesUl = document.getElementById('categories-ul')
+      for (let i = 0; i < categories.length; i++) {
+        let li = document.createElement('li')
+        li.setAttribute('data-filter', `.filter-${categories[i].en_name}`)
+        li.textContent = `${categories[i].en_name}`
+        categoriesUl.appendChild(li)
+      }
     }
   }
 
-  fetch(`${url}/meals`)
-    .then(res => res.json())
-    .then(res => {
-      if (res.success) {
-        renderMeals(res.data.meals)
-      }
-    })
-    .catch(error => console.log(error))
+  function etap3() {
+    fetch(`${url}/meals`)
+      .then(res => res.json())
+      .then(res => {
+        if (res.success) {
+          renderMeals(res.data.meals)
+        }
+      })
+      .catch(error => console.log(error))
 
-  function renderMeals(meals) {
-    let mainContainer = document.getElementById('meals-container');
-    let mealsContainer = document.createElement('div');
-    mealsContainer.innerHTML = '';
+    function renderMeals(meals) {
+      let mainContainer = document.getElementById('meals-container');
+      let mealsContainer = document.createElement('div');
 
-    (function eachMeals(meals) {
-      mealsContainer.classList.add("row", "isotope-container")
-      mealsContainer.setAttribute('data-aos', 'fade-up')
-      mealsContainer.setAttribute('data-aos-delay', '200')
+      (function eachMeals(meals) {
+        mealsContainer.classList.add("row", "isotope-container")
+        mealsContainer.setAttribute('data-aos', 'fade-up')
+        mealsContainer.setAttribute('data-aos-delay', '200')
 
-      for (let i = 0; i < meals.length; i++) {
-        renderingMeal(meals[i])
-      }
-      mainContainer.appendChild(mealsContainer)
-    })(meals)
+        for (let i = 0; i < meals.length; i++) {
+          renderingMeal(meals[i])
+        }
+        mainContainer.appendChild(mealsContainer)
+      })(meals)
 
-    function renderingMeal(meal) {
-      let div = document.createElement("div");
-      let filter = `filter-${meal.category.en_name}`
-      div.classList.add("col-lg-6", "menu-item", "isotope-item", filter);
-      let img = document.createElement('img')
-      img.src = `${meal.image_url}`
-      img.classList.add('menu-img')
-      let divIn = document.createElement('div')
-      divIn.classList.add('menu-content')
-      let a = document.createElement('a')
-      a.textContent = `${meal.en_name}`
-      let span = document.createElement('span')
-      span.textContent = `$${meal.price}`
-      let divIn2 = document.createElement('div')
-      divIn2.classList.add('menu-ingredients')
-      divIn2.textContent = `${meal.en_description}`
-      div.dataset.id = meal._id;
-      divIn.appendChild(a)
-      divIn.appendChild(span)
-      div.appendChild(img)
-      div.appendChild(divIn)
-      div.appendChild(divIn2)
-      mealsContainer.appendChild(div);
-    };
+      function renderingMeal(meal) {
+        let div = document.createElement("div");
+        let filter = `filter-${meal.category.en_name}`
+        div.classList.add("col-lg-6", "menu-item", "isotope-item", filter);
+        let img = document.createElement('img')
+        img.src = `${meal.image_url}`
+        img.classList.add('menu-img')
+        let divIn = document.createElement('div')
+        divIn.classList.add('menu-content')
+        let a = document.createElement('a')
+        a.textContent = `${meal.en_name}`
+        let span = document.createElement('span')
+        span.textContent = `$${meal.price}`
+        let divIn2 = document.createElement('div')
+        divIn2.classList.add('menu-ingredients')
+        divIn2.textContent = `${meal.en_description}`
+        div.dataset.id = meal._id;
+        divIn.appendChild(a)
+        divIn.appendChild(span)
+        div.appendChild(img)
+        div.appendChild(divIn)
+        div.appendChild(divIn2)
+        mealsContainer.appendChild(div);
+      };
+    }
   }
-  function isotope() {
+
+  function etap2() {
     /**
-     * Init isotope layout and filters
-    */
+   * Init isotope layout and filters
+  */
     document.querySelectorAll('.isotope-layout').forEach(function (isotopeItem) {
       let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
       let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
@@ -107,7 +114,6 @@
 
     });
   }
-
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
