@@ -1,12 +1,38 @@
 (function () {
   "use strict";
 
+  let tableSection = document.getElementById('table')
+  tableSection.style.display = 'none'
+
+  let errorSection = document.getElementById('error')
+  errorSection.style.display = 'none'
+
   const url = 'http://localhost:3030/api'
 
+  const params = new URLSearchParams(window.location.search)
+  const token = params.get('token')
 
+  fetch(`${url}/verify/email-verification?token=${token}`)
+    .then(res => res.json())
+    .then(res => {
+      if (res.success) {
+        if (res.data.table) {
+          tableSection.style.display = ''
+          document.getElementById('date-and-time').textContent = `${res.data.booking.date} ${res.data.booking.time}`
+          document.getElementById('customer-phone').textContent = `${res.data.booking.phone}`
+          document.getElementById('customer-email').textContent = `${res.data.booking.email}`
+          document.getElementById('table-number').textContent = `Table number ${res.data.table} for ${res.data.booking.hour} hour(s)`
+        }
+      } else {
+        errorSection.style.display = ''
+        document.getElementById('error-message').textContent = `${res.error.message}`
+      }
+    })
+    .catch(err => {
+      errorSection.style.display = ''
+      document.getElementById('error-message').textContent = `${err}`
+    })
 
-  
-  
   /**
    * Apply .scrolled class to the body as the page is scrolled down
    */
