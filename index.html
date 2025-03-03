@@ -66,6 +66,7 @@
             <li><a href="#hero" class="active">Home<br></a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#menu">Menu</a></li>
+            <li><a href="#cart">Cart</a></li>
             <li><a href="#chefs">Chefs</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
@@ -168,6 +169,51 @@
 
     </section><!-- /Menu Section -->
 
+    <!-- Menu Section -->
+    <section id="cart" class="menu section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2><i class="bi bi-cart"></i></h2>
+        <p>Cart</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div id="cart-container" class="d-flex flex-wrap">
+          <div id="empty-message">
+            <p>Cart is empty</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gy-4" id="container-ordering">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6">
+            <input type="text" name="customer_name" class="form-control" id="order-name" placeholder="Your Name"
+              required>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <input type="email" class="form-control" name="email" id="order-email" placeholder="Your Email" required>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <input type="text" class="form-control" name="phone" id="order-phone" placeholder="Your Phone" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-bottom text-center mt-3">
+        <div class="loading">Loading</div>
+        <div class="error-message"></div>
+        <div class="sent-message">Your order request was sent. We will call back or send an Email to confirm
+          your
+          order. Thank you!</div>
+        <button id="order-button">Order</button>
+      </div>
+
+      </div>
+
+    </section><!-- /Menu Section -->
+
     <!-- Book A Table Section -->
     <section id="book-a-table" class="book-a-table section">
 
@@ -193,7 +239,6 @@
             <div class="col-lg-4 col-md-6">
               <input type="number" class="form-control" name="hour" id="people" placeholder="# of hour(s)" required="">
             </div>
-
 
             <div class="text-center mt-3">
               <div class="loading">Loading</div>
@@ -636,6 +681,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/order.js"></script>
 
 </body>
 

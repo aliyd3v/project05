@@ -31,7 +31,8 @@
 }
 
 @media (max-width: 575px) {
-  .book-a-table .select-table-form {
+  .book-a-table .select-table-form,
+  #container-ordering {
     padding: 20px;
   }
 }
