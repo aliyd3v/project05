@@ -1794,3 +1794,27 @@ section,
   margin-right: 7px;
   color: green;
 }
+
+.cart-remove {
+  font-size: 25px;
+  color: red;
+}
+
+.cart-item-minus-btn p,
+.cart-item-plus-btn p {
+  background-color: black;
+  align-items: end;
+  color: white;
+  font-size: 16px;
+  border-radius: 25%;
+  padding-top: 2px;
+  font-style: normal;
+}
+
+.cart-item-count-text {
+  margin: 3px 0 16px;
+  font-size: 18px;
+  color: white;
+  font-style: normal;
+  font-family: sans-serif;
+}

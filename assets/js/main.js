@@ -76,19 +76,90 @@
     function renderMeals(meals) {
       let mainContainer = document.getElementById('meals-container');
       let mealsContainer = document.createElement('div');
+      let mainCartContainer = document.getElementById('cart-container');
+      let cartContainer = document.createElement('div');
 
       (function eachMeals(meals) {
         mealsContainer.classList.add("row", "isotope-container");
         mealsContainer.setAttribute('data-aos', 'fade-up');
         mealsContainer.setAttribute('data-aos-delay', '200');
 
+        cartContainer.classList.add("row", "isotope-container");
+        cartContainer.setAttribute('data-aos', 'fade-up');
+        cartContainer.setAttribute('data-aos-delay', '200');
+
         for (let i = 0; i < meals.length; i++) {
           renderingMeal(meals[i]);
         };
         mainContainer.appendChild(mealsContainer);
+        mainCartContainer.appendChild(cartContainer);
       })(meals);
 
       function renderingMeal(meal) {
+        // Cart item
+        let isExist = false
+        for (let i = 0; i < localStorage.length; i++) {
+          localStorage.key(i).includes(`cart-item-${meal._id}`) ? isExist = true : false
+        }
+        if (isExist) {
+          let cartItemDiv = document.createElement("div");
+          cartItemDiv.classList.add("col-lg-6", "menu-item", "isotope-item");
+          let cartItemImg = document.createElement('img');
+          cartItemImg.src = `${meal.image_url}`;
+          cartItemImg.classList.add('menu-img');
+          let divInCartItem = document.createElement('div');
+          divInCartItem.classList.add('menu-content');
+          let aCartItem = document.createElement('a');
+          aCartItem.textContent = `${meal.en_name}`;
+          let spanCartItem = document.createElement('span');
+          spanCartItem.textContent = `$${meal.price}`;
+          let divIn2CartItem = document.createElement('div');
+          divIn2CartItem.classList.add('menu-ingredients', 'd-flex');
+          divIn2CartItem.textContent = `${meal.en_description}`;
+
+
+          // new thing for cart item managing.
+          let itemMinus = document.createElement('button');
+          itemMinus.classList.add('btn-sm', 'ms-end', 'cart-item-minus-btn');
+          let itemMinusText = document.createElement('p');
+          itemMinusText.textContent = '-';
+          itemMinus.appendChild(itemMinusText)
+
+          let itemCount = document.createElement('p');
+          itemCount.classList.add('cart-item-count-text');
+          itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`;
+
+          let itemPlus = document.createElement('button');
+          itemPlus.classList.add('btn-sm', 'cart-item-plus-btn');
+          let itemPlusText = document.createElement('p');
+          itemPlusText.textContent = '+';
+          itemPlus.appendChild(itemPlusText)
+
+
+
+
+          let btnCartItem = document.createElement('button');
+          btnCartItem.classList.add('btn-sm', 'ms-auto');
+          let iconCartRemove = document.createElement('i');
+          iconCartRemove.classList.add('bi', 'bi-cart-x-fill', 'cart-remove');
+          btnCartItem.appendChild(iconCartRemove);
+          btnCartItem.dataset.id = meal._id;
+          btnCartItem.addEventListener('click', () => {
+            console.log(localStorage.getItem(`cart-item-${meal._id}`));
+          });
+          divInCartItem.appendChild(aCartItem);
+          divInCartItem.appendChild(spanCartItem);
+          divIn2CartItem.appendChild(itemMinus);
+          divIn2CartItem.appendChild(itemCount);
+          divIn2CartItem.appendChild(itemPlus);
+          divIn2CartItem.appendChild(btnCartItem);
+          cartItemDiv.appendChild(cartItemImg);
+          cartItemDiv.appendChild(divInCartItem);
+          cartItemDiv.appendChild(divIn2CartItem);
+          cartContainer.appendChild(cartItemDiv);
+        }
+
+        // Menu item
         let div = document.createElement("div");
         let filter = `filter-${meal.category.en_name}`;
         div.classList.add("col-lg-6", "menu-item", "isotope-item", filter);
