@@ -169,7 +169,7 @@
 
     </section><!-- /Menu Section -->
 
-    <!-- Menu Section -->
+    <!-- Cart Section -->
     <section id="cart" class="menu section">
 
       <!-- Section Title -->
@@ -186,33 +186,32 @@
         </div>
       </div>
 
-      <div class="row gy-4" id="container-ordering">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6">
-            <input type="text" name="customer_name" class="form-control" id="order-name" placeholder="Your Name"
-              required>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <input type="email" class="form-control" name="email" id="order-email" placeholder="Your Email" required>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <input type="text" class="form-control" name="phone" id="order-phone" placeholder="Your Phone" required>
+      <form id="order-form" class="order-form">
+        <div class="row gy-4" id="container-ordering">
+          <div class="row gy-4">
+            <div class="col-lg-4 col-md-6">
+              <input type="text" name="customer_name" class="form-control" placeholder="Your Name" required>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <input type="text" class="form-control" name="phone" placeholder="Your Phone" required>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="order-bottom text-center mt-3">
-        <div class="loading">Loading</div>
-        <div class="error-message"></div>
-        <div class="sent-message">Your order request was sent. We will call back or send an Email to confirm
-          your
-          order. Thank you!</div>
-        <button id="order-button">Order</button>
-      </div>
+        <div class="order-bottom text-center mt-3">
+          <div class="loading">Loading</div>
+          <div class="error-message"></div>
+          <div class="sent-message">Your order request was sent. We will call back or send an Email to confirm
+            your
+            order. Thank you!</div>
+          <button type="submit">Order</button>
+        </div>
+      </form>
 
-      </div>
-
-    </section><!-- /Menu Section -->
+    </section><!-- /Card Section -->
 
     <!-- Book A Table Section -->
     <section id="book-a-table" class="book-a-table section">
@@ -681,7 +680,6 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/order.js"></script>
 
 </body>
 

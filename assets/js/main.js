@@ -59,7 +59,6 @@
           }
         }, false);
       });
-
     });
   }
 
@@ -78,6 +77,19 @@
       let mealsContainer = document.createElement('div');
       let mainCartContainer = document.getElementById('cart-container');
       let cartContainer = document.createElement('div');
+      let emptyMessage = document.getElementById('empty-message');
+
+      function showOrHideEmptyMsg() {
+        let localStorageKeys = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          let key = localStorage.key(i);
+          if (key && key.includes('cart-item')) {
+            localStorageKeys.push(key);
+          }
+        }
+        emptyMessage.style.display = localStorageKeys.length === 0 ? '' : 'none';
+        document.querySelector('.order-form').style.display = localStorageKeys.length === 0 ? 'none' : '';
+      }
 
       (function eachMeals(meals) {
         mealsContainer.classList.add("row", "isotope-container");
@@ -97,13 +109,15 @@
 
       function renderingMeal(meal) {
         // Cart item
-        let isExist = false
-        for (let i = 0; i < localStorage.length; i++) {
-          localStorage.key(i).includes(`cart-item-${meal._id}`) ? isExist = true : false
-        }
+        let isExist = Object.keys(localStorage).some(key => key.includes(`cart-item-${meal._id}`));
+
         if (isExist) {
+          // Unhide ordering form
+          // Cart item rendering.
           let cartItemDiv = document.createElement("div");
-          cartItemDiv.classList.add("col-lg-6", "menu-item", "isotope-item");
+          cartItemDiv.classList.add("col-lg-6", "menu-item");
+          // Adding id to cartItemDiv.
+          cartItemDiv.setAttribute('id', `cart-item-${meal._id}`);
           let cartItemImg = document.createElement('img');
           cartItemImg.src = `${meal.image_url}`;
           cartItemImg.classList.add('menu-img');
@@ -116,28 +130,33 @@
           let divIn2CartItem = document.createElement('div');
           divIn2CartItem.classList.add('menu-ingredients', 'd-flex');
           divIn2CartItem.textContent = `${meal.en_description}`;
-
-
-          // new thing for cart item managing.
+          // Cart item '-' button.
           let itemMinus = document.createElement('button');
           itemMinus.classList.add('btn-sm', 'ms-end', 'cart-item-minus-btn');
           let itemMinusText = document.createElement('p');
           itemMinusText.textContent = '-';
-          itemMinus.appendChild(itemMinusText)
-
+          itemMinus.appendChild(itemMinusText);
+          itemMinus.addEventListener('click', () => {
+            if (localStorage.getItem(`cart-item-${meal._id}`) != 1 || localStorage.getItem(`cart-item-${meal._id}`) > 1) {
+              localStorage.setItem(`cart-item-${meal._id}`, `${Number(localStorage.getItem(`cart-item-${meal._id}`)) - 1}`)
+              itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`
+            }
+          });
+          // Cart item count text.
           let itemCount = document.createElement('p');
           itemCount.classList.add('cart-item-count-text');
           itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`;
-
+          // Cart item '+' button.
           let itemPlus = document.createElement('button');
           itemPlus.classList.add('btn-sm', 'cart-item-plus-btn');
           let itemPlusText = document.createElement('p');
           itemPlusText.textContent = '+';
-          itemPlus.appendChild(itemPlusText)
-
-
-
-
+          itemPlus.appendChild(itemPlusText);
+          itemPlus.addEventListener('click', () => {
+            localStorage.setItem(`cart-item-${meal._id}`, `${Number(localStorage.getItem(`cart-item-${meal._id}`)) + 1}`)
+            itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`
+          });
+          // Cart item remove button.
           let btnCartItem = document.createElement('button');
           btnCartItem.classList.add('btn-sm', 'ms-auto');
           let iconCartRemove = document.createElement('i');
@@ -145,8 +164,18 @@
           btnCartItem.appendChild(iconCartRemove);
           btnCartItem.dataset.id = meal._id;
           btnCartItem.addEventListener('click', () => {
-            console.log(localStorage.getItem(`cart-item-${meal._id}`));
+            // Remove cart item from localeStorage.
+            localStorage.removeItem(`cart-item-${meal._id}`);
+            // Remove item from cart.
+            document.getElementById(`cart-item-${meal._id}`).remove();
+            // Hide added-to-cart icon.
+            document.getElementById(`checked-cart-${meal._id}`).style.display = 'none';
+            // Unhide add-to-cart button.
+            document.getElementById(`add-to-cart-${meal._id}`).style.display = '';
+            // Show ro hide empty message.
+            showOrHideEmptyMsg();
           });
+          // AppendChild pieces.
           divInCartItem.appendChild(aCartItem);
           divInCartItem.appendChild(spanCartItem);
           divIn2CartItem.appendChild(itemMinus);
@@ -157,6 +186,7 @@
           cartItemDiv.appendChild(divInCartItem);
           cartItemDiv.appendChild(divIn2CartItem);
           cartContainer.appendChild(cartItemDiv);
+          showOrHideEmptyMsg();
         }
 
         // Menu item
@@ -175,14 +205,20 @@
         let divIn2 = document.createElement('div');
         divIn2.classList.add('menu-ingredients', 'd-flex');
         divIn2.textContent = `${meal.en_description}`;
+        // Add to cart button.
         let btn = document.createElement('button');
         btn.classList.add('btn-sm', 'ms-auto');
         let iconCartPlus = document.createElement('i');
         iconCartPlus.classList.add('bi', 'bi-cart-plus-fill', 'cart-plus');
         btn.appendChild(iconCartPlus);
         btn.dataset.id = meal._id;
+        btn.id = `add-to-cart-${meal._id}`;
+        // Added to cart icon.
         let cartAdded = document.createElement('i');
         cartAdded.classList.add('bi', 'bi-cart-check-fill', 'ms-auto', 'checked-cart');
+        cartAdded.id = `checked-cart-${meal._id}`;
+        cartAdded.style.display = 'none';
+        btn.style.display = 'none';
         btn.addEventListener('click', () => {
           let arr = [];
           for (let i = 0; i < localStorage.length; i++) {
@@ -192,25 +228,155 @@
             false
           } else {
             localStorage.setItem(`cart-item-${meal._id}`, 1);
+            // Hide add-to-cart button.
             btn.style.display = 'none';
-            divIn2.appendChild(cartAdded);
-          }
+            // Unhide added-to-cart icon.
+            cartAdded.style.display = '';
+            // Adding item to cart.
+            let cartItemDiv = document.createElement("div");
+            cartItemDiv.classList.add("col-lg-6", "menu-item", "isotope-item");
+            // Adding id to cartItemDiv.
+            cartItemDiv.setAttribute('id', `cart-item-${meal._id}`);
+            let cartItemImg = document.createElement('img');
+            cartItemImg.src = `${meal.image_url}`;
+            cartItemImg.classList.add('menu-img');
+            let divInCartItem = document.createElement('div');
+            divInCartItem.classList.add('menu-content');
+            let aCartItem = document.createElement('a');
+            aCartItem.textContent = `${meal.en_name}`;
+            let spanCartItem = document.createElement('span');
+            spanCartItem.textContent = `$${meal.price}`;
+            let divIn2CartItem = document.createElement('div');
+            divIn2CartItem.classList.add('menu-ingredients', 'd-flex');
+            divIn2CartItem.textContent = `${meal.en_description}`;
+            // Cart item '-' button.
+            let itemMinus = document.createElement('button');
+            itemMinus.classList.add('btn-sm', 'ms-end', 'cart-item-minus-btn');
+            let itemMinusText = document.createElement('p');
+            itemMinusText.textContent = '-';
+            itemMinus.appendChild(itemMinusText);
+            itemMinus.addEventListener('click', () => {
+              if (localStorage.getItem(`cart-item-${meal._id}`) != 1 || localStorage.getItem(`cart-item-${meal._id}`) > 1) {
+                localStorage.setItem(`cart-item-${meal._id}`, `${Number(localStorage.getItem(`cart-item-${meal._id}`)) - 1}`)
+                itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`
+              }
+            });
+            // Cart item count text.
+            let itemCount = document.createElement('p');
+            itemCount.classList.add('cart-item-count-text');
+            itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`;
+            // Cart item '+' button.
+            let itemPlus = document.createElement('button');
+            itemPlus.classList.add('btn-sm', 'cart-item-plus-btn');
+            let itemPlusText = document.createElement('p');
+            itemPlusText.textContent = '+';
+            itemPlus.appendChild(itemPlusText);
+            itemPlus.addEventListener('click', () => {
+              localStorage.setItem(`cart-item-${meal._id}`, `${Number(localStorage.getItem(`cart-item-${meal._id}`)) + 1}`)
+              itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`
+            });
+            // Cart item remove button.
+            let btnCartItem = document.createElement('button');
+            btnCartItem.classList.add('btn-sm', 'ms-auto');
+            let iconCartRemove = document.createElement('i');
+            iconCartRemove.classList.add('bi', 'bi-cart-x-fill', 'cart-remove');
+            btnCartItem.appendChild(iconCartRemove);
+            btnCartItem.dataset.id = meal._id;
+            btnCartItem.addEventListener('click', () => {
+              // Remove cart item from localeStorage.
+              localStorage.getItem(`cart-item-${meal._id}`) ? localStorage.removeItem(`cart-item-${meal._id}`) : false;
+              // Remove item from cart.
+              document.getElementById(`cart-item-${meal._id}`).remove();
+              // Hide added-to-cart icon.
+              document.getElementById(`checked-cart-${meal._id}`).style.display = 'none';
+              // Unhide add-to-cart button.
+              document.getElementById(`add-to-cart-${meal._id}`).style.display = '';
+              // Show or hide empty message.
+              showOrHideEmptyMsg();
+            });
+            // AppendChild pieces.
+            divInCartItem.appendChild(aCartItem);
+            divInCartItem.appendChild(spanCartItem);
+            divIn2CartItem.appendChild(itemMinus);
+            divIn2CartItem.appendChild(itemCount);
+            divIn2CartItem.appendChild(itemPlus);
+            divIn2CartItem.appendChild(btnCartItem);
+            cartItemDiv.appendChild(cartItemImg);
+            cartItemDiv.appendChild(divInCartItem);
+            cartItemDiv.appendChild(divIn2CartItem);
+            cartContainer.appendChild(cartItemDiv);
+          };
+          showOrHideEmptyMsg();
         });
+        if (localStorage.getItem(`cart-item-${meal._id}`)) {
+          cartAdded.style.display = '';
+        } else {
+          btn.style.display = '';
+        }
         divIn.appendChild(a);
         divIn.appendChild(span);
-        (function () {
-          if (localStorage.getItem(`cart-item-${meal._id}`)) {
-            divIn2.appendChild(cartAdded)
-          } else {
-            divIn2.appendChild(btn)
-          }
-        })();
+        divIn2.appendChild(cartAdded);
+        divIn2.appendChild(btn);
         div.appendChild(img);
         div.appendChild(divIn);
         div.appendChild(divIn2);
         mealsContainer.appendChild(div);
       };
     }
+  }
+
+  document.querySelector('.order-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      let thisForm = this;
+
+      let action = `${url}/order/create`;
+
+      thisForm.querySelector('.loading').classList.add('d-block');
+      thisForm.querySelector('.error-message').classList.remove('d-block');
+      thisForm.querySelector('.sent-message').classList.remove('d-block');
+
+      let formData = new FormData(thisForm);
+
+      let jsonObject = {};
+      formData.forEach((value, key) => jsonObject[key] = value);
+
+      ordering(thisForm, action, jsonObject);
+    });
+
+  function ordering(thisForm, action, jsonData) {
+    fetch(action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(jsonData)
+    })
+      .then(response => response.json())
+      .then(response => {
+        thisForm.querySelector('.loading').classList.remove('d-block');
+        if (response.success == true) {
+          // document.querySelector('#order-form input[name=customer_name]').setAttribute('type', 'hidden')
+          // document.querySelector('#order-form input[name=customer_name]').removeAttribute('class')
+          // document.querySelector('#order-form input[name=email]').setAttribute('type', 'hidden')
+          // document.querySelector('#order-form input[name=email]').removeAttribute('class')
+          // document.querySelector('#order-form input[name=phone]').setAttribute('type', 'hidden')
+          // document.querySelector('#order-form input[name=phone]').removeAttribute('class')
+          // document.getElementById('container-order-form').style.display = 'none'
+          // document.getElementById('lastBookingButton').style.display = 'none'
+          // thisForm.querySelector('.sent-message').classList.add('d-block');
+          thisForm.reset();
+        } else {
+          throw new Error(response.error.message);
+        }
+      })
+      .catch((error) => {
+        displayError(thisForm, error);
+      });
+  }
+
+  function displayError(thisForm, error) {
+    thisForm.querySelector('.loading').classList.remove('d-block');
+    thisForm.querySelector('.error-message').innerHTML = error;
+    thisForm.querySelector('.error-message').classList.add('d-block');
   }
 
   /**
