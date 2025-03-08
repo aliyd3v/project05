@@ -1,11 +1,14 @@
 (function () {
   "use strict";
 
-  const url = 'http://localhost:3030/api'
+  const url = 'http://localhost:3030/api';
 
-  etap1()
-  etap2()
-  etap3()
+  let emptyMessage = document.getElementById('empty-message');
+
+  etap1();
+  etap2();
+  etap3();
+  showOrHideEmptyMsg();
 
   function etap1() {
     fetch(`${url}/categories`)
@@ -77,19 +80,7 @@
       let mealsContainer = document.createElement('div');
       let mainCartContainer = document.getElementById('cart-container');
       let cartContainer = document.createElement('div');
-      let emptyMessage = document.getElementById('empty-message');
 
-      function showOrHideEmptyMsg() {
-        let localStorageKeys = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          let key = localStorage.key(i);
-          if (key && key.includes('cart-item')) {
-            localStorageKeys.push(key);
-          }
-        }
-        emptyMessage.style.display = localStorageKeys.length === 0 ? '' : 'none';
-        document.querySelector('.order-form').style.display = localStorageKeys.length === 0 ? 'none' : '';
-      }
 
       (function eachMeals(meals) {
         mealsContainer.classList.add("row", "isotope-container");
@@ -99,6 +90,7 @@
         cartContainer.classList.add("row", "isotope-container");
         cartContainer.setAttribute('data-aos', 'fade-up');
         cartContainer.setAttribute('data-aos-delay', '200');
+        cartContainer.id = 'cart-items'
 
         for (let i = 0; i < meals.length; i++) {
           renderingMeal(meals[i]);
@@ -326,23 +318,35 @@
   }
 
   document.querySelector('.order-form').addEventListener('submit', function (event) {
-      event.preventDefault();
+    event.preventDefault();
 
-      let thisForm = this;
+    let thisForm = this;
 
-      let action = `${url}/order/create`;
+    let action = `${url}/order/create`;
 
-      thisForm.querySelector('.loading').classList.add('d-block');
-      thisForm.querySelector('.error-message').classList.remove('d-block');
-      thisForm.querySelector('.sent-message').classList.remove('d-block');
+    thisForm.querySelector('.loading').classList.add('d-block');
+    thisForm.querySelector('.error-message').classList.remove('d-block');
+    thisForm.querySelector('.sent-message').classList.remove('d-block');
 
-      let formData = new FormData(thisForm);
+    let formData = new FormData(thisForm);
 
-      let jsonObject = {};
-      formData.forEach((value, key) => jsonObject[key] = value);
+    let jsonObject = {};
+    formData.forEach((value, key) => jsonObject[key] = value);
 
-      ordering(thisForm, action, jsonObject);
-    });
+    let meals = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage.key(i).includes('cart-item')) {
+        let orderMeal = {};
+        let key = localStorage.key(i);
+        orderMeal.mealId = key.split('-')[2];
+        orderMeal.amount = Number(localStorage.getItem(key));
+        meals.push(orderMeal);
+      };
+    }
+    jsonObject.meals = meals;
+
+    ordering(thisForm, action, jsonObject);
+  });
 
   function ordering(thisForm, action, jsonData) {
     fetch(action, {
@@ -354,16 +358,18 @@
       .then(response => {
         thisForm.querySelector('.loading').classList.remove('d-block');
         if (response.success == true) {
-          // document.querySelector('#order-form input[name=customer_name]').setAttribute('type', 'hidden')
-          // document.querySelector('#order-form input[name=customer_name]').removeAttribute('class')
-          // document.querySelector('#order-form input[name=email]').setAttribute('type', 'hidden')
-          // document.querySelector('#order-form input[name=email]').removeAttribute('class')
-          // document.querySelector('#order-form input[name=phone]').setAttribute('type', 'hidden')
-          // document.querySelector('#order-form input[name=phone]').removeAttribute('class')
-          // document.getElementById('container-order-form').style.display = 'none'
-          // document.getElementById('lastBookingButton').style.display = 'none'
-          // thisForm.querySelector('.sent-message').classList.add('d-block');
+          document.querySelector('#order-form input[name=customer_name]').setAttribute('type', 'hidden');
+          document.querySelector('#order-form input[name=customer_name]').removeAttribute('class');
+          document.querySelector('#order-form input[name=email]').setAttribute('type', 'hidden');
+          document.querySelector('#order-form input[name=email]').removeAttribute('class');
+          document.querySelector('#order-form input[name=phone]').setAttribute('type', 'hidden');
+          document.querySelector('#order-form input[name=phone]').removeAttribute('class');
+          document.getElementById('container-ordering').style.display = 'none';
+          document.getElementById('order-submit').style.display = 'none';
+          thisForm.querySelector('.sent-message').classList.add('d-block');
           thisForm.reset();
+          document.getElementById('cart-items').remove();
+          clearLocaleStorageAndCartItems();
         } else {
           throw new Error(response.error.message);
         }
@@ -373,10 +379,30 @@
       });
   }
 
+  function clearLocaleStorageAndCartItems() {
+    let keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      localStorage.key(i).includes('cart-item-') ? keys.push(localStorage.key(i)) : false;
+    }
+    keys.forEach(key => localStorage.removeItem(key));
+  }
+
   function displayError(thisForm, error) {
     thisForm.querySelector('.loading').classList.remove('d-block');
     thisForm.querySelector('.error-message').innerHTML = error;
     thisForm.querySelector('.error-message').classList.add('d-block');
+  }
+
+  function showOrHideEmptyMsg() {
+    let localStorageKeys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      if (key && key.includes('cart-item')) {
+        localStorageKeys.push(key);
+      }
+    }
+    emptyMessage.style.display = localStorageKeys.length === 0 ? '' : 'none';
+    document.querySelector('.order-form').style.display = localStorageKeys.length === 0 ? 'none' : '';
   }
 
   /**
