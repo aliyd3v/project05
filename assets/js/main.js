@@ -132,7 +132,7 @@
             if (localStorage.getItem(`cart-item-${meal._id}`) != 1 || localStorage.getItem(`cart-item-${meal._id}`) > 1) {
               localStorage.setItem(`cart-item-${meal._id}`, `${Number(localStorage.getItem(`cart-item-${meal._id}`)) - 1}`)
               itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`
-            }
+            };
           });
           // Cart item count text.
           let itemCount = document.createElement('p');
@@ -145,8 +145,8 @@
           itemPlusText.textContent = '+';
           itemPlus.appendChild(itemPlusText);
           itemPlus.addEventListener('click', () => {
-            localStorage.setItem(`cart-item-${meal._id}`, `${Number(localStorage.getItem(`cart-item-${meal._id}`)) + 1}`)
-            itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`
+            localStorage.setItem(`cart-item-${meal._id}`, `${Number(localStorage.getItem(`cart-item-${meal._id}`)) + 1}`);
+            itemCount.textContent = `${localStorage.getItem(`cart-item-${meal._id}`)}`;
           });
           // Cart item remove button.
           let btnCartItem = document.createElement('button');

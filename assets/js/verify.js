@@ -1,16 +1,19 @@
 (function () {
   "use strict";
 
-  let tableSection = document.getElementById('table')
-  tableSection.style.display = 'none'
+  let tableSection = document.getElementById('table');
+  tableSection.style.display = 'none';
 
-  let errorSection = document.getElementById('error')
-  errorSection.style.display = 'none'
+  let orderSection = document.getElementById('order');
+  orderSection.style.display = 'none';
 
-  const url = 'http://localhost:3030/api'
+  let errorSection = document.getElementById('error');
+  errorSection.style.display = 'none';
 
-  const params = new URLSearchParams(window.location.search)
-  const token = params.get('token')
+  const url = 'http://localhost:3030/api';
+
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
 
   fetch(`${url}/verify/email-verification?token=${token}`)
     .then(res => res.json())
@@ -22,16 +25,71 @@
           document.getElementById('customer-phone').textContent = `${res.data.booking.phone}`
           document.getElementById('customer-email').textContent = `${res.data.booking.email}`
           document.getElementById('table-number').textContent = `Table number ${res.data.table} for ${res.data.booking.hour} hour(s)`
-        }
+        };
+        if (res.data.meals) {
+          orderSection.style.display = '';
+          renderMeals(res.data.meals);
+        };
       } else {
         errorSection.style.display = ''
         document.getElementById('error-message').textContent = `${res.error.message}`
-      }
+      };
     })
     .catch(err => {
       errorSection.style.display = ''
       document.getElementById('error-message').textContent = `${err}`
-    })
+    });
+
+
+  function renderMeals(meals) {
+    let mainCartContainer = document.getElementById('order-itmes-container');
+    let cartContainer = document.createElement('div');
+
+
+    (function eachMeals(meals) {
+      cartContainer.classList.add("row", "isotope-container");
+      cartContainer.setAttribute('data-aos', 'fade-up');
+      cartContainer.setAttribute('data-aos-delay', '200');
+      cartContainer.id = 'cart-items'
+
+      for (let i = 0; i < meals.length; i++) {
+        renderingMeal(meals[i]);
+      };
+      mainCartContainer.appendChild(cartContainer);
+    })(meals);
+
+    function renderingMeal(data) {
+      // Cart item
+      let cartItemDiv = document.createElement("div");
+      cartItemDiv.classList.add("col-lg-6", "menu-item");
+      let cartItemImg = document.createElement('img');
+      cartItemImg.src = `${data.meal.image_url}`;
+      cartItemImg.classList.add('menu-img');
+      let divInCartItem = document.createElement('div');
+      divInCartItem.classList.add('menu-content');
+      let aCartItem = document.createElement('a');
+      aCartItem.textContent = `${data.meal.en_name}`;
+      let spanCartItem = document.createElement('span');
+      spanCartItem.textContent = `$${data.meal.price}`;
+      let divIn2CartItem = document.createElement('div');
+      divIn2CartItem.classList.add('menu-ingredients', 'd-flex');
+      divIn2CartItem.textContent = `${data.meal.en_description}`;
+      // Cart item count text.
+      let itemCount = document.createElement('p');
+      itemCount.classList.add('cart-item-count-text');
+      itemCount.textContent = data.amount;
+      // AppendChild pieces.
+      divInCartItem.appendChild(aCartItem);
+      divInCartItem.appendChild(spanCartItem);
+      divIn2CartItem.appendChild(itemMinus);
+      divIn2CartItem.appendChild(itemCount);
+      divIn2CartItem.appendChild(itemPlus);
+      cartItemDiv.appendChild(cartItemImg);
+      cartItemDiv.appendChild(divInCartItem);
+      cartItemDiv.appendChild(divIn2CartItem);
+      cartContainer.appendChild(cartItemDiv);
+    };
+  }
 
   /**
    * Apply .scrolled class to the body as the page is scrolled down
@@ -113,13 +171,6 @@
     });
   }
   window.addEventListener('load', aosInit);
-
-  /**
-   * Initiate glightbox
-   */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
 
   /**
    * Init swiper sliders
