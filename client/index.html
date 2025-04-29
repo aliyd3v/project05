@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color: black;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+            font-size: 18px;
+            border-radius: 0;
+            border: 1px solid white;
+            margin: 20px 0;
+            max-width: 300px;
+            padding: 4px 4px;
+        }
+
+        input:hover {
+            border: 1px solid yellow;
+        }
+
+        button {
+            font-size: 18px;
+            border-radius: 0;
+            border: 1px solid white;
+            padding: 5px 20px;
+            margin: 20px 0;
+            font-weight: bolder;
+        }
+
+        button:hover {
+            border: 1px solid yellow;
+        }
+
+        div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .textarea-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        textarea {
+            font-size: 18px;
+            width: 300px;
+            max-width: 300px;
+            min-width: 300px;
+            min-height: 30px;
+            margin: 20px 0;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .captcha-err {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            width: 300px;
+        }
+
+        .captcha-question {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            height: 31px;
+            align-content: center;
+            padding: 0 15px;
+            font-size: 18px;
+            border-right: 1px solid black;
+        }
+
+        #answer {
+            width: 220px;
+        }
+
+        .success-msg {
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            width: 300px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <h1>Type text message</h1>
+    <form id="send-form">
+        <div>
+            <input id="name-input" minlength="3" name="name" placeholder="Enter your name..." type="text" required>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <input type="button" style="width: 50px;" value="+998">
+            <input style="width: 250px;" type="tel" id="phone" name="phone" maxlength="9" pattern="[0-9]{9}"
+                placeholder="90 123 4567"
+                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
+        </div>
+        <div class="textarea-div">
+            <textarea id="description-textarea" name="description" placeholder="Write about your project..."
+                required></textarea>
+        </div>
+        <div>
+            <input type="hidden" id="captcha-id" name="captchaId">
+            <div class="captcha-question"></div>
+            <input type="text" name="answer" placeholder="Count" id="answer" maxlength="2" autocomplete="off" required>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button type="submit">Send</button>
+        </div>
+    </form>
+
+    <div class="captcha-err hidden">
+        Captcha not complete
+    </div>
+
+    <div class="success-msg hidden">
+        <p>Successfully sended</p>
+    </div>
+
+    <script>
+        const form = document.getElementById('send-form')
+        const captchaErr = document.querySelector('.captcha-err')
+        const successMsg = document.querySelector('.success-msg')
+        const captchaQuestion = document.querySelector('.captcha-question')
+        const captchaId = document.getElementById('captcha-id')
+
+        function getCaptcha() {
+            fetch('http://localhost:3333/captcha')
+                .then(res => res.json())
+                .then(data => {
+                    captchaQuestion.innerHTML = `${data.data.question}`
+                    captchaId.value = data.data.captchaId
+                })
+        }
+        getCaptcha()
+
+        const interval = setInterval(() => {
+            getCaptcha()
+        }, 1000 * 60);
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const data = {
+                captchaId: document.getElementById('captcha-id').value,
+                answer: document.getElementById('answer').value,
+                name: document.getElementById('name-input').value,
+                phone: document.getElementById('phone').value,
+                description: document.getElementById('description-textarea').value,
+            }
+            send(data)
+        })
+
+        function send(data) {
+            fetch(`http://localhost:3333/send?data=${data.captchaId}--${data.answer}&name=${data.name}&phone=${data.phone}&description=${data.description}`, {
+                method: "POST"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    form.reset()
+                    if (data.status == 'success') {
+                        getCaptcha()
+                        successMsg.classList.remove('hidden')
+                        setTimeout(() => {
+                            successMsg.classList.add('hidden')
+                        }, 5000)
+                    } else {
+                        if (data.statusCode == 400) {
+                            captchaErr.innerHTML = `${data.message}`
+                        } else {
+                            captchaErr.innerHTML = `Captcha not complete`
+                        }
+                        getCaptcha()
+                        captchaErr.classList.remove('hidden')
+                        setTimeout(() => {
+                            captchaErr.classList.add('hidden')
+                        }, 5000);
+                    }
+                })
+                .catch(err => {
+                    captchaErr.innerHTML = `
+                    ${err}`
+                    captchaErr.classList.remove('hidden')
+                    setTimeout(() => {
+                        captchaErr.classList.add('hidden')
+                    }, 15000);
+                })
+        }
+    </script>
+
+</body>
+
+</html>
