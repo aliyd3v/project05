@@ -44,7 +44,15 @@ app.post('/send', async (req, res) => {
         else return res.status(400).json({ status: 'fail', statusCode: 400, message: 'Phone number is wrong!' });
         if (decoded.answer != answer) return res.status(400).json({ status: 'fail', message: 'Captcha not verified' });
         let likeDrink;
-        if (drink) { switch (drink) { case 0: likeDrink = 'Water'; break; case 1: likeDrink = 'Coffee'; break; case 2: likeDrink = 'Limonade'; break; case 3: likeDrink = 'Tea'; break; } }
+        console.log(drink)
+        if (drink) {
+            switch (Number(drink)) {
+                case 0: likeDrink = 'Water'; break;
+                case 1: likeDrink = 'Coffee'; break;
+                case 2: likeDrink = 'Limonade'; break;
+                case 3: likeDrink = 'Tea'; break;
+            }
+        }
         const currentTime = new Date();
         const message = `
 Name: ${name}
