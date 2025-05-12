@@ -1,2 +1,4 @@
-/api/node_modules
-/api/.env
+custom-CAPTCHA/api/node_modules
+custom-CAPTCHA/api/.env
+reCAPTCHA/api/node_modules
+reCAPTCHA/api/.env

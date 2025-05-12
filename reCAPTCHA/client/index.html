@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send message</title>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color: black;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+            font-size: 18px;
+            border-radius: 0;
+            border: 1px solid white;
+            margin: 20px 0;
+            max-width: 300px;
+            padding: 4px 4px;
+        }
+
+        input:hover {
+            border: 1px solid yellow;
+        }
+
+        button {
+            font-size: 18px;
+            border-radius: 0;
+            border: 1px solid white;
+            padding: 5px 20px;
+            margin: 20px 0;
+            font-weight: bolder;
+        }
+
+        button:hover {
+            border: 1px solid yellow;
+        }
+
+        div {
+            display: flex;
+            justify-content: center;
+        }
+
+        .textarea-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        textarea {
+            font-size: 18px;
+            width: 300px;
+            max-width: 300px;
+            min-width: 300px;
+            min-height: 30px;
+            margin: 20px 0;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        .captcha-err {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            width: 300px;
+        }
+
+        .success-msg {
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            width: 300px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+
+    <h1>Type text message</h1>
+    <form id="send-form">
+        <div>
+            <input id="name-input" name="name" placeholder="Enter your name..." type="text" required>
+        </div>
+        <div>
+            <input id="phone-input" name="phone" placeholder="Enter phone number..." type="tel" required>
+        </div>
+        <div class="textarea-div">
+            <textarea id="description-textarea" name="description" placeholder="Write more..."
+                required></textarea>
+        </div>
+        <div class="g-recaptcha" data-sitekey="6LdGRCQrAAAAAHcWJM2UonfbHSU8HeBQ6ov0dft7"></div>
+        <div style="display: flex; justify-content: center;">
+            <button type="submit">Send</button>
+        </div>
+    </form>
+
+
+    <div class="captcha-err hidden">
+        Captcha not complete
+    </div>
+
+    <div class="success-msg hidden">
+        <p>Successfully sended</p>
+    </div>
+
+
+    <script>
+        const form = document.getElementById('send-form')
+        const captchaErr = document.querySelector('.captcha-err')
+        const successMsg = document.querySelector('.success-msg')
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const captchaResponse = grecaptcha.getResponse();
+            if (!captchaResponse.length) {
+                captchaErr.classList.remove('hidden')
+                setTimeout(() => {
+                    captchaErr.classList.add('hidden')
+                }, 3000);
+            }
+
+            const data = {
+                captchaResponse,
+                name: document.getElementById('name-input').value,
+                phone: document.getElementById('phone-input').value,
+                description: document.getElementById('description-textarea').value,
+            }
+            verifyCaptcha(data)
+
+        })
+
+        function verifyCaptcha(data) {
+            fetch(`http://localhost:3333/verify?data=${data.captchaResponse}&name=${data.name}&phone=${data.phone}&description=${data.description}`, {
+                method: "POST"
+            })
+                .then(res => res.json())
+                .then(data => {
+                    form.reset()
+                    grecaptcha.reset()
+                    if (data.status == 'success') {
+                        successMsg.classList.remove('hidden')
+                        setTimeout(() => {
+                            successMsg.classList.add('hidden')
+                        }, 15000)
+                    } else {
+                        captchaErr.innerHTML = `Captcha not complete`
+                        captchaErr.classList.remove('hidden')
+                        setTimeout(() => {
+                            captchaErr.classList.add('hidden')
+                        }, 15000);
+                    }
+                })
+                .catch(err => {
+                    captchaErr.innerHTML = `
+                    ${err}`
+                    captchaErr.classList.remove('hidden')
+                    setTimeout(() => {
+                        captchaErr.classList.add('hidden')
+                    }, 15000);
+                })
+        }
+    </script>
+
+</body>
+
+</html>
